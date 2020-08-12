@@ -15,6 +15,8 @@ var LIMIT_HP = 3;
 var LIMIT_OIL = 10;
 var LIMIT_MIND = 10;
 var LIMIT_MATCHES = 3;
+var DIST_LIGHT = 3;
+var DIST_LOAD = 6;
 
 // Map parameters
 var SIZE_X = 20;
@@ -22,7 +24,7 @@ var SIZE_Y = 20;
 
 
 //// DRAW PREFERENCES ////
-var SCALE = 8;
+var SCALE = 16;
 
 
 // Canvas
@@ -37,9 +39,27 @@ function getImg(src) { // Load images
     return img;
 }
 
-var IMG_GROUND0 = getImg("textures/ground0.png");
-var IMG_GRAVE0 = getImg("textures/grave0.png");
+var IMGS_GROUND = [
+    getImg("textures/ground0.png"),
+    getImg("textures/ground1.png")
+];
+
+
+var IMGS_GRAVE = [
+    getImg("textures/grave0.png"),
+    getImg("textures/grave1.png"),
+    getImg("textures/grave2.png"),
+    getImg("textures/grave3.png"),
+    getImg("textures/grave4.png"),
+    getImg("textures/grave5.png"),
+    getImg("textures/grave6.png"),
+    getImg("textures/grave7.png")
+];
+
+
 var IMG_PLAYER = getImg("textures/player.png");
+var IMG_LIGHT = getImg("textures/light.png");
+var IMG_SHADOW = getImg("textures/shadow.png");
 
 //// KEY CONFIG ////
 // Keys (0 - released, 1 - pressed)
