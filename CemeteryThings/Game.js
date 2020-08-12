@@ -48,12 +48,16 @@ Game.prototype.playerControl = function() {
     // Player movement
     var deltaPos = new Vec2(0, 0); // Shift for this step
     // Check keys
-    if(KEY_D)
+    if(KEY_D) {
         deltaPos.x += 1;
+        this.player.dir = RIGHT;
+    }
     if(KEY_S)
         deltaPos.y += 1;
-    if(KEY_A)
+    if(KEY_A) {
         deltaPos.x -= 1;
+        this.player.dir = LEFT;
+    }
     if(KEY_W)
         deltaPos.y -= 1;
     // Collision

@@ -2,7 +2,7 @@
 
 //// CONSTANTS ////
 // Directions
-var RIGTH = 0;
+var RIGHT = 0;
 var DOWN = 1;
 var LEFT = 2;
 var UP = 3;
@@ -59,7 +59,7 @@ var IMGS_GRAVE = [
 ];
 
 
-var IMG_PLAYER = getImg("textures/player.png");
+var IMG_PLAYER = getImg("textures/player" + random(0, 2) + ".png");
 var IMG_LIGHT = getImg("textures/light.png");
 var IMG_SHADOW = getImg("textures/shadow.png");
 
