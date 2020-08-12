@@ -8,4 +8,4 @@ function step() {
     draw.draw(game);
 }
 
-var interval = setInterval(step, 100);
+var interval = setInterval(step, 50);

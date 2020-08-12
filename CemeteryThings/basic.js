@@ -8,22 +8,22 @@ class Vec2 {
 
 // +
 function plus(a, b) {
-    return Vec2(a.x + b.x, a.y + b.y);
+    return new Vec2(a.x + b.x, a.y + b.y);
 }
 
 // -
 function minus(a, b) {
-    return Vec2(a.x - b.x, a.y - b.y);
+    return new Vec2(a.x - b.x, a.y - b.y);
 }
 
 // Multiply
 function mult(a, b) {
-    return Vec2(a.x * b.x, a.y * b.y);
+    return new Vec2(a.x * b.x, a.y * b.y);
 }
 
 // Divide
 function div(a, b) {
-    return Vec2(a.x / b.x, a.y / b.y);
+    return new Vec2(a.x / b.x, a.y / b.y);
 }
 
 // Distance

@@ -39,3 +39,39 @@ function getImg(src) { // Load images
 
 var IMG_GROUND0 = getImg("textures/ground0.png");
 var IMG_GRAVE0 = getImg("textures/grave0.png");
+var IMG_PLAYER = getImg("textures/player.png");
+
+//// KEY CONFIG ////
+// Keys (0 - released, 1 - pressed)
+var KEY_W = 0;
+var KEY_A = 0;
+var KEY_S = 0;
+var KEY_D = 0;
+
+window.addEventListener('keydown',this.checkDown,false);
+function checkDown(e) {
+   
+    // Checking for buttons pressed
+    if(e.keyCode == 87)
+        KEY_W = 1;	
+    if(e.keyCode == 65)
+        KEY_A = 1;  
+    if(e.keyCode == 83)
+        KEY_S = 1;
+    if(e.keyCode == 68)
+        KEY_D = 1;
+}
+
+window.addEventListener('keyup',this.checkUp,false);
+function checkUp(e) {
+   
+    // Checking for buttons pressed
+    if(e.keyCode == 87)
+        KEY_W = 0;	
+    if(e.keyCode == 65)
+        KEY_A = 0;  
+    if(e.keyCode == 83)
+        KEY_S = 0;
+    if(e.keyCode == 68)
+        KEY_D = 0;
+}
