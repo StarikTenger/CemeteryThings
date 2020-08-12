@@ -33,6 +33,7 @@ Draw.prototype.rect = function(x, y, w, h, color) {
 Draw.prototype.draw = function(game) {
     // Focusing camera
     this.cam = game.player.pos;
+    this.center = new Vec2(32, 27);
 
     // Filling background
     this.ctx.fillStyle = "black";
@@ -68,4 +69,9 @@ Draw.prototype.draw = function(game) {
             }
         }
     }
+
+    // Interface
+    this.cam = new Vec2(0, 0);
+    this.center = new Vec2(0, 0);
+    this.image(IMG_INTERFACE, 0, 0, 64, 64);
 };
