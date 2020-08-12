@@ -28,12 +28,13 @@ Draw.prototype.draw = function(game) {
     this.ctx.fillStyle = "black";
     this.ctx.fillRect(0, 0, 10000, 10000);
 
+
     // Grid
     for (var x = 0; x < SIZE_X; x++) {
         for (var y = 0; y < SIZE_Y; y++) {
             if (game.grid[x][y].obstacle){
                 this.image(IMGS_GROUND[0], x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                this.image(IMGS_GRAVE[game.grid[x][y].type], x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                this.image(IMGS_GRAVE[game.grid[x][y].type], x * CELL_SIZE, (y - 1) * CELL_SIZE, CELL_SIZE, CELL_SIZE * 2);
             } else {
                 this.image(IMGS_GROUND[game.grid[x][y].type], x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }

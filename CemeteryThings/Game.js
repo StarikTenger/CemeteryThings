@@ -32,8 +32,8 @@ Game.prototype.generate = function() {
         for (var y = 0; y < SIZE_Y; y++) {
             if(this.grid[x][y].light > 0)
                 continue;
-            if (!random(0, 4)) {
-                this.grid[x][y].type = Math.abs(normalDistribution(-7, 7, 4));
+            if (!random(0, 2)) {
+                this.grid[x][y].type = Math.abs(normalDistribution(-7, 7, 4)); // !!!!!!!!!!!!! -7, 7
                 this.grid[x][y].obstacle = 1;
             }
             else {
