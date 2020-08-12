@@ -1,0 +1,40 @@
+//// 2D vector ////
+class Vec2 {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+// +
+function plus(a, b) {
+    return Vec2(a.x + b.x, a.y + b.y);
+}
+
+// -
+function minus(a, b) {
+    return Vec2(a.x - b.x, a.y - b.y);
+}
+
+// Multiply
+function mult(a, b) {
+    return Vec2(a.x * b.x, a.y * b.y);
+}
+
+// Divide
+function div(a, b) {
+    return Vec2(a.x / b.x, a.y / b.y);
+}
+
+// Distance
+function dist(a, b) {
+    var x = a.x - b.x;
+    var y = a.y - b.y;
+    return Math.sqrt(x*x + y*y);
+}
+
+//// RANDOM ////
+
+function random(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
