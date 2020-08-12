@@ -30,7 +30,7 @@ function div(a, b) {
 function dist(a, b) {
     var x = a.x - b.x;
     var y = a.y - b.y;
-    return Math.sqrt(x*x + y*y);
+    return Math.abs(x) + Math.abs(y);
 }
 
 //// RANDOM ////

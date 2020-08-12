@@ -15,8 +15,8 @@ var LIMIT_HP = 3;
 var LIMIT_OIL = 10;
 var LIMIT_MIND = 10;
 var LIMIT_MATCHES = 3;
-var DIST_LIGHT = 3;
-var DIST_LOAD = 6;
+var DIST_LIGHT = 5;
+var DIST_LOAD = 7;
 
 // Map parameters
 var SIZE_X = 20;

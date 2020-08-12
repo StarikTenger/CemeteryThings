@@ -32,7 +32,7 @@ Game.prototype.generate = function() {
         for (var y = 0; y < SIZE_Y; y++) {
             if(this.grid[x][y].light > 0)
                 continue;
-            if (!random(0, 2)) {
+            if (!random(0, 4)) {
                 this.grid[x][y].type = Math.abs(normalDistribution(-7, 7, 4));
                 this.grid[x][y].obstacle = 1;
             }
@@ -100,9 +100,10 @@ Game.prototype.setLight = function() {
     // Adding initial cells
     for (var x = cellPos.x - 1; x <= cellPos.x + 1; x++) {
         for (var y = cellPos.y - 1; y <= cellPos.y + 1; y++) {
-            if (this.checkCell(new Vec2(x, y)))
+            var d = dist(this.player.pos, new Vec2(x * 8 + 4, y * 8 + 4));
+            if (this.checkCell(new Vec2(x, y)) || dist > 8)
                 continue;
-            this.grid[x][y].light = DIST_LIGHT + 1 - dist(this.player.pos, new Vec2(x * 8 + 4, y * 8 + 4)) / 8;
+            this.grid[x][y].light = DIST_LIGHT + 1 - d / 8;
             deque.addBack(new Vec2(x, y));
         }
     }
@@ -113,13 +114,17 @@ Game.prototype.setLight = function() {
         deque.removeFront();
         if(this.grid[pos.x][pos.y].light < 0)
             this.grid[pos.x][pos.y].light = 0;
-        if (this.grid[pos.x][pos.y].obstacle || this.grid[pos.x][pos.y].light <= 0)
+        if (this.grid[pos.x][pos.y].light <= 0)
             continue;
+
+        var deltaLight = 1;
+        if (this.grid[pos.x][pos.y].obstacle)
+            deltaLight = 2;
         for (var i = 0; i < 4; i++) {
             var pos1 = plus(pos, neighbors[i]);
-            if(this.checkCell(pos1) || this.grid[pos1.x][pos1.y].light > 0)
+            if(this.checkCell(pos1) || this.grid[pos1.x][pos1.y].light > this.grid[pos.x][pos.y].light - deltaLight)
                 continue;
-            this.grid[pos1.x][pos1.y].light = this.grid[pos.x][pos.y].light - 1;
+            this.grid[pos1.x][pos1.y].light = this.grid[pos.x][pos.y].light - deltaLight;
             deque.addBack(pos1);
         }
     }
