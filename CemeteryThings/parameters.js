@@ -15,6 +15,7 @@ var LIMIT_HP = 3;
 var LIMIT_OIL = 10;
 var LIMIT_MIND = 10;
 var LIMIT_MATCHES = 3;
+
 var DIST_LIGHT = 5;
 var DIST_LOAD = 7;
 
@@ -24,7 +25,7 @@ var SIZE_Y = 20;
 
 
 //// DRAW PREFERENCES ////
-var SCALE = 16;
+var SCALE = 16; // 1 Cell in px
 
 
 // Canvas
@@ -39,6 +40,7 @@ function getImg(src) { // Load images
     return img;
 }
 
+// Loading current imgs
 var IMGS_GROUND = [
     getImg("textures/ground0.png"),
     getImg("textures/ground1.png")

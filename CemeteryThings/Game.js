@@ -32,11 +32,11 @@ Game.prototype.generate = function() {
         for (var y = 0; y < SIZE_Y; y++) {
             if(this.grid[x][y].light > 0)
                 continue;
-            if (!random(0, 4)) {
+            if (!random(0, 4)) { // Obstacle
                 this.grid[x][y].type = Math.abs(normalDistribution(-7, 7, 4));
                 this.grid[x][y].obstacle = 1;
             }
-            else {
+            else { // No obstacle
                 this.grid[x][y].type =  Math.abs(normalDistribution(-1, 1, 3));
                 this.grid[x][y].obstacle = 0;
             }
@@ -87,16 +87,9 @@ Game.prototype.setLight = function() {
     cellPos.x = Math.floor(cellPos.x);
     cellPos.y = Math.floor(cellPos.y);
 
-    // BFS
+    // BFS deque
     var deque = new Deque();
    
-    var neighbors = [
-        new Vec2(1, 0),
-        new Vec2(-1, 0),
-        new Vec2(0, 1),
-        new Vec2(0, -1)
-    ];
-
     // Adding initial cells
     for (var x = cellPos.x - 1; x <= cellPos.x + 1; x++) {
         for (var y = cellPos.y - 1; y <= cellPos.y + 1; y++) {
@@ -109,6 +102,12 @@ Game.prototype.setLight = function() {
     }
 
     // BFS itself
+    var neighbors = [
+        new Vec2(1, 0),
+        new Vec2(-1, 0),
+        new Vec2(0, 1),
+        new Vec2(0, -1)
+    ];
     while (deque.peekFront()) {
         var pos = plus(deque.peekFront(), new Vec2(0, 0));
         deque.removeFront();
