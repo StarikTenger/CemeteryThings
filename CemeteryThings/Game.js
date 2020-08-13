@@ -27,13 +27,31 @@ Game.prototype.checkCell = function(pos) {
     return 0;
 }
 
+// In which cell is pos
+Game.prototype.getCell = function(pos) {
+    var cellPos = div(pos, new Vec2(8, 8));
+    cellPos.x = Math.floor(cellPos.x);
+    cellPos.y = Math.floor(cellPos.y);
+    return cellPos;
+}
+
+// Gets visible light value for current cell
+Game.prototype.getLight = function(pos) {
+    var val = 0;
+    if (!this.checkCell(pos))
+        val = Math.max(this.grid[pos.x][pos.y].light + DIST_LIGHT - DIST_LOAD, 0);
+    return val;
+}
+
 // Generates the map
 Game.prototype.generate = function() {
+
+    // Initial graves (in each cell with some chance)
     for (var x = 0; x < SIZE_X; x++) {
         for (var y = 0; y < SIZE_Y; y++) {
-            if(this.grid[x][y].light > 0)
+            if(this.grid[x][y].light > 0) // Forbidden zone
                 continue;
-            if (!random(0, 4)) { // Obstacle
+            if (!random(0, 10)) { // Obstacle
                 this.grid[x][y].type = Math.abs(normalDistribution(-7, 7, 4));
                 this.grid[x][y].obstacle = 1;
             }
@@ -43,24 +61,75 @@ Game.prototype.generate = function() {
             }
         }
     }
+
+    // Neighbor graves (finds random point, sets grave if this cell has neighbor)
+    var neighbors = [
+        new Vec2(1, 0),
+        new Vec2(-1, 0),
+        new Vec2(0, 1),
+        new Vec2(0, -1)
+    ];
+    var neighborsDiagonal = [
+        new Vec2(1, 1),
+        new Vec2(-1, 1),
+        new Vec2(1, -1),
+        new Vec2(-1, -1)
+    ];
+    for (var i = 0; i < (SIZE_X * SIZE_Y); i++) {
+        // Generate random point
+        var pos = new Vec2(random(0, SIZE_X - 1), random(0, SIZE_Y - 1));
+        // Number of neighbors
+        var neighborsCount = 0;
+        var neighborsDiagonalCount = 0; 
+
+        if(this.grid[pos.x][pos.y].light > 0) // Forbidden zone
+            continue;
+
+        // Check for neighbors
+        // Close
+        for (var j = 0; j < 4; j++) {
+            var pos1 = plus(pos, neighbors[j]); // In this cell we check neighbor
+            if(this.checkCell(pos1)) // Cell out of borders
+                continue;
+            if(this.grid[pos1.x][pos1.y].obstacle) // Neighbor found
+                neighborsCount++;
+        }
+        // Diagonal
+        for (var j = 0; j < 4; j++) {
+            var pos1 = plus(pos, neighborsDiagonal[j]); // In this cell we check neighbor
+            if(this.checkCell(pos1)) // Cell out of borders
+                continue;
+            if(this.grid[pos1.x][pos1.y].obstacle) // Neighbor found
+                neighborsDiagonalCount++;
+        }
+
+        // If cell has neighbors we generate a grave
+        if (neighborsCount == 1 && neighborsDiagonalCount <= 1) {
+            this.grid[pos.x][pos.y].type = Math.abs(normalDistribution(-7, 7, 4));
+            this.grid[pos.x][pos.y].obstacle = 1;
+        }
+    }
 };
 
+// Player's movement & actions
 Game.prototype.playerControl = function() {
     // Player movement
     var deltaPos = new Vec2(0, 0); // Shift for this step
     // Check keys
-    if(KEY_D) {
+    // Player has only 2 directions (left & right)
+    if(KEY_D) { // Right
         deltaPos.x += 1;
         this.player.dir = RIGHT;
     }
-    if(KEY_S)
+    if(KEY_S) // Down
         deltaPos.y += 1;
-    if(KEY_A) {
+    if(KEY_A) { // Left
         deltaPos.x -= 1;
         this.player.dir = LEFT;
     }
-    if(KEY_W)
+    if(KEY_W) // Right
         deltaPos.y -= 1;
+
     // Collision
     var newPosX = plus(this.player.pos, new Vec2(0, 0)); newPosX.x += deltaPos.x;
     var newPosY = plus(this.player.pos, new Vec2(0, 0)); newPosY.y += deltaPos.y;
@@ -80,6 +149,7 @@ Game.prototype.playerControl = function() {
     this.player.grid_pos = getCell(this.player.pos);
 }
 
+// Generate light around player (& other objects)
 Game.prototype.setLight = function() {
     // Turning off light
     for (var x = 0; x < SIZE_X; x++) {
@@ -89,9 +159,7 @@ Game.prototype.setLight = function() {
     }
 
     // Light around person
-    var cellPos = div(this.player.pos, new Vec2(8, 8));
-    cellPos.x = Math.floor(cellPos.x);
-    cellPos.y = Math.floor(cellPos.y);
+    var cellPos = this.getCell(this.player.pos);
 
     // BFS deque
     var deque = new Deque();
@@ -102,7 +170,7 @@ Game.prototype.setLight = function() {
             var d = dist(this.player.pos, new Vec2(x * 8 + 4, y * 8 + 4));
             if (this.checkCell(new Vec2(x, y)) || dist > 8)
                 continue;
-            this.grid[x][y].light = DIST_LIGHT + 1 - d / 8;
+            this.grid[x][y].light = DIST_LOAD + 1 - d / 8;
             deque.addBack(new Vec2(x, y));
         }
     }
@@ -124,7 +192,7 @@ Game.prototype.setLight = function() {
 
         var deltaLight = 1;
         if (this.grid[pos.x][pos.y].obstacle)
-            deltaLight = 2;
+            deltaLight = 3;
         for (var i = 0; i < 4; i++) {
             var pos1 = plus(pos, neighbors[i]);
             if(this.checkCell(pos1) || this.grid[pos1.x][pos1.y].light > this.grid[pos.x][pos.y].light - deltaLight)
