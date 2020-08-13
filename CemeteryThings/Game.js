@@ -13,6 +13,7 @@ class Game {
         // Setting player
         this.player = new Player();
         this.player.pos = new Vec2(10, 10);
+        this.player.grid_pos = getCell(this.player.pos);
 
         // Monster array
         this.monsters = [];
@@ -76,6 +77,7 @@ Game.prototype.playerControl = function() {
         deltaPos.y = 0;
     }
     this.player.pos = plus(this.player.pos, deltaPos);
+    this.player.grid_pos = getCell(this.player.pos);
 }
 
 Game.prototype.setLight = function() {
