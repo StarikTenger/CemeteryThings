@@ -43,6 +43,11 @@ Game.prototype.getLight = function(pos) {
     return val;
 }
 
+// Choose random grave texture
+Game.prototype.random_grave_type = function() {
+    return Math.abs(normalDistribution(-8, 8, 4));
+}
+
 // Generates the map
 Game.prototype.generate = function() {
 
@@ -52,7 +57,7 @@ Game.prototype.generate = function() {
             if(this.grid[x][y].light > 0) // Forbidden zone
                 continue;
             if (!random(0, 10)) { // Obstacle
-                this.grid[x][y].type = Math.abs(normalDistribution(-7, 7, 4));
+                this.grid[x][y].type = this.random_grave_type();
                 this.grid[x][y].obstacle = 1;
             }
             else { // No obstacle
@@ -105,7 +110,7 @@ Game.prototype.generate = function() {
 
         // If cell has neighbors we generate a grave
         if (neighborsCount == 1 && neighborsDiagonalCount <= 1) {
-            this.grid[pos.x][pos.y].type = Math.abs(normalDistribution(-7, 7, 4));
+            this.grid[pos.x][pos.y].type = this.random_grave_type();
             this.grid[pos.x][pos.y].obstacle = 1;
         }
     }

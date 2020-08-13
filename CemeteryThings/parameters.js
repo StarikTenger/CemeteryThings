@@ -57,7 +57,8 @@ var IMGS_GRAVE = [
     getImg("textures/grave4.png"),
     getImg("textures/grave5.png"),
     getImg("textures/grave6.png"),
-    getImg("textures/grave7.png")
+    getImg("textures/grave7.png"),
+    getImg("textures/grave8.png")
 ];
 
 
