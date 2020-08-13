@@ -14,7 +14,7 @@ Draw.prototype.image = function(texture, x, y, w, h, flip) {
     y = Math.round(y);
     w = Math.round(w);
     h = Math.round(h);
-    
+
     if(!flip)
         flip = 0;
         
@@ -97,8 +97,8 @@ Draw.prototype.draw = function(game) {
                     var d = dist(pos, new Vec2(x * 8 + 4, y * 8 + 4));
                     if (game.checkCell(new Vec2(x, y)) || dist > 8)
                         continue;
-                    val += game.getLight(new Vec2(x, y)) * (17 - d);
-                    sum += 17 - d;
+                    val += game.getLight(new Vec2(x, y)) * (18 - d);
+                    sum += 18 - d;
                 }
             }
 
@@ -113,4 +113,7 @@ Draw.prototype.draw = function(game) {
     this.cam = new Vec2(0, 0);
     this.center = new Vec2(0, 0);
     this.image(IMG_INTERFACE, 0, 0, 64, 64);
+
+    // Mind
+    this.rect(53, 55, 10, 1, "rgb(0,30,65)");
 };

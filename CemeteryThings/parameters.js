@@ -8,6 +8,7 @@ var LEFT = 2;
 var UP = 3;
 
 //// GAME PREFERENCES ////
+var DT = 0.050; // Tick time in seconds
 var CELL_SIZE = 8;
 
 // Limitations for player
@@ -19,7 +20,8 @@ var LIMIT_MATCHES = 3;
 var DIST_LIGHT = 4;
 var DIST_LOAD = 7;
 
-var LIMIT_MONSTERS = 3;
+var MONSTER_LIMIT = 3; // Maximum number of monsters
+var MONSTER_PERIOD = 10; // Time between monsters spawn
 
 // Map parameters
 var SIZE_X = 20;
@@ -27,7 +29,7 @@ var SIZE_Y = 20;
 
 
 //// DRAW PREFERENCES ////
-var SCALE = 16; // 1 Cell in px
+var SCALE = 14; // 1 Cell in px
 
 
 // Canvas
@@ -57,8 +59,7 @@ var IMGS_GRAVE = [
     getImg("textures/grave4.png"),
     getImg("textures/grave5.png"),
     getImg("textures/grave6.png"),
-    getImg("textures/grave7.png"),
-    getImg("textures/grave8.png")
+    getImg("textures/grave7.png")
 ];
 
 

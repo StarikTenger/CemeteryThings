@@ -16,6 +16,7 @@ class Game {
         this.player.grid_pos = new Vec2(0, 0);
 
         // Monster array
+        this.monsterTimer = 0;
         this.monsters = [];
     }
 }
@@ -43,11 +44,6 @@ Game.prototype.getLight = function(pos) {
     return val;
 }
 
-// Choose random grave texture
-Game.prototype.random_grave_type = function() {
-    return Math.abs(normalDistribution(-8, 8, 4));
-}
-
 // Generates the map
 Game.prototype.generate = function() {
 
@@ -57,7 +53,7 @@ Game.prototype.generate = function() {
             if(this.grid[x][y].light > 0) // Forbidden zone
                 continue;
             if (!random(0, 10)) { // Obstacle
-                this.grid[x][y].type = this.random_grave_type();
+                this.grid[x][y].type = Math.abs(normalDistribution(-7, 7, 2));
                 this.grid[x][y].obstacle = 1;
             }
             else { // No obstacle
@@ -110,12 +106,13 @@ Game.prototype.generate = function() {
 
         // If cell has neighbors we generate a grave
         if (neighborsCount == 1 && neighborsDiagonalCount <= 1) {
-            this.grid[pos.x][pos.y].type = this.random_grave_type();
+            this.grid[pos.x][pos.y].type = Math.abs(normalDistribution(-7, 7, 4));
             this.grid[pos.x][pos.y].obstacle = 1;
         }
     }
 
     //// Monsters ////
+    this.monsterTimer -= DT; // dt
     // Killing lost monsters (out of stable zone)
     for (var i = 0; i < this.monsters.length; i++) {
         var monster = this.monsters[i];
@@ -130,7 +127,9 @@ Game.prototype.generate = function() {
         var pos = new Vec2(random(0, SIZE_X - 1), random(0, SIZE_Y - 1));
 
         // Checking for limitations
-        if(this.monsters.length >= LIMIT_MONSTERS) // Too much monsters
+        if(this.monsters.length >= MONSTER_LIMIT) // Too much monsters
+            break;
+        if(this.monsterTimer > 0) // We can't spawn monsters to often
             break;
         if(this.grid[pos.x][pos.y].obstacle) // Cell is not empty
             continue;
@@ -146,6 +145,9 @@ Game.prototype.generate = function() {
 
         // Adding monster to array
         this.monsters.push(monster);
+
+        // Timer
+        this.monsterTimer = MONSTER_PERIOD;
     }
 };
 
@@ -193,6 +195,7 @@ Game.prototype.playerControl = function() {
 
     // Movement
     this.move(this.player, deltaPos);
+
 }
 
 // Monster management
@@ -221,6 +224,11 @@ Game.prototype.monstersControl = function() {
 
         if(!random(0, 1))
             this.move(monster, mult(deltaPos, new Vec2(1, 1)));
+
+        // Horror
+        if (this.grid[monster.grid_pos.x][monster.grid_pos.y].light > DIST_LIGHT - 1) {
+            this.player.mind -= monster.horror * DT;
+        }
     }
     
 }

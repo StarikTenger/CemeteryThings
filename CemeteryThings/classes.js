@@ -13,6 +13,7 @@ class Object {
 
         // For monster
         this.type = 0;
+        this.horror = 0; // -mind per second
     }
 }
 
