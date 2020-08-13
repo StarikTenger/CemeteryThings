@@ -3,6 +3,7 @@
 class Object {
     constructor(){
         this.pos = new Vec2(0, 0); // Position
+        this.grid_pos = new Vec2(0, 0); // Position
         this.dir = 0; // Direction
 
         this.hp = 3;

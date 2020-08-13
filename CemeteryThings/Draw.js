@@ -10,6 +10,11 @@ class Draw {
 }
 
 Draw.prototype.image = function(texture, x, y, w, h, flip) {
+    x = Math.round(x);
+    y = Math.round(y);
+    w = Math.round(w);
+    h = Math.round(h);
+    
     if(!flip)
         flip = 0;
         

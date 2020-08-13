@@ -110,11 +110,11 @@ Game.prototype.generate = function() {
         }
     }
 
-    // Monsters
+    //// Monsters ////
     // Killing lost monsters (out of stable zone)
     for (var i = 0; i < this.monsters.length; i++) {
         var monster = this.monsters[i];
-        if (this.grid[monster.grid_pos.x][monster.grid_pos.y].light <= 0){
+        if (this.checkCell(monster.grid_pos) || this.grid[monster.grid_pos.x][monster.grid_pos.y].light <= 0){
             this.monsters.splice(i, 1);
         }
     }
@@ -144,6 +144,29 @@ Game.prototype.generate = function() {
     }
 };
 
+// Moves object (collision)
+Game.prototype.move = function(object, shift) {
+    var deltaPos = shift;
+    var newPosX = plus(object.pos, new Vec2(0, 0)); newPosX.x += deltaPos.x;
+    var newPosY = plus(object.pos, new Vec2(0, 0)); newPosY.y += deltaPos.y;
+    var cellPosX = div(newPosX, new Vec2(8, 8)); // Cell
+    var cellPosY = div(newPosY, new Vec2(8, 8)); // Cell
+    cellPosX.x = Math.floor(cellPosX.x);
+    cellPosX.y = Math.floor(cellPosX.y);
+    cellPosY.x = Math.floor(cellPosY.x);
+    cellPosY.y = Math.floor(cellPosY.y);
+    if(cellPosX.x < 0 || cellPosX.y < 0 || cellPosX.x >= SIZE_X || cellPosX.y >= SIZE_Y || this.grid[cellPosX.x][cellPosX.y].obstacle){
+        deltaPos.x = 0;
+    }
+    if(cellPosY.x < 0 || cellPosY.y < 0 || cellPosY.x >= SIZE_X || cellPosY.y >= SIZE_Y || this.grid[cellPosY.x][cellPosY.y].obstacle){
+        deltaPos.y = 0;
+    }
+    object.pos = plus(object.pos, deltaPos);
+
+    // Grid pos
+    object.grid_pos = this.getCell(this.player.pos);
+}
+
 // Player's movement & actions
 Game.prototype.playerControl = function() {
     // Player movement
@@ -163,25 +186,8 @@ Game.prototype.playerControl = function() {
     if(KEY_W) // Right
         deltaPos.y -= 1;
 
-    // Collision
-    var newPosX = plus(this.player.pos, new Vec2(0, 0)); newPosX.x += deltaPos.x;
-    var newPosY = plus(this.player.pos, new Vec2(0, 0)); newPosY.y += deltaPos.y;
-    var cellPosX = div(newPosX, new Vec2(8, 8)); // Cell
-    var cellPosY = div(newPosY, new Vec2(8, 8)); // Cell
-    cellPosX.x = Math.floor(cellPosX.x);
-    cellPosX.y = Math.floor(cellPosX.y);
-    cellPosY.x = Math.floor(cellPosY.x);
-    cellPosY.y = Math.floor(cellPosY.y);
-    if(cellPosX.x < 0 || cellPosX.y < 0 || cellPosX.x >= SIZE_X || cellPosX.y >= SIZE_Y || this.grid[cellPosX.x][cellPosX.y].obstacle){
-        deltaPos.x = 0;
-    }
-    if(cellPosY.x < 0 || cellPosY.y < 0 || cellPosY.x >= SIZE_X || cellPosY.y >= SIZE_Y || this.grid[cellPosY.x][cellPosY.y].obstacle){
-        deltaPos.y = 0;
-    }
-    this.player.pos = plus(this.player.pos, deltaPos);
-
-    // Grid pos !include this in collision!
-    this.player.grid_pos = this.getCell(this.player.pos);
+    // Movement
+    this.move(this.player, deltaPos);
 }
 
 // Monster management
@@ -189,8 +195,27 @@ Game.prototype.monstersControl = function() {
     for (var i = 0; i < this.monsters.length; i++) {
         // Get current monster
         var monster = this.monsters[i];
-
         monster.grid_pos = this.getCell(monster.pos);
+
+        // Movement
+        var deltaPos = new Vec2(0, 0);
+        // Check neighbor cells to find
+        var neighbors = [
+            new Vec2(1, 0),
+            new Vec2(-1, 0),
+            new Vec2(0, 1),
+            new Vec2(0, -1)
+        ];
+        for(var j = 0; j < 4; j ++) {
+            var pos1 = plus(monster.grid_pos, neighbors[j]);
+            if (this.checkCell(pos1) || this.grid[pos1.x][pos1.y].obstacle)
+                continue;
+            if(this.grid[pos1.x][pos1.y].light > this.grid[monster.grid_pos.x][monster.grid_pos.y].light)
+                deltaPos = plus(deltaPos, neighbors[j]); 
+        }
+
+        if(!random(0, 1))
+            this.move(monster, mult(deltaPos, new Vec2(1, 1)));
     }
     
 }

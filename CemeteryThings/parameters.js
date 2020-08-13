@@ -62,7 +62,7 @@ var IMGS_GRAVE = [
 
 
 var IMG_PLAYER = getImg("textures/player" + random(0, 2) + ".png");
-var IMG_MONSTER0 = getImg("textures/player0.png");
+var IMG_MONSTER0 = getImg("textures/monster0.png");
 var IMG_LIGHT = getImg("textures/light.png");
 var IMG_SHADOW = getImg("textures/shadow.png");
 var IMG_INTERFACE = getImg("textures/interface.png");
