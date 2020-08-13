@@ -26,6 +26,22 @@ Game.prototype.checkCell = function(pos) {
     return 0;
 }
 
+// In which cell is pos
+Game.prototype.getCell = function(pos) {
+    var cellPos = div(pos, new Vec2(8, 8));
+    cellPos.x = Math.floor(cellPos.x);
+    cellPos.y = Math.floor(cellPos.y);
+    return cellPos;
+}
+
+// Gets visible light value for current cell
+Game.prototype.getLight = function(pos) {
+    var val = 0;
+    if (!this.checkCell(pos))
+        val = Math.max(this.grid[pos.x][pos.y].light + DIST_LIGHT - DIST_LOAD, 0);
+    return val;
+}
+
 // Generates the map
 Game.prototype.generate = function() {
     for (var x = 0; x < SIZE_X; x++) {
@@ -87,9 +103,7 @@ Game.prototype.setLight = function() {
     }
 
     // Light around person
-    var cellPos = div(this.player.pos, new Vec2(8, 8));
-    cellPos.x = Math.floor(cellPos.x);
-    cellPos.y = Math.floor(cellPos.y);
+    var cellPos = this.getCell(this.player.pos);
 
     // BFS deque
     var deque = new Deque();
@@ -100,7 +114,7 @@ Game.prototype.setLight = function() {
             var d = dist(this.player.pos, new Vec2(x * 8 + 4, y * 8 + 4));
             if (this.checkCell(new Vec2(x, y)) || dist > 8)
                 continue;
-            this.grid[x][y].light = DIST_LIGHT + 1 - d / 8;
+            this.grid[x][y].light = DIST_LOAD + 1 - d / 8;
             deque.addBack(new Vec2(x, y));
         }
     }
