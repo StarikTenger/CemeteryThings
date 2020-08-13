@@ -202,14 +202,25 @@ Game.prototype.playerControl = function() {
     // Movement
     this.move(this.player, deltaPos);
 
-    // Oil consumption
+    // Lamp management
+    // Consumption
     this.player.oil -= OIL_CONSUMPTION * DT;
     if (this.player.oil <= 0) {
         this.player.oil = 0;
-        this.player.mind -= 0.5 * DT;
-        this.player.distLight = 1;
+        this.player.lamp = 0;
     }
 
+    // Turning on/off
+    if (KEY_X && !KEY_X_PREV)
+        this.player.lamp = !this.player.lamp;
+    if (this.player.lamp)
+        this.player.distLight = DIST_LIGHT;
+    else
+        this.player.distLight = 1;
+
+    // Horror
+    if (!this.player.lamp)
+        this.player.mind -= 0.5 * DT;
 }
 
 // Monster management

@@ -73,10 +73,11 @@ var IMG_INTERFACE = getImg("textures/interface.png");
 
 //// KEY CONFIG ////
 // Keys (0 - released, 1 - pressed)
-var KEY_W = 0;
-var KEY_A = 0;
-var KEY_S = 0;
-var KEY_D = 0;
+var KEY_W = 0; var KEY_W_PREV = 0; 
+var KEY_A = 0; var KEY_A_PREV = 0; 
+var KEY_S = 0; var KEY_S_PREV = 0; 
+var KEY_D = 0; var KEY_D_PREV = 0;
+var KEY_X = 0; var KEY_X_PREV = 0;
 
 window.addEventListener('keydown',this.checkDown,false);
 function checkDown(e) {
@@ -90,6 +91,8 @@ function checkDown(e) {
         KEY_S = 1;
     if(e.keyCode == 68)
         KEY_D = 1;
+    if(e.keyCode == 88)
+        KEY_X = 1;
 }
 
 window.addEventListener('keyup',this.checkUp,false);
@@ -104,4 +107,6 @@ function checkUp(e) {
         KEY_S = 0;
     if(e.keyCode == 68)
         KEY_D = 0;
+    if(e.keyCode == 88)
+        KEY_X = 0;
 }

@@ -5,6 +5,8 @@ class Object {
         this.pos = new Vec2(0, 0); // Position
         this.grid_pos = new Vec2(0, 0); // Position
         this.dir = 0; // Direction
+
+        this.lamp = 1; // 1 - on, 0 - off
         this.distLight = DIST_LIGHT;
 
         this.hp = 3;
