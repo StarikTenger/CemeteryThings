@@ -11,7 +11,7 @@ class Game {
         }
 
         // Setting player
-        this.player = new Player();
+        this.player = new Object();
         this.player.pos = new Vec2(10, 10);
         this.player.grid_pos = new Vec2(0, 0);
 
@@ -86,7 +86,7 @@ Game.prototype.generate = function() {
             continue;
 
         // Check for neighbors
-        // Close
+        // Close neighbors
         for (var j = 0; j < 4; j++) {
             var pos1 = plus(pos, neighbors[j]); // In this cell we check neighbor
             if(this.checkCell(pos1)) // Cell out of borders
@@ -94,7 +94,7 @@ Game.prototype.generate = function() {
             if(this.grid[pos1.x][pos1.y].obstacle) // Neighbor found
                 neighborsCount++;
         }
-        // Diagonal
+        // Diagonal neighbors
         for (var j = 0; j < 4; j++) {
             var pos1 = plus(pos, neighborsDiagonal[j]); // In this cell we check neighbor
             if(this.checkCell(pos1)) // Cell out of borders
@@ -108,6 +108,39 @@ Game.prototype.generate = function() {
             this.grid[pos.x][pos.y].type = Math.abs(normalDistribution(-7, 7, 4));
             this.grid[pos.x][pos.y].obstacle = 1;
         }
+    }
+
+    // Monsters
+    // Killing lost monsters (out of stable zone)
+    for (var i = 0; i < this.monsters.length; i++) {
+        var monster = this.monsters[i];
+        if (this.grid[monster.grid_pos.x][monster.grid_pos.y].light <= 0){
+            this.monsters.splice(i, 1);
+        }
+    }
+
+    // Spawning new monsters
+    for (var i = 0; i < 10; i++) { // We try to spwawn monster for 10 times
+        // Generate random point
+        var pos = new Vec2(random(0, SIZE_X - 1), random(0, SIZE_Y - 1));
+
+        // Checking for limitations
+        if(this.monsters.length >= LIMIT_MONSTERS) // Too much monsters
+            break;
+        if(this.grid[pos.x][pos.y].obstacle) // Cell is not empty
+            continue;
+        if(this.grid[pos.x][pos.y].light <= 0) // No light (zone is unstable)
+            continue;
+        if(this.grid[pos.x][pos.y].light > DIST_LIGHT - 1) // Visible zone
+            continue;
+
+        // Making a monster
+        var monster = new Object();
+        monster.pos = plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4));
+        monster.type = 0;
+
+        // Adding monster to array
+        this.monsters.push(monster);
     }
 };
 
@@ -146,7 +179,20 @@ Game.prototype.playerControl = function() {
         deltaPos.y = 0;
     }
     this.player.pos = plus(this.player.pos, deltaPos);
+
+    // Grid pos !include this in collision!
     this.player.grid_pos = this.getCell(this.player.pos);
+}
+
+// Monster management
+Game.prototype.monstersControl = function() {
+    for (var i = 0; i < this.monsters.length; i++) {
+        // Get current monster
+        var monster = this.monsters[i];
+
+        monster.grid_pos = this.getCell(monster.pos);
+    }
+    
 }
 
 // Generate light around player (& other objects)
@@ -207,5 +253,6 @@ Game.prototype.setLight = function() {
 Game.prototype.step = function() {
     this.generate();
     this.playerControl();
+    this.monstersControl();
     this.setLight();
 };

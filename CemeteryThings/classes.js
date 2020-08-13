@@ -1,6 +1,6 @@
 
-// Playable player
-class Player {
+// Player | monster
+class Object {
     constructor(){
         this.pos = new Vec2(0, 0); // Position
         this.dir = 0; // Direction
@@ -9,17 +9,8 @@ class Player {
         this.oil = 10;
         this.mind = 10;
         this.matches = 1;
-    }
-}
 
-// Not playable monster
-class Monster {
-    constructor() {
-        this.pos = Vec2(0, 0); // Position
-        this.dir = 0; // Direction
-
-        this.hp = 3;
-        this.vel = 0; // velocity
+        // For monster
         this.type = 0;
     }
 }

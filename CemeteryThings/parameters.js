@@ -19,6 +19,8 @@ var LIMIT_MATCHES = 3;
 var DIST_LIGHT = 4;
 var DIST_LOAD = 7;
 
+var LIMIT_MONSTERS = 3;
+
 // Map parameters
 var SIZE_X = 20;
 var SIZE_Y = 20;
@@ -60,6 +62,7 @@ var IMGS_GRAVE = [
 
 
 var IMG_PLAYER = getImg("textures/player" + random(0, 2) + ".png");
+var IMG_MONSTER0 = getImg("textures/player0.png");
 var IMG_LIGHT = getImg("textures/light.png");
 var IMG_SHADOW = getImg("textures/shadow.png");
 var IMG_INTERFACE = getImg("textures/interface.png");

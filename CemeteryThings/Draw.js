@@ -46,26 +46,33 @@ Draw.prototype.draw = function(game) {
         for (var y = 0; y < SIZE_Y; y++) {
             if(game.grid[x][y].light <= 0) // We don't see this cell
                 continue;
-            if (game.grid[x][y].obstacle) {
+            if (game.grid[x][y].obstacle) { // Grave
                 this.ySorted.push([IMGS_GROUND[0], x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE, 0, -1]);
                 this.ySorted.push([IMGS_GRAVE[game.grid[x][y].type], x * CELL_SIZE, (y - 1) * CELL_SIZE, CELL_SIZE, CELL_SIZE * 2, 0, y]);
-            } else {
+            } else { // Ground
                 this.ySorted.push([IMGS_GROUND[game.grid[x][y].type], x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE, 0, -1]);
             }
         }
     }
 
     // Player
-    if(game.player.dir == RIGHT)
+    if (game.player.dir == RIGHT)
         this.ySorted.push([IMG_PLAYER, game.player.pos.x - CELL_SIZE / 2, game.player.pos.y - CELL_SIZE, CELL_SIZE, CELL_SIZE, 0, game.player.grid_pos.y]);
     else
         this.ySorted.push([IMG_PLAYER, game.player.pos.x - CELL_SIZE / 2, game.player.pos.y - CELL_SIZE, CELL_SIZE, CELL_SIZE, 1, game.player.grid_pos.y]);
 
+    // Monsters
+    for (var i = 0; i < game.monsters.length; i++) {
+        var monster = game.monsters[i];
+        this.ySorted.push([IMG_MONSTER0, monster.pos.x - CELL_SIZE / 2, monster.pos.y - CELL_SIZE, CELL_SIZE, CELL_SIZE, 0, monster.grid_pos.y]);
+    }
 
+    // Sorting objects by Y-pos
     this.ySorted.sort(function(a, b) {
         return a[6] - b[6];
     });
 
+    // Drawing sorted objects
     for (var x = 0; x < this.ySorted.length; x++) {
         var a = this.ySorted[x];
         this.image(a[0], a[1], a[2], a[3], a[4], a[5]);
