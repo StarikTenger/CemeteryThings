@@ -121,7 +121,7 @@ Game.prototype.generate = function() {
     // Killing lost monsters (out of stable zone)
     for (var i = 0; i < this.monsters.length; i++) {
         var monster = this.monsters[i];
-        if (this.checkCell(monster.grid_pos) || this.grid[monster.grid_pos.x][monster.grid_pos.y].light <= 0){
+        if (this.checkCell(monster.grid_pos) || this.grid[monster.grid_pos.x][monster.grid_pos.y].light <= 0 || monster.hp <= 0) {
             this.monsters.splice(i, 1);
         }
     }
@@ -147,6 +147,7 @@ Game.prototype.generate = function() {
         var monster = new Object();
         monster.pos = plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4));
         monster.type = 0;
+        monster.horror = 0.2;
 
         // Adding monster to array
         this.monsters.push(monster);
@@ -185,21 +186,29 @@ Game.prototype.playerControl = function() {
     var deltaPos = new Vec2(0, 0); // Shift for this step
     // Check keys
     // Player has only 2 directions (left & right)
-    if(KEY_D) { // Right
+    if (KEY_D) { // Right
         deltaPos.x += 1;
         this.player.dir = RIGHT;
     }
-    if(KEY_S) // Down
+    if (KEY_S) // Down
         deltaPos.y += 1;
-    if(KEY_A) { // Left
+    if (KEY_A) { // Left
         deltaPos.x -= 1;
         this.player.dir = LEFT;
     }
-    if(KEY_W) // Right
+    if (KEY_W) // Right
         deltaPos.y -= 1;
 
     // Movement
     this.move(this.player, deltaPos);
+
+    // Oil consumption
+    this.player.oil -= OIL_CONSUMPTION * DT;
+    if (this.player.oil <= 0) {
+        this.player.oil = 0;
+        this.player.mind -= 0.5 * DT;
+        this.player.distLight = 1;
+    }
 
 }
 
@@ -259,7 +268,7 @@ Game.prototype.setLight = function() {
             var d = dist(this.player.pos, new Vec2(x * 8 + 4, y * 8 + 4));
             if (this.checkCell(new Vec2(x, y)) || dist > 8)
                 continue;
-            this.grid[x][y].light = DIST_LOAD + 1 - d / 8;
+            this.grid[x][y].light = this.player.distLight - DIST_LIGHT + DIST_LOAD + 1 - d / 8;
             deque.addBack(new Vec2(x, y));
         }
     }

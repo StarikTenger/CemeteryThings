@@ -5,11 +5,13 @@ class Object {
         this.pos = new Vec2(0, 0); // Position
         this.grid_pos = new Vec2(0, 0); // Position
         this.dir = 0; // Direction
+        this.distLight = DIST_LIGHT;
 
         this.hp = 3;
         this.oil = 10;
         this.mind = 10;
         this.matches = 1;
+        
 
         // For monster
         this.type = 0;
@@ -24,4 +26,9 @@ class Cell {
         this.type = 0; // For different texturing
         this.light = 0; // Illumination
     }
+}
+
+// Weapon
+class Weapon {
+
 }

@@ -30,6 +30,11 @@ Draw.prototype.image = function(texture, x, y, w, h, flip) {
 };
 
 Draw.prototype.rect = function(x, y, w, h, color) {
+    x = Math.round(x);
+    y = Math.round(y);
+    w = Math.round(w);
+    h = Math.round(h);
+
     this.ctx.imageSmoothingEnabled = 0;
     this.ctx.fillStyle = color;
     this.ctx.fillRect((x - this.cam.x + this.center.x) * SCALE, (y - this.cam.y + this.center.y) * SCALE, w * SCALE, h * SCALE);
@@ -115,5 +120,9 @@ Draw.prototype.draw = function(game) {
     this.image(IMG_INTERFACE, 0, 0, 64, 64);
 
     // Mind
-    this.rect(53, 55, 10, 1, "rgb(0,30,65)");
+    this.rect(53, 55, game.player.mind * 10 / LIMIT_MIND, 1, "rgb(0,100,200)");
+    // Hp 
+    this.rect(18, 63, 2, - game.player.hp * 6 / LIMIT_HP, "rgb(194, 29, 40)");
+    // Oil 
+    this.rect(8, 63, 2, - game.player.oil * 6 / LIMIT_OIL, "rgb(148, 133, 46)");
 };

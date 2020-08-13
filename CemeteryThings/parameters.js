@@ -17,6 +17,7 @@ var LIMIT_OIL = 10;
 var LIMIT_MIND = 10;
 var LIMIT_MATCHES = 3;
 
+var OIL_CONSUMPTION = 0.2;
 var DIST_LIGHT = 4;
 var DIST_LOAD = 7;
 
