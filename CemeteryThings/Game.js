@@ -13,7 +13,7 @@ class Game {
         // Setting player
         this.player = new Player();
         this.player.pos = new Vec2(10, 10);
-        this.player.grid_pos = getCell(this.player.pos);
+        this.player.grid_pos = new Vec2(0, 0);
 
         // Monster array
         this.monsters = [];
@@ -146,7 +146,7 @@ Game.prototype.playerControl = function() {
         deltaPos.y = 0;
     }
     this.player.pos = plus(this.player.pos, deltaPos);
-    this.player.grid_pos = getCell(this.player.pos);
+    this.player.grid_pos = this.getCell(this.player.pos);
 }
 
 // Generate light around player (& other objects)
