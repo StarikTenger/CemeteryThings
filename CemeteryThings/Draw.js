@@ -44,6 +44,8 @@ Draw.prototype.draw = function(game) {
     // Grid
     for (var x = 0; x < SIZE_X; x++) {
         for (var y = 0; y < SIZE_Y; y++) {
+            if(game.grid[x][y].light <= 0) // We don't see this cell
+                continue;
             if (game.grid[x][y].obstacle) {
                 this.ySorted.push([IMGS_GROUND[0], x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE, 0, -1]);
                 this.ySorted.push([IMGS_GRAVE[game.grid[x][y].type], x * CELL_SIZE, (y - 1) * CELL_SIZE, CELL_SIZE, CELL_SIZE * 2, 0, y]);
