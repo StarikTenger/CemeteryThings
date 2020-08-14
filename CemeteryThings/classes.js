@@ -20,6 +20,12 @@ class Object {
         this.protectionTimer = 0; // Invulnerability after taking damage (Timer)
         this.subjects = [undefined, undefined];
 
+        // animation
+        this.animationType = 0; // 0 - standing, 1 - walking
+        this.animationFrame = 0; // from 0 to skol'ko est'
+        this.animationTime = 0.3; // time per 1 animation frame
+        this.animationTimer = 0; // timer
+
         // For monster
         this.monsterType = 0;
         this.horror = 0; // -mind per second
@@ -81,11 +87,27 @@ Object.prototype.protect = function() {
     this.protectionTimer = this.protectionTime;
 }
 
-// Cooldowns, etc
+// Cooldowns, timers, etc
 Object.prototype.step = function(dt) {
+
+    // Protection timer
     this.protectionTimer -= dt;
     if (this.protectionTimer < 0) {
         this.protectionTimer = 0;
+    }
+    
+    // animation timer
+    this.animationTimer += dt;
+    if (this.animationTimer >= this.animationTime) {
+        this.animationTimer = 0;
+        this.animationFrame++;
+
+        if (this.animationType == 0 && this.animationFrame >= 1) { // Walking frame changing
+            this.animationFrame = 0;
+        }
+        if (this.animationType == 1 && this.animationFrame >= 2) { // Walking frame changing
+            this.animationFrame = 0;
+        }
     }
 }
 

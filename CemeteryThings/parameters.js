@@ -66,39 +66,39 @@ function getImg(src) { // Load images
 
 // Loading current imgs
 let IMGS_GROUND = [
-    getImg("textures/ground1.png"),
-    getImg("textures/ground2.png")
+    getImg("textures/grounds/ground1.png"),
+    getImg("textures/grounds/ground2.png")
 ];
 
 let IMGS_COVERING = [
-    getImg("textures/covering1.png"),
-    getImg("textures/covering2.png"),
-    getImg("textures/covering3.png"),
-    getImg("textures/covering4.png"),
-    getImg("textures/covering5.png"),
-    getImg("textures/covering6.png"),
-    getImg("textures/covering7.png"),
-    getImg("textures/covering8.png")
+    getImg("textures/coverings/covering1.png"),
+    getImg("textures/coverings/covering2.png"),
+    getImg("textures/coverings/covering3.png"),
+    getImg("textures/coverings/covering4.png"),
+    getImg("textures/coverings/covering5.png"),
+    getImg("textures/coverings/covering6.png"),
+    getImg("textures/coverings/covering7.png"),
+    getImg("textures/coverings/covering8.png")
 ];
 
 
 let IMGS_GRAVE = [
-    getImg("textures/grave1.png"),
-    getImg("textures/grave2.png"),
-    getImg("textures/grave3.png"),
-    getImg("textures/grave4.png"),
-    getImg("textures/grave5.png"),
-    getImg("textures/grave6.png"),
-    getImg("textures/grave7.png"),
-    getImg("textures/grave8.png"),
-    getImg("textures/grave9.png"),
-    getImg("textures/grave10.png"),
+    getImg("textures/graves/grave1.png"),
+    getImg("textures/graves/grave2.png"),
+    getImg("textures/graves/grave3.png"),
+    getImg("textures/graves/grave4.png"),
+    getImg("textures/graves/grave5.png"),
+    getImg("textures/graves/grave6.png"),
+    getImg("textures/graves/grave7.png"),
+    getImg("textures/graves/grave8.png"),
+    getImg("textures/graves/grave9.png"),
+    getImg("textures/graves/grave10.png"),
 ];
 
 let IMGS_MONSTER = [
-    getImg("textures/monster1.png"),
-    getImg("textures/monster2.png"),
-    getImg("textures/monster3.png")
+    getImg("textures/monsters/monster1.png"),
+    getImg("textures/monsters/monster2.png"),
+    getImg("textures/monsters/monster3.png")
 ];
 
 let IMGS_SUBJECT = [
@@ -108,9 +108,13 @@ let IMGS_SUBJECT = [
     getImg("textures/subjects/matchbox.png")
 ];
 
+// Player animation
+let IMG_PLAYER_STANDING1 = getImg("textures/player/standing/player_standing1.png");
+let IMG_PLAYER_WALKING1 = getImg("textures/player/walking/player_walking1.png");
+let IMG_PLAYER_WALKING2 = getImg("textures/player/walking/player_walking2.png");
 
-let IMG_PLAYER = getImg("textures/player" + random(1, 3) + ".png");
-let IMG_MONSTER0 = getImg("textures/monster1.png");
+
+let IMG_MONSTER0 = getImg("textures/monsters/monster1.png");
 let IMG_LIGHT = getImg("textures/light.png");
 let IMG_SHADOW = getImg("textures/shadow.png");
 let IMG_INTERFACE = getImg("textures/interface/interface.png");
