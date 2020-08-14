@@ -30,6 +30,13 @@ class Cell {
     }
 }
 
+// Usable subjects
+class Subject {
+    constructor() {
+        this.type = 0; // 
+    }
+}
+
 // Weapon
 class Weapon {
 
