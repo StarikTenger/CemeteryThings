@@ -13,6 +13,12 @@ let SBJ_OIL = 1;
 let SBJ_WHISKEY = 2;
 let SBJ_MATCHBOX = 3;
 
+// Monsters' names
+
+let MNS_ZOMBIE = 1;
+let MNS_GHOST = 2;
+let MNS_TENTACLE = 3;
+
 //// GAME PREFERENCES ////
 let DT = 0.050; // Tick time in seconds
 let CELL_SIZE = 8;
@@ -87,8 +93,7 @@ let IMGS_GRAVE = [
 let IMGS_MONSTER = [
     getImg("textures/monster1.png"),
     getImg("textures/monster2.png"),
-    getImg("textures/monster3.png"),
-    getImg("textures/monster4.png")
+    getImg("textures/monster3.png")
 ];
 
 
