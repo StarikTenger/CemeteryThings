@@ -53,20 +53,26 @@ Game.prototype.getLight = function(pos) {
 
 // Choose random grave texture
 Game.prototype.random_grave_type = function() {
-    let graves_cnt = 9;
-    return normalRoll(2, graves_cnt, 3);
+    let graves_cnt = IMGS_GRAVE.length;
+    return normalRoll(2, graves_cnt, 4);
 }
 
 // Choose random gronud texture
 Game.prototype.random_ground_type = function() {
-    let grounds_cnt = 2;
+    let grounds_cnt = IMGS_GROUND.length;
     return normalRoll(1, grounds_cnt, 3);
 }
 
 // Choose random gronud covering texture
 Game.prototype.random_covering_type = function() {
-    let covering_cnt = 6;
+    let covering_cnt = IMGS_COVERING.length;
     return normalRoll(1, covering_cnt, 2);
+}
+
+// Choose random monster texture
+Game.prototype.random_monster_type = function() {
+    let monster_cnt = IMGS_MONSTER.length;
+    return normalRoll(1, monster_cnt, 2);
 }
 
 Game.prototype.clever_covering_type = function() {
@@ -228,7 +234,7 @@ Game.prototype.generate = function() {
         // Making a monster
         let monster = new Object();
         monster.pos = plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4));
-        monster.type = 1;
+        monster.texture = this.random_monster_type();
         monster.horror = 0.2;
 
         // Adding monster to array
