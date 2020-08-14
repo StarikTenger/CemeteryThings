@@ -29,7 +29,7 @@ let DIST_LIGHT = 4;
 let DIST_LOAD = 7;
 
 let MONSTER_LIMIT = 3; // Maximum number of monsters
-let MONSTER_PERIOD = 10; // Time between monsters spawn
+let MONSTER_PERIOD = 1; // Time between monsters spawn
 
 let SUBJECT_LIMIT = 3; // Maximum number of subjects
 let SUBJECT_PERIOD = 10; // Time between subjects spawn
@@ -83,6 +83,13 @@ let IMGS_GRAVE = [
     getImg("textures/grave7.png"),
     getImg("textures/grave8.png"),
     getImg("textures/grave9.png"),
+];
+
+let IMGS_MONSTER = [
+    getImg("textures/monster1.png"),
+    getImg("textures/monster2.png"),
+    getImg("textures/monster3.png"),
+    getImg("textures/monster4.png")
 ];
 
 
