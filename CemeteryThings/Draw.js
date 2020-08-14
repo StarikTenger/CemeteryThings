@@ -79,7 +79,7 @@ Draw.prototype.draw = function(game) {
     // Monsters
     for (let i = 0; i < game.monsters.length; i++) {
         let monster = game.monsters[i];
-        this.ySorted.push([IMGS_MONSTER[monster.texture - 1], monster.pos.x - CELL_SIZE / 2, monster.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE * 2, 0, monster.pos.y]);
+        this.ySorted.push([IMGS_MONSTER[monster.monsterType - 1], monster.pos.x - CELL_SIZE / 2, monster.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE * 2, 0, monster.pos.y]);
     }
 
     // Subjects
@@ -148,6 +148,9 @@ Draw.prototype.draw = function(game) {
         if (!game.player.subjects[j] || !game.player.subjects[j].type) // Empty slot
             continue;
 
-        this.image(IMGS_SUBJECT[game.player.subjects[j].type], 28 + j * 8, 56, 8, 8)
+        this.image(IMGS_SUBJECT[game.player.subjects[j].type], 28 + j * 7, 56, 8, 8)
     }
+
+    // Overlay
+    this.image(IMG_INTERFACE_OVERLAY, 0, 0, 64, 64);
 };
