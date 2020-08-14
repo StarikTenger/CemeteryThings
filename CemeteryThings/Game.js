@@ -28,6 +28,12 @@ Game.prototype.checkCell = function(pos) {
         return 1;
     return 0;
 }
+// Checks is the cell is in bounds and in margin
+Game.prototype.checkMargin = function(pos) {
+    if(pos.x < MARGIN || pos.y < MARGIN || pos.x >= SIZE_X - MARGIN || pos.y >= SIZE_Y - MARGIN)
+        return 1;
+    return 0;
+}
 
 // In which cell is pos
 Game.prototype.getCell = function(pos) {
@@ -48,7 +54,7 @@ Game.prototype.getLight = function(pos) {
 // Choose random grave texture
 Game.prototype.random_grave_type = function() {
     let graves_cnt = 9;
-    return normalRoll(1, graves_cnt, 3);
+    return normalRoll(2, graves_cnt, 3);
 }
 
 // Choose random gronud texture
@@ -86,6 +92,35 @@ Game.prototype.clever_covering_type = function() {
     }
 }
 
+Game.prototype.initial_generation = function() {
+    // Initial graves (in each cell with some chance)
+    for (let x = MARGIN - 1; x < SIZE_X - (MARGIN - 1); x++) {
+        let y = (MARGIN - 1);
+        let cell = this.grid[x][y];
+        cell.grave = 1;
+        cell.obstacle = 1;
+    }
+    for (let x = (MARGIN - 1); x < SIZE_X - (MARGIN - 1); x++) {
+        let y = SIZE_Y - (MARGIN - 1) - 1;
+        let cell = this.grid[x][y];
+        cell.grave = 1;
+        cell.obstacle = 1;
+    } 
+    for (let y = (MARGIN - 1); y < SIZE_Y - (MARGIN - 1); y++) {
+        let x = (MARGIN - 1);
+        let cell = this.grid[x][y];
+        cell.grave = 1;
+        cell.obstacle = 1;
+    }
+    for (let y = (MARGIN - 1); y < SIZE_Y - (MARGIN - 1); y++) {
+        let x = SIZE_X - (MARGIN - 1) - 1;
+        let cell = this.grid[x][y];
+        cell.grave = 1;
+        cell.obstacle = 1;
+    }
+};
+
+
 // Generates the map
 Game.prototype.generate = function() {
     // Initial graves (in each cell with some chance)
@@ -96,6 +131,14 @@ Game.prototype.generate = function() {
                 continue;
             cell.ground = this.random_ground_type();
             cell.covering = this.clever_covering_type();
+        }
+    }
+
+    for (let x = MARGIN; x < SIZE_X - MARGIN; x++) {
+        for (let y = MARGIN; y < SIZE_Y - MARGIN; y++) {
+            let cell = this.grid[x][y];
+            if (cell.light > 0) // Forbidden zone
+                continue;
             if (!random(0, 10)) { // Grave
                 cell.grave = this.random_grave_type();
                 cell.obstacle = 1;
@@ -121,7 +164,8 @@ Game.prototype.generate = function() {
     ];
     for (let i = 0; i < (SIZE_X * SIZE_Y); i++) {
         // Generate random point
-        let pos = new Vec2(random(0, SIZE_X - 1), random(0, SIZE_Y - 1));
+        let pos = new Vec2(random(MARGIN, SIZE_X - 1 - MARGIN), random(MARGIN, SIZE_Y - 1 - MARGIN));
+
         // Number of neighbors
         let neighborsCount = 0;
         let neighborsDiagonalCount = 0; 
@@ -133,7 +177,7 @@ Game.prototype.generate = function() {
         // Close neighbors
         for (let j = 0; j < 4; j++) {
             let pos1 = plus(pos, neighbors[j]); // In this cell we check neighbor
-            if(this.checkCell(pos1)) // Cell out of borders
+            if(this.checkMargin(pos1)) // Cell out of borders or in margin
                 continue;
             if(this.grid[pos1.x][pos1.y].obstacle) // Neighbor found
                 neighborsCount++;
@@ -141,7 +185,7 @@ Game.prototype.generate = function() {
         // Diagonal neighbors
         for (let j = 0; j < 4; j++) {
             let pos1 = plus(pos, neighborsDiagonal[j]); // In this cell we check neighbor
-            if(this.checkCell(pos1)) // Cell out of borders
+            if(this.checkMargin(pos1)) // Cell out of borders or in margin
                 continue;
             if(this.grid[pos1.x][pos1.y].obstacle) // Neighbor found
                 neighborsDiagonalCount++;
