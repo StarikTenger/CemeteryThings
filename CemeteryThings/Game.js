@@ -240,6 +240,8 @@ Game.prototype.playerControl = function() {
     // Movement
     this.move(this.player, deltaPos);
 
+    // Cooldowns
+    this.player.step(DT);
 
     // Lamp management
     // Consumption
@@ -274,6 +276,9 @@ Game.prototype.monstersControl = function() {
         let monster = this.monsters[i];
         monster.grid_pos = this.getCell(monster.pos);
 
+        // Cooldowns
+        monster.step(DT);
+
         // Movement
         let deltaPos = new Vec2(0, 0);
         // Check neighbor cells to find
@@ -297,6 +302,11 @@ Game.prototype.monstersControl = function() {
         // Horror
         if (this.grid[monster.grid_pos.x][monster.grid_pos.y].light > DIST_LIGHT - 1) {
             this.player.change_mind(-monster.horror * DT);
+        }
+
+        // Damage
+        if (dist(monster.pos, this.player.pos) <= monster.attackRange) {
+            this.player.hurt(monster.damage);
         }
     }
 }
