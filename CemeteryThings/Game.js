@@ -254,13 +254,13 @@ Game.prototype.generate = function() {
     for (let i = 0; i < this.subjects.length; i++) {
         let subject = this.subjects[i];
         subject.gridPos = this.getCell(subject.pos);
-        if (this.checkCell(subject.gridPos) || this.grid[subject.gridPos.x][subject.gridPos.y].light <= 0) {
+        if (this.checkCell(subject.gridPos) || this.grid[subject.gridPos.x][subject.gridPos.y].light <= 0 || !subject.type) {
             this.subjects.splice(i, 1);
         }
     }
 
     // Spawning new subjects
-    for (let i = 0; i < 10; i++) { // We try to spwawn subject for 10 times
+    for (let i = 0; i < 10; i++) { // We try to spawn subject for 10 times
         // Generate random point
         let pos = new Vec2(random(0, SIZE_X - 1), random(0, SIZE_Y - 1));
 
@@ -337,7 +337,7 @@ Game.prototype.playerControl = function() {
     // Cooldowns
     this.player.step(DT);
 
-    // Lamp management
+    //// Lamp management ////
     // Consumption
     if (this.player.lamp)
         this.player.change_oil(-OIL_CONSUMPTION * DT);
@@ -360,6 +360,25 @@ Game.prototype.playerControl = function() {
     // Horror
     if (!this.player.lamp)
         this.player.change_mind(-0.5 * DT);
+
+    //// Get subjects ////
+    for (let i = 0; i < this.subjects.length; i++) {
+        let subject = this.subjects[i];
+        if (dist(subject.pos, this.player.pos) > 8) // Not close enough
+            continue;
+        
+        // Checking slots
+        for (let j = 0; j < 2; j++) {
+            if (this.player.subjects[j] && this.player.subjects[j].type) // There is another subject in the slot
+                continue;
+
+            this.player.subjects[j] = new Subject();
+            this.player.subjects[j].type = subject.type;
+
+            subject.type = undefined;
+        }
+        
+    }
 
 }
 

@@ -19,6 +19,8 @@ class Object {
         this.protectionTimer = 0; // Invulnerability after taking damage (Timer)
         this.damage = 1;
 
+        this.subjects = [undefined, undefined];
+
         // For monster
         this.texture = 0;
         this.horror = 0; // -mind per second

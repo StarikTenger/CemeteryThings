@@ -85,6 +85,8 @@ Draw.prototype.draw = function(game) {
     // Subjects
     for (let i = 0; i < game.subjects.length; i++) {
         let subject = game.subjects[i];
+        if (!subject || !subject.type) // Corrupted
+            continue;
         this.ySorted.push([IMGS_SUBJECT[subject.type], subject.pos.x - CELL_SIZE / 2, subject.pos.y, TEXTURE_SIZE, TEXTURE_SIZE , 0, subject.pos.y]);
     }
 
@@ -139,5 +141,13 @@ Draw.prototype.draw = function(game) {
     // Matches
     for (let i = 0; i < game.player.matches; i++) {
         this.image(IMG_MATCH, 22 + i * 2, 58, 1, 5);
+    }
+
+    // Subjects
+    for (let j = 0; j < 2; j++) {
+        if (!game.player.subjects[j] || !game.player.subjects[j].type) // Empty slot
+            continue;
+
+        this.image(IMGS_SUBJECT[game.player.subjects[j].type], 28 + j * 8, 56, 8, 8)
     }
 };
