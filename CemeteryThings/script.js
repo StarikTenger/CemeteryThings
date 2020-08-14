@@ -2,6 +2,7 @@ var game = new Game();
 var draw = new Draw(CTX);
 
 game.generate();
+game.spawnPlayer(new Vec2(10, 10));
 
 function step() {
     game.step();

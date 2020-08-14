@@ -240,14 +240,11 @@ Game.prototype.playerControl = function() {
     // Movement
     this.move(this.player, deltaPos);
 
+
     // Lamp management
     // Consumption
     if (this.player.lamp)
-        this.player.oil -= OIL_CONSUMPTION * DT;
-    if (this.player.oil <= 0) {
-        this.player.oil = 0;
-        this.player.lamp = 0;
-    }
+        this.player.change_oil(-OIL_CONSUMPTION * DT);
 
     // Turning on/off
     if (KEY_X && !KEY_X_PREV) {
@@ -266,7 +263,8 @@ Game.prototype.playerControl = function() {
 
     // Horror
     if (!this.player.lamp)
-        this.player.mind -= 0.5 * DT;
+        this.player.change_mind(-0.5 * DT);
+
 }
 
 // Monster management
@@ -298,7 +296,7 @@ Game.prototype.monstersControl = function() {
 
         // Horror
         if (this.grid[monster.grid_pos.x][monster.grid_pos.y].light > DIST_LIGHT - 1) {
-            this.player.mind -= monster.horror * DT;
+            this.player.change_mind(-monster.horror * DT);
         }
     }
     
@@ -360,8 +358,22 @@ Game.prototype.setLight = function() {
 
 // Function called in each iteration
 Game.prototype.step = function() {
-    this.generate();
     this.playerControl();
     this.monstersControl();
     this.setLight();
+    this.generate();
 };
+
+Game.prototype.spawnPlayer = function(pos) {
+    let gridPos = this.getCell(pos);
+    
+    this.player.pos = pos;
+    this.player.gridPos = gridPos;
+
+    for (let x = Math.max(0, gridPos.x - 1); x <= Math.min(SIZE_X, gridPos.x + 1); x++) {
+        for (let y = Math.max(0, gridPos.y - 1); y <= Math.min(SIZE_Y, gridPos.y + 1); y++) {
+            this.grid[x][y].grave = 0;
+            this.grid[x][y].obstacle = 0;
+        }
+    }
+}

@@ -98,34 +98,29 @@ let KEY_S = 0; let KEY_S_PREV = 0;
 let KEY_D = 0; let KEY_D_PREV = 0;
 let KEY_X = 0; let KEY_X_PREV = 0;
 
+function checkKey(e, t) {
+    if(e.keyCode == 87)
+        KEY_W = t;	
+    if(e.keyCode == 65)
+        KEY_A = t;  
+    if(e.keyCode == 83)
+        KEY_S = t;
+    if(e.keyCode == 68)
+        KEY_D = t;
+    if(e.keyCode == 88)
+        KEY_X = t;
+}
+
 window.addEventListener('keydown',this.checkDown,false);
 function checkDown(e) {
    
     // Checking for buttons pressed
-    if(e.keyCode == 87)
-        KEY_W = 1;	
-    if(e.keyCode == 65)
-        KEY_A = 1;  
-    if(e.keyCode == 83)
-        KEY_S = 1;
-    if(e.keyCode == 68)
-        KEY_D = 1;
-    if(e.keyCode == 88)
-        KEY_X = 1;
+    checkKey(e, 1);
 }
 
 window.addEventListener('keyup',this.checkUp,false);
 function checkUp(e) {
    
     // Checking for buttons pressed
-    if(e.keyCode == 87)
-        KEY_W = 0;	
-    if(e.keyCode == 65)
-        KEY_A = 0;  
-    if(e.keyCode == 83)
-        KEY_S = 0;
-    if(e.keyCode == 68)
-        KEY_D = 0;
-    if(e.keyCode == 88)
-        KEY_X = 0;
+    checkKey(e, 0);
 }
