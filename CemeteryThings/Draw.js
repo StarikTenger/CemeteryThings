@@ -65,7 +65,11 @@ Draw.prototype.draw = function(game) {
                 this.ySorted.push([IMGS_COVERING[cell.covering - 1], x * CELL_SIZE, (y - 1) * CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE * 2, 0, -4]);
             }
             if (cell.grave) {
-                this.ySorted.push([IMGS_GRAVE[cell.grave - 1], x * CELL_SIZE, (y - 1) * CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE * 2, 0, (y + 1) * 8]);
+                if (cell.grave > 0) {
+                    this.ySorted.push([IMGS_GRAVE[+cell.grave - 1], x * CELL_SIZE, (y - 1) * CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE * 2, 0, (y + 1) * 8]);
+                } else { // Spec grave
+                    this.ySorted.push([IMGS_SPEC_GRAVE[-cell.grave - 1], x * CELL_SIZE, (y - 1) * CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE * 2, 0, (y + 1) * 8]);
+                }
             }
         }
     }

@@ -84,6 +84,7 @@ let IMGS_COVERING = [
 
 let IMGS_GRAVE = [
     getImg("textures/grave1.png"),
+    getImg("textures/grave10.png"),
     getImg("textures/grave2.png"),
     getImg("textures/grave3.png"),
     getImg("textures/grave4.png"),
@@ -91,8 +92,12 @@ let IMGS_GRAVE = [
     getImg("textures/grave6.png"),
     getImg("textures/grave7.png"),
     getImg("textures/grave8.png"),
-    getImg("textures/grave9.png"),
-    getImg("textures/grave10.png"),
+];
+
+let IMGS_SPEC_GRAVE = [
+    getImg("textures/spec_grave1.png"),
+    getImg("textures/spec_grave2.png"),
+    getImg("textures/spec_grave3.png"),
 ];
 
 let IMGS_MONSTER = [
