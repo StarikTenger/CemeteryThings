@@ -49,7 +49,11 @@ let SIZE_Y = 20 + MARGIN * 2;
 
 
 //// DRAW PREFERENCES ////
-let SCALE = 14; // 1 Cell in px
+let SCALE = 1; // 1 Cell in px
+while (64 * SCALE <= Math.min(window.innerHeight, window.innerWidth)) {
+    SCALE += 1;
+}
+SCALE -= 1;
 
 
 // Canvas
@@ -81,25 +85,13 @@ let IMGS_COVERING = [
     getImg("textures/coverings/covering8.png")
 ];
 
-
-let IMGS_GRAVE = [
-<<<<<<< HEAD
-    getImg("textures/grave1.png"),
-    getImg("textures/grave10.png"),
-    getImg("textures/grave2.png"),
-    getImg("textures/grave3.png"),
-    getImg("textures/grave4.png"),
-    getImg("textures/grave5.png"),
-    getImg("textures/grave6.png"),
-    getImg("textures/grave7.png"),
-    getImg("textures/grave8.png"),
-];
-
 let IMGS_SPEC_GRAVE = [
     getImg("textures/spec_grave1.png"),
     getImg("textures/spec_grave2.png"),
-    getImg("textures/spec_grave3.png"),
-=======
+    getImg("textures/spec_grave3.png")
+];
+
+let IMGS_GRAVE = [
     getImg("textures/graves/grave1.png"),
     getImg("textures/graves/grave2.png"),
     getImg("textures/graves/grave3.png"),
@@ -110,7 +102,6 @@ let IMGS_SPEC_GRAVE = [
     getImg("textures/graves/grave8.png"),
     getImg("textures/graves/grave9.png"),
     getImg("textures/graves/grave10.png"),
->>>>>>> 94eff0f43f7f0f23a377e06a90306d945b3edc4c
 ];
 
 let IMGS_MONSTER = [
