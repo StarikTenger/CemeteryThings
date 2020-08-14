@@ -15,6 +15,8 @@ function step() {
     KEY_S_PREV = KEY_S;
     KEY_D_PREV = KEY_D;
     KEY_X_PREV = KEY_X;
+    KEY_1_PREV = KEY_1;
+    KEY_2_PREV = KEY_2;
 }
 
 var interval = setInterval(step, DT * 1000);

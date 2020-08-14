@@ -122,6 +122,8 @@ let KEY_A = 0; let KEY_A_PREV = 0;
 let KEY_S = 0; let KEY_S_PREV = 0; 
 let KEY_D = 0; let KEY_D_PREV = 0;
 let KEY_X = 0; let KEY_X_PREV = 0;
+let KEY_1 = 0; let KEY_1_PREV = 0;
+let KEY_2 = 0; let KEY_2_PREV = 0;
 
 function checkKey(e, t) {
     if(e.keyCode == 87)
