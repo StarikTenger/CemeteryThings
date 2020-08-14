@@ -299,7 +299,6 @@ Game.prototype.monstersControl = function() {
             this.player.change_mind(-monster.horror * DT);
         }
     }
-    
 }
 
 // Generate light around player (& other objects)

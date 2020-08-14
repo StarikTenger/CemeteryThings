@@ -14,6 +14,9 @@ class Object {
         this.mind = LIMIT_MIND;
         this.matches = LIMIT_MATCHES;
         
+        this.attackRange = 2;
+        this.protectionTime = 1; // Invulnerability after taking damage (parameter)
+        this.protectionTimer = 0; // Invulnerability after taking damage (Timer)
 
         // For monster
         this.type = 0;
@@ -31,10 +34,13 @@ Object.prototype.change_mind = function(delta) {
 
 // hp += delta
 Object.prototype.change_hp = function(delta) {
-    this.hp += delta;
+    if (protectionTimer == 0) {// protection after attacks
+       
+        this.hp += delta;
 
-    if (this.hp < 0)
-        this.hp = 0;
+        if (this.hp < 0)
+            this.hp = 0;
+    }
 }
 
 // oil += delta
@@ -46,6 +52,22 @@ Object.prototype.change_oil = function(delta) {
         this.lamp = 0;
     }
 }
+
+// Protection after attacks
+Object.prototype.protect = function(time) {
+    this.protectionTimer = time;
+}
+
+// Cooldowns, etc
+Object.prototype.step = function(dt) {
+    this.oil += delta;
+
+    if (this.oil <= 0) {
+        this.oil = 0;
+        this.lamp = 0;
+    }
+}
+
 
 // Cell on the grid
 class Cell {
