@@ -1,8 +1,9 @@
 var game = new Game();
 var draw = new Draw(CTX);
 
+game.initial_generation();
 game.generate();
-game.spawnPlayer(new Vec2(10, 10));
+game.spawnPlayer(new Vec2(10 + MARGIN * 8, 10 + MARGIN * 8));
 
 function step() {
     game.step();

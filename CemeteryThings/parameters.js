@@ -35,8 +35,9 @@ let SUBJECT_LIMIT = 3; // Maximum number of subjects
 let SUBJECT_PERIOD = 10; // Time between subjects spawn
 
 // Map parameters
-let SIZE_X = 20;
-let SIZE_Y = 20;
+let MARGIN = 3; // Cells on map's sides, that are not changing
+let SIZE_X = 20 + MARGIN * 2;
+let SIZE_Y = 20 + MARGIN * 2;
 
 
 //// DRAW PREFERENCES ////
@@ -83,6 +84,7 @@ let IMGS_GRAVE = [
     getImg("textures/grave7.png"),
     getImg("textures/grave8.png"),
     getImg("textures/grave9.png"),
+    getImg("textures/grave10.png"),
 ];
 
 let IMGS_MONSTER = [
