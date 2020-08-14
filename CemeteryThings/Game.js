@@ -234,8 +234,12 @@ Game.prototype.generate = function() {
         // Making a monster
         let monster = new Object();
         monster.pos = plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4));
-        monster.texture = this.random_monster_type();
-        monster.horror = 0.2;
+        monster.monsterType = this.random_monster_type();
+
+        if (monster.monsterType == MNS_TENTACLE)
+            monster.horror = 0.5;
+        else 
+            monster.horror = 0.2;
 
         // Adding monster to array
         this.monsters.push(monster);
@@ -325,29 +329,52 @@ Game.prototype.monstersControl = function() {
         // Get current monster
         let monster = this.monsters[i];
         monster.grid_pos = this.getCell(monster.pos);
-
         // Cooldowns
         monster.step(DT);
 
-        // Movement
-        let deltaPos = new Vec2(0, 0);
-        // Check neighbor cells to find
-        let neighbors = [
-            new Vec2(1, 0),
-            new Vec2(-1, 0),
-            new Vec2(0, 1),
-            new Vec2(0, -1)
-        ];
-        for(let j = 0; j < 4; j ++) {
-            let pos1 = plus(monster.grid_pos, neighbors[j]);
-            if (this.checkCell(pos1) || this.grid[pos1.x][pos1.y].obstacle)
-                continue;
-            if(this.grid[pos1.x][pos1.y].light > this.grid[monster.grid_pos.x][monster.grid_pos.y].light)
-                deltaPos = plus(deltaPos, neighbors[j]); 
-        }
+        if (monster.monsterType == MNS_ZOMBIE) {
+            // Movement
+            let deltaPos = new Vec2(0, 0);
+            // Check neighbor cells to find
+            let neighbors = [
+                new Vec2(1, 0),
+                new Vec2(-1, 0),
+                new Vec2(0, 1),
+                new Vec2(0, -1)
+            ];
+            for(let j = 0; j < 4; j ++) {
+                let pos1 = plus(monster.grid_pos, neighbors[j]);
+                if (this.checkCell(pos1) || this.grid[pos1.x][pos1.y].obstacle)
+                    continue;
+                if(this.grid[pos1.x][pos1.y].light > this.grid[monster.grid_pos.x][monster.grid_pos.y].light)
+                    deltaPos = plus(deltaPos, neighbors[j]); 
+            }
 
-        if(!random(0, 1))
-            this.move(monster, mult(deltaPos, new Vec2(1, 1)));
+            if(!random(0, 1)) {
+                this.move(monster, mult(deltaPos, new Vec2(1, 1)));
+            }
+        } 
+        else if (monster.monsterType == MNS_GHOST) {
+            // Movement
+            let deltaPos = new Vec2(0, 0);
+            // Check neighbor cells to find
+            let neighbors = [
+                new Vec2(1, 0),
+                new Vec2(-1, 0),
+                new Vec2(0, 1),
+                new Vec2(0, -1)
+            ];
+            for(let j = 0; j < 4; j++) {
+                let pos1 = plus(monster.grid_pos, neighbors[j]);
+                if (this.checkCell(pos1))
+                    continue;
+                if(this.grid[pos1.x][pos1.y].light > this.grid[monster.grid_pos.x][monster.grid_pos.y].light)
+                    deltaPos = plus(deltaPos, neighbors[j]); 
+            }
+
+            if(!random(0, 1))
+                this.move(monster, mult(deltaPos, new Vec2(1, 1)));
+        }
 
         // Horror
         if (this.grid[monster.grid_pos.x][monster.grid_pos.y].light > DIST_LIGHT - 1) {
