@@ -79,7 +79,7 @@ Draw.prototype.draw = function(game) {
     // Monsters
     for (let i = 0; i < game.monsters.length; i++) {
         let monster = game.monsters[i];
-        this.ySorted.push([IMGS_MONSTER[monster.monsterType - 1], monster.pos.x - CELL_SIZE / 2, monster.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE * 2, 0, monster.pos.y]);
+        this.ySorted.push([IMGS_MONSTER[monster.monsterType - 1], monster.pos.x - CELL_SIZE / 2, monster.pos.y - CELL_SIZE * 2, TEXTURE_SIZE, TEXTURE_SIZE * 2, 0, monster.pos.y]);
     }
 
     // Subjects
