@@ -20,7 +20,7 @@ class Object {
         this.damage = 1;
 
         // For monster
-        this.type = 0;
+        this.texture = 0;
         this.horror = 0; // -mind per second
     }
 }
