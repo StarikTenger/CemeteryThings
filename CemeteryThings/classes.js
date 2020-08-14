@@ -1,4 +1,28 @@
 
+// Usable subjects
+class Subject {
+    constructor(pos) {
+        this.type = 0; // See types in parameters.js
+        if(pos)
+            this.pos = pos;
+        else
+            this.pos = new Vec2(0, 0);
+    }
+}
+
+// Weapon
+class Weapon {
+    constructor() {
+        this.damage = 1;
+        // Ammo
+        this.ammoMax = 5;
+        this.ammo = this.ammoMax;
+        // Cooldown
+        this.cooldownTime = 1;
+        this.timeToCooldown = this.cooldownTime;
+    }
+}
+
 // Player | monster
 class Object {
     constructor() {
@@ -19,6 +43,8 @@ class Object {
         this.protectionTime = 1; // Invulnerability after taking damage (parameter)
         this.protectionTimer = 0; // Invulnerability after taking damage (Timer)
         this.subjects = [undefined, undefined];
+
+        this.weapon = new Weapon();
 
         // animation
         this.animationType = 0; // 0 - standing, 1 - walking
@@ -137,26 +163,27 @@ class LightSource {
     }
 }
 
-// Usable subjects
-class Subject {
-    constructor(pos) {
-        this.type = 0; // See types in parameters.js
-        if(pos)
-            this.pos = pos;
-        else
-            this.pos = new Vec2(0, 0);
+class Animation {
+    constructor(frames, pos, t) {
+        this.frames = frames; // Images
+        this.pos = new Vec2(pos.x, pos.y); // Position
+        this.frameTime = t; // Frame change period
+        this.timer = this.frameTime; // Countdown to change frame
+        this.currentFrame = 0; // id of current frame
+        this.alive = 1; // If 0 - animation must be deleted
+    }
+};
+
+Animation.prototype.step = function() {
+    this.timer -= DT;
+    if (this.timer <= 0) {
+        this.currentFrame++;
+        this.timer = this.frameTime;
+        if (this.currentFrame >= this.frames.length)
+            this.alive = 0;
     }
 }
 
-// Weapon
-class Weapon {
-    constructor() {
-        this.damage = 1;
-        // Ammo
-        this.ammoMax = 5;
-        this.ammo = this.ammoMax;
-        // Cooldown
-        this.cooldownTime = 2;
-        this.timeToCooldown = this.cooldownTime;
-    }
+Animation.prototype.getFrame = function() {
+    return this.frames[this.currentFrame];
 }

@@ -37,7 +37,7 @@ let DIST_LIGHT = 4;
 let DIST_LOAD = 7;
 
 let MONSTER_LIMIT = 3; // Maximum number of monsters
-let MONSTER_PERIOD = 20; // Time between monsters spawn
+let MONSTER_PERIOD = 1; // Time between monsters spawn
 
 let SUBJECT_LIMIT = 3; // Maximum number of subjects
 let SUBJECT_PERIOD = 5; // Time between subjects spawn
@@ -123,6 +123,13 @@ let IMG_MATCH = getImg("textures/interface/match.png");
 
 let IMG_DEAD = getImg("textures/interface/deathscreen.png");
 let IMG_DELIRIOUS = getImg("textures/interface/deliriumscreen.png");
+
+// Sprite animations
+let ANM_BLOOD = [
+    getImg("textures/particles/blood0.png"),
+    getImg("textures/particles/blood1.png"),
+    getImg("textures/particles/blood2.png")
+];
 
 //// KEY CONFIG ////
 // Keys (0 - released, 1 - pressed)

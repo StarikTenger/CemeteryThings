@@ -41,6 +41,7 @@ Draw.prototype.rect = function(x, y, w, h, color) {
 };
 
 Draw.prototype.draw = function(game) {
+
     // Focusing camera
     this.cam = game.player.pos;
     this.center = new Vec2(32, 27);
@@ -98,6 +99,13 @@ Draw.prototype.draw = function(game) {
         this.ySorted.push([IMGS_SUBJECT[subject.type - 1], subject.pos.x - CELL_SIZE / 2, subject.pos.y, TEXTURE_SIZE, TEXTURE_SIZE , 0, subject.pos.y]);
     }
 
+    // Sprite animations
+    for (let i = 0; i < game.animations.length; i++) {
+        let animation = game.animations[i];
+        let img = animation.getFrame();
+        this.ySorted.push([img, animation.pos.x - CELL_SIZE / 2, animation.pos.y, TEXTURE_SIZE, TEXTURE_SIZE , 0, 1000]);
+    }
+
     // Sorting objects by Y-pos
     this.ySorted.sort(function(a, b) {
         return a[6] - b[6];
@@ -150,6 +158,10 @@ Draw.prototype.draw = function(game) {
     for (let i = 0; i < game.player.matches; i++) {
         this.image(IMG_MATCH, 22 + i * 2, 58, 1, 5);
     }
+    // Ammo
+    this.rect(1, 55, game.player.weapon.ammo * 10 / 5, 1, "rgb(0, 143, 39)");
+    // Cooldown
+    this.rect(1, 54, game.player.weapon.timeToCooldown * 10 / game.player.weapon.cooldownTime , 1, "rgb(0, 0, 0)");
 
     // Subjects
     for (let j = 0; j < 2; j++) {

@@ -26,6 +26,8 @@ class Game {
 
         // Light sources array
         this.lightSources = [];
+
+        this.animations = [];
     }
 }
 
@@ -438,8 +440,48 @@ Game.prototype.playerControl = function() {
     }
 
     //// Weapon ////
-    //if(KEY_UP)
+    // Cooldown progress
+    this.player.weapon.timeToCooldown -= DT;
 
+    if (KEY_UP || KEY_DOWN || KEY_LEFT || KEY_RIGHT) {
+        let dir = new Vec2();
+
+        // Get direction
+        if (KEY_UP)
+            dir = new Vec2(0, -1);
+        if (KEY_DOWN)
+            dir = new Vec2(0, 1);
+        if (KEY_LEFT)
+            dir = new Vec2(-1, 0);
+        if (KEY_RIGHT)
+            dir = new Vec2(1, 0);
+        
+        if (this.player.weapon.timeToCooldown <= 0 && this.player.weapon.ammo > 0) { // Are we able to shoot
+            // Stupid collision check
+            let pos = new Vec2(this.player.pos.x, this.player.pos.y);
+            dir = mult(dir, new Vec2(2, 2));
+            for (let i = 0; i < 30; i++) {
+                let hit = 0;
+                for (let j = 0; j < this.monsters.length; j++) {
+                    // Current monster
+                    let monster = this.monsters[j];
+                    // Shift
+                    pos = plus(pos, dir);
+                    // Collision check
+                    if (dist(pos, monster.pos) < 8) {
+                        monster.hurt(this.player.weapon.damage);
+                        this.animations.push(new Animation(ANM_BLOOD, plus(monster.pos, new Vec2(0, -8)), 0.1));
+                    }
+                }
+                if (hit)
+                    break;
+            }
+
+            // Modify cooldown & ammo
+            this.player.weapon.timeToCooldown =  this.player.weapon.cooldownTime;
+            this.player.weapon.ammo--;
+        }
+    }
 }
 
 // Monster management
@@ -529,10 +571,10 @@ Game.prototype.setLight = function() {
         let cellPos = this.getCell(lightSource.pos);
         for (let x = cellPos.x - 1; x <= cellPos.x + 1; x++) {
             for (let y = cellPos.y - 1; y <= cellPos.y + 1; y++) {
-                let d = dist(this.player.pos, new Vec2(x * 8 + 4, y * 8 + 4));
+                let d = dist(lightSource.pos, new Vec2(x * 8 + 4, y * 8 + 4));
                 if (this.checkCell(new Vec2(x, y)) || dist > 16)
                     continue;
-                this.grid[x][y].light = lightSource.power - DIST_LIGHT + DIST_LOAD + 1 - d / 8;
+                this.grid[x][y].light = Math.max (this.grid[x][y].light, lightSource.power - DIST_LIGHT + DIST_LOAD + 1 - d / 8);
                 deque.addBack(new Vec2(x, y));
             }
         }
@@ -561,13 +603,28 @@ Game.prototype.setLight = function() {
             deltaLight = 3;
         for (let i = 0; i < 4; i++) {
             let pos1 = plus(pos, neighbors[i]);
-            if(this.checkCell(pos1) || this.grid[pos1.x][pos1.y].light > this.grid[pos.x][pos.y].light - deltaLight)
+            if (this.checkCell(pos1) || this.grid[pos1.x][pos1.y].light > this.grid[pos.x][pos.y].light - deltaLight)
                 continue;
             this.grid[pos1.x][pos1.y].light = this.grid[pos.x][pos.y].light - deltaLight;
             deque.addBack(pos1);
         }
     }
 }
+
+// Sprite animations
+Game.prototype.manageAnimations = function() {
+    // Step
+    for (let i = 0; i < this.animations.length; i++) {
+        this.animations[i].step();
+    }
+    // Delete
+    for (let i = 0; i < this.animations.length; i++) {
+        if (!this.animations[i].alive) {
+            this.animations.splice(i, 1);
+            i--;
+        }
+    }
+};
 
 // Function called in each iteration
 Game.prototype.step = function() {
@@ -576,6 +633,7 @@ Game.prototype.step = function() {
         this.monstersControl();
         this.setLight();
         this.generate();
+        this.manageAnimations();
     }
 };
 
