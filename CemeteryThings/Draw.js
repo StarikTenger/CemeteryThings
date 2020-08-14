@@ -82,6 +82,12 @@ Draw.prototype.draw = function(game) {
         this.ySorted.push([IMGS_MONSTER[monster.texture - 1], monster.pos.x - CELL_SIZE / 2, monster.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE * 2, 0, monster.pos.y]);
     }
 
+    // Subjects
+    for (let i = 0; i < game.subjects.length; i++) {
+        let subject = game.subjects[i];
+        this.ySorted.push([IMGS_SUBJECT[subject.type], subject.pos.x - CELL_SIZE / 2, subject.pos.y, TEXTURE_SIZE, TEXTURE_SIZE , 0, subject.pos.y]);
+    }
+
     // Sorting objects by Y-pos
     this.ySorted.sort(function(a, b) {
         return a[6] - b[6];

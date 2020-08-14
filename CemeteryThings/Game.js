@@ -205,7 +205,44 @@ Game.prototype.generate = function() {
     }
 
     //// Subjects ////
-    
+    this.subjectTimer -= DT; // dt
+    // Despawn
+    for (let i = 0; i < this.subjects.length; i++) {
+        let subject = this.subjects[i];
+        subject.gridPos = this.getCell(subject.pos);
+        if (this.checkCell(subject.gridPos) || this.grid[subject.gridPos.x][subject.gridPos.y].light <= 0) {
+            this.subjects.splice(i, 1);
+        }
+    }
+
+    // Spawning new subjects
+    for (let i = 0; i < 10; i++) { // We try to spwawn subject for 10 times
+        // Generate random point
+        let pos = new Vec2(random(0, SIZE_X - 1), random(0, SIZE_Y - 1));
+
+        // Checking for limitations
+        if(this.subjects.length >= SUBJECT_LIMIT) // Too much subjects
+            break;
+        if(this.subjectTimer > 0) // We can't spawn subjects to often
+            break;
+        if(this.grid[pos.x][pos.y].obstacle) // Cell is not empty
+            continue;
+        if(this.grid[pos.x][pos.y].light <= 0) // No light (zone is unstable)
+            continue;
+        if(this.grid[pos.x][pos.y].light > DIST_LIGHT - 1) // Visible zone
+            continue;
+
+        // Making a subject
+        let subject = new Subject(plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4)));
+        //subject.pos = plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4));
+        subject.type = random(0, 3);
+
+        // Adding subject to array
+        this.subjects.push(subject);
+
+        // Timer
+        this.subjectTimer = SUBJECT_PERIOD;
+    }
 };
 
 // Moves object (collision)
