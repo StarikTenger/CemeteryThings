@@ -129,6 +129,10 @@ let KEY_D = 0; let KEY_D_PREV = 0;
 let KEY_X = 0; let KEY_X_PREV = 0;
 let KEY_1 = 0; let KEY_1_PREV = 0;
 let KEY_2 = 0; let KEY_2_PREV = 0;
+let KEY_UP = 0; let KEY_UP_PREV = 0; 
+let KEY_DOWN = 0; let KEY_DOWN_PREV = 0; 
+let KEY_LEFT = 0; let KEY_LEFT_PREV = 0; 
+let KEY_RIGHT = 0; let KEY_RIGHT_PREV = 0; 
 
 function checkKey(e, t) {
     if(e.keyCode == 87)
@@ -145,6 +149,14 @@ function checkKey(e, t) {
         KEY_1 = t;
     if(e.keyCode == 50)
         KEY_2 = t;
+    if(e.keyCode == 37)
+        KEY_LEFT = t;
+    if(e.keyCode == 38)
+        KEY_UP = t;
+    if(e.keyCode == 39)
+        KEY_RIGHT = t;
+    if(e.keyCode == 40)
+        KEY_DOWN = t;
 }
 
 window.addEventListener('keydown',this.checkDown,false);

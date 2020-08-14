@@ -61,7 +61,7 @@ Game.prototype.getLight = function(pos) {
 // Choose random grave texture
 Game.prototype.random_grave_type = function() {
     let graves_cnt = IMGS_GRAVE.length;
-    return normalRoll(2, graves_cnt, 4);
+    return normalRoll(2, graves_cnt, 5);
 }
 
 // Choose random gronud texture
@@ -272,21 +272,24 @@ Game.prototype.generate = function() {
         let pos = new Vec2(random(0, SIZE_X - 1), random(0, SIZE_Y - 1));
 
         // Checking for limitations
-        if(this.subjects.length >= SUBJECT_LIMIT) // Too much subjects
+        if (this.subjects.length >= SUBJECT_LIMIT) // Too much subjects
             break;
-        if(this.subjectTimer > 0) // We can't spawn subjects to often
+        if (this.subjectTimer > 0) // We can't spawn subjects to often
             break;
-        if(this.grid[pos.x][pos.y].obstacle) // Cell is not empty
+        if (this.grid[pos.x][pos.y].obstacle) // Cell is not empty
             continue;
-        if(this.grid[pos.x][pos.y].light <= 0) // No light (zone is unstable)
+        if (this.grid[pos.x][pos.y].light <= 0) // No light (zone is unstable)
             continue;
-        if(this.grid[pos.x][pos.y].light > DIST_LIGHT - 1) // Visible zone
+        if (this.grid[pos.x][pos.y].light > DIST_LIGHT - 1) // Visible zone
             continue;
 
         // Making a subject
         let subject = new Subject(plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4)));
-        //subject.pos = plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4));
+        
+        // Choosing type
         subject.type = random(1, 4);
+        if(!random(0, 2))
+            subject.type = SBJ_OIL;
 
         // Adding subject to array
         this.subjects.push(subject);
@@ -369,6 +372,7 @@ Game.prototype.playerControl = function() {
     if (!this.player.lamp)
         this.player.change_mind(-0.5 * DT);
 
+    //// Active subjects ////
     // Get subjects
     for (let i = 0; i < this.subjects.length; i++) {
         let subject = this.subjects[i];
@@ -403,7 +407,7 @@ Game.prototype.playerControl = function() {
             this.player.change_hp(1);
         }
         if (subject.type == SBJ_OIL){
-            this.player.change_oil(2);
+            this.player.change_oil(7);
         }
         if (subject.type == SBJ_WHISKEY){
             this.player.change_mind(2);
@@ -416,6 +420,9 @@ Game.prototype.playerControl = function() {
         // Remove subject
         this.player.subjects[i] = undefined;
     }
+
+    //// Weapon ////
+    //if(KEY_UP)
 
 }
 
@@ -486,15 +493,15 @@ Game.prototype.monstersControl = function() {
 
 // Generate light around player (& other objects)
 Game.prototype.setLight = function() {
+    // Add player pos to light source
+    this.lightSources.push(new LightSource(this.player.pos, this.player.distLight));
+
     // Turning off light
     for (let x = 0; x < SIZE_X; x++) {
         for (let y = 0; y < SIZE_Y; y++) {
             this.grid[x][y].light = 0;
         }
     }
-
-    // Add player pos to light source
-    this.lightSources.push(new LightSource(this.player.pos, this.player.distLight));
 
     // BFS deque
     let deque = new Deque();

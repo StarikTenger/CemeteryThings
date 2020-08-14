@@ -154,6 +154,7 @@ Draw.prototype.draw = function(game) {
     // Overlay
     this.image(IMG_INTERFACE_OVERLAY, 0, 0, 64, 64);
 
+    // Gameover screen
     if (game.player.status == 1) {
         this.image(IMG_DEAD, 0, 0, 64, 64);
     }
