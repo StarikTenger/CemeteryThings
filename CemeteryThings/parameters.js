@@ -31,6 +31,9 @@ let DIST_LOAD = 7;
 let MONSTER_LIMIT = 3; // Maximum number of monsters
 let MONSTER_PERIOD = 10; // Time between monsters spawn
 
+let SUBJECT_LIMIT = 3; // Maximum number of subjects
+let SUBJECT_PERIOD = 10; // Time between subjects spawn
+
 // Map parameters
 let SIZE_X = 20;
 let SIZE_Y = 20;

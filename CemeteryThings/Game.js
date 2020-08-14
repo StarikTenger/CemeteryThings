@@ -14,11 +14,15 @@ class Game {
         // Setting player
         this.player = new Object();
         this.player.pos = new Vec2(10, 10);
-        this.player.grid_pos = new Vec2(0, 0);
+        this.player.gridPos = new Vec2(0, 0);
 
         // Monster array
         this.monsterTimer = 0;
         this.monsters = [];
+
+        // Subjects array
+        this.subjectTimer = 0;
+        this.subjects = [];
     }
 }
 
@@ -159,7 +163,7 @@ Game.prototype.generate = function() {
     // Killing lost monsters (out of stable zone)
     for (let i = 0; i < this.monsters.length; i++) {
         let monster = this.monsters[i];
-        if (this.checkCell(monster.grid_pos) || this.grid[monster.grid_pos.x][monster.grid_pos.y].light <= 0 || monster.hp <= 0) {
+        if (this.checkCell(monster.gridPos) || this.grid[monster.gridPos.x][monster.gridPos.y].light <= 0 || monster.hp <= 0) {
             this.monsters.splice(i, 1);
         }
     }
@@ -193,6 +197,9 @@ Game.prototype.generate = function() {
         // Timer
         this.monsterTimer = MONSTER_PERIOD;
     }
+
+    //// Subjects ////
+    
 };
 
 // Moves object (collision)
@@ -215,7 +222,7 @@ Game.prototype.move = function(object, shift) {
     object.pos = plus(object.pos, deltaPos);
 
     // Grid pos
-    object.grid_pos = this.getCell(this.player.pos);
+    object.gridPos = this.getCell(this.player.pos);
 }
 
 // Player's movement & actions
@@ -274,7 +281,7 @@ Game.prototype.monstersControl = function() {
     for (let i = 0; i < this.monsters.length; i++) {
         // Get current monster
         let monster = this.monsters[i];
-        monster.grid_pos = this.getCell(monster.pos);
+        monster.gridPos = this.getCell(monster.pos);
 
         // Cooldowns
         monster.step(DT);
@@ -288,11 +295,11 @@ Game.prototype.monstersControl = function() {
             new Vec2(0, 1),
             new Vec2(0, -1)
         ];
-        for(let j = 0; j < 4; j ++) {
-            let pos1 = plus(monster.grid_pos, neighbors[j]);
+        for (let j = 0; j < 4; j ++) {
+            let pos1 = plus(monster.gridPos, neighbors[j]);
             if (this.checkCell(pos1) || this.grid[pos1.x][pos1.y].obstacle)
                 continue;
-            if(this.grid[pos1.x][pos1.y].light > this.grid[monster.grid_pos.x][monster.grid_pos.y].light)
+            if(this.grid[pos1.x][pos1.y].light > this.grid[monster.gridPos.x][monster.gridPos.y].light)
                 deltaPos = plus(deltaPos, neighbors[j]); 
         }
 
@@ -300,7 +307,7 @@ Game.prototype.monstersControl = function() {
             this.move(monster, mult(deltaPos, new Vec2(1, 1)));
 
         // Horror
-        if (this.grid[monster.grid_pos.x][monster.grid_pos.y].light > DIST_LIGHT - 1) {
+        if (this.grid[monster.gridPos.x][monster.gridPos.y].light > DIST_LIGHT - 1) {
             this.player.change_mind(-monster.horror * DT);
         }
 

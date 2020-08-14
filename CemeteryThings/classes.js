@@ -1,7 +1,7 @@
 
 // Player | monster
 class Object {
-    constructor(){
+    constructor() {
         this.pos = new Vec2(0, 0); // Position
         this.gridPos = new Vec2(0, 0); // Position
         this.dir = 0; // Direction
@@ -97,8 +97,12 @@ class Cell {
 
 // Usable subjects
 class Subject {
-    constructor() {
-        this.type = 0; // 
+    constructor(pos) {
+        this.type = 0; // See types in parameters.js
+        if(pos)
+            this.pos = pos;
+        else
+            this.pos = new Vec2(0, 0);
     }
 }
 
