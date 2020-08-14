@@ -153,4 +153,11 @@ Draw.prototype.draw = function(game) {
 
     // Overlay
     this.image(IMG_INTERFACE_OVERLAY, 0, 0, 64, 64);
+
+    if (game.player.status == 1) {
+        this.image(IMG_DEAD, 0, 0, 64, 64);
+    }
+    if (game.player.status == 2) {
+        this.image(IMG_DELIRIOUS, 0, 0, 64, 64);
+    }
 };

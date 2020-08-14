@@ -13,17 +13,19 @@ class Object {
         this.oil = LIMIT_OIL;
         this.mind = LIMIT_MIND;
         this.matches = LIMIT_MATCHES;
+
+        this.status = 0; // 0 - alive, 1 - dead, 2 - delirious
         
-        this.attackRange = 5;
         this.protectionTime = 1; // Invulnerability after taking damage (parameter)
         this.protectionTimer = 0; // Invulnerability after taking damage (Timer)
-        this.damage = 1;
-
         this.subjects = [undefined, undefined];
 
         // For monster
         this.monsterType = 0;
         this.horror = 0; // -mind per second
+
+        this.attackRange = 5;
+        this.damage = 1;
     }
 }
 
@@ -31,8 +33,9 @@ class Object {
 Object.prototype.change_mind = function(delta) {
     this.mind += delta;
 
-    if (this.mind < 0) {
+    if (this.mind < EPS) {
         this.mind = 0;
+        this.status = 2; // Delirium
     }
     if (this.mind > LIMIT_MIND) {
         this.mind = LIMIT_MIND;
@@ -43,8 +46,9 @@ Object.prototype.change_mind = function(delta) {
 Object.prototype.change_hp = function(delta) {
     this.hp += delta;
 
-    if (this.hp < 0) {
+    if (this.hp < EPS) {
         this.hp = 0;
+        this.status = 1; // Death
     }
     if (this.hp > LIMIT_HP) {
         this.hp = LIMIT_HP;

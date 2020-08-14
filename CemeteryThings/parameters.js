@@ -24,6 +24,8 @@ let DT = 0.050; // Tick time in seconds
 let CELL_SIZE = 8;
 let TEXTURE_SIZE = 8;
 
+let EPS = 0.0001;
+
 // Limitations for player
 let LIMIT_HP = 3;
 let LIMIT_OIL = 10;
@@ -114,6 +116,9 @@ let IMG_SHADOW = getImg("textures/shadow.png");
 let IMG_INTERFACE = getImg("textures/interface/interface.png");
 let IMG_INTERFACE_OVERLAY = getImg("textures/interface/interfaceOverlay.png");
 let IMG_MATCH = getImg("textures/interface/match.png");
+
+let IMG_DEAD = getImg("textures/interface/deathscreen.png");
+let IMG_DELIRIOUS = getImg("textures/interface/deliriumscreen.png");
 
 //// KEY CONFIG ////
 // Keys (0 - released, 1 - pressed)

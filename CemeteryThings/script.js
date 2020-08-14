@@ -1,7 +1,7 @@
 var game = new Game();
 var draw = new Draw(CTX);
 
-game.initial_generation();
+game.initialGeneration();
 game.generate();
 game.spawnPlayer(new Vec2(10 + MARGIN * 8, 10 + MARGIN * 8));
 
