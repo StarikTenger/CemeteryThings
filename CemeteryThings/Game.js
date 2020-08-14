@@ -48,25 +48,42 @@ Game.prototype.getLight = function(pos) {
 // Choose random grave texture
 Game.prototype.random_grave_type = function() {
     let graves_cnt = 9;
-    graves_cnt -= 1;
-    let roll = normalDistribution(-graves_cnt, +graves_cnt, 3);
-    return Math.abs(roll) + 1;
+    return normalRoll(1, graves_cnt, 3);
 }
 
 // Choose random gronud texture
 Game.prototype.random_ground_type = function() {
     let grounds_cnt = 2;
-    grounds_cnt -= 1;
-    let roll = normalDistribution(-grounds_cnt, +grounds_cnt, 3);
-    return Math.abs(roll) + 1;
+    return normalRoll(1, grounds_cnt, 3);
 }
 
 // Choose random gronud covering texture
 Game.prototype.random_covering_type = function() {
-    let covering_cnt = 3;
-    covering_cnt -= 1;
-    let roll = normalDistribution(-covering_cnt, +covering_cnt, 3);
-    return Math.abs(roll) + 1;
+    let covering_cnt = 6;
+    return normalRoll(1, covering_cnt, 2);
+}
+
+Game.prototype.clever_covering_type = function() {
+    let roll = random(1, 100);
+    let grass_cnt = 5;
+    let water_cnt = 2;
+    let blood_cnt = 1;
+    let sum = 0;
+    if (roll < 90) { // Grass
+        return normalRoll(sum + 1, grass_cnt, 3);
+    } else {
+        sum += grass_cnt;
+    }
+
+    if (roll < 98) { // Water
+        return normalRoll(sum + 1, sum + water_cnt, 3);
+    } else {
+        sum += water_cnt;
+    }
+
+    if (roll < 100) {
+        return normalRoll(sum + 1, sum + blood_cnt, 3);
+    }
 }
 
 // Generates the map
@@ -78,7 +95,7 @@ Game.prototype.generate = function() {
             if (cell.light > 0) // Forbidden zone
                 continue;
             cell.ground = this.random_ground_type();
-            cell.covering = this.random_covering_type();
+            cell.covering = this.clever_covering_type();
             if (!random(0, 10)) { // Grave
                 cell.grave = this.random_grave_type();
                 cell.obstacle = 1;

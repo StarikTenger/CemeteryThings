@@ -45,3 +45,8 @@ function normalDistribution(min, max, iterations) {
         sum += random(min, max);
     return Math.round(sum / iterations);
 }
+
+function normalRoll(min, max, iterations) { // gives value from min to max with normal distribution
+    let roll = normalDistribution(-max + min, +max - min, iterations);
+    return Math.abs(roll) + min;
+}
