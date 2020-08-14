@@ -101,6 +101,20 @@ class Cell {
     }
 }
 
+// Light source
+class LightSource {
+    constructor(pos, power) {
+        if (pos)
+            this.pos = plus(pos, new Vec2(0, 0));
+        else
+        this.pos = new Vec2(0, 0);
+        if (power)
+            this.power = power;
+        else
+            this.power = 0;
+    }
+}
+
 // Usable subjects
 class Subject {
     constructor(pos) {

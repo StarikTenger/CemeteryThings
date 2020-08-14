@@ -23,6 +23,9 @@ class Game {
         // Subjects array
         this.subjectTimer = 0;
         this.subjects = [];
+
+        // Light sources array
+        this.lightSources = [];
     }
 }
 
@@ -490,23 +493,31 @@ Game.prototype.setLight = function() {
         }
     }
 
-    // Light around person
-    let cellPos = this.getCell(this.player.pos);
+    // Add player pos to light source
+    this.lightSources.push(new LightSource(this.player.pos, this.player.distLight));
 
     // BFS deque
     let deque = new Deque();
    
     // Adding initial cells
-    for (let x = cellPos.x - 1; x <= cellPos.x + 1; x++) {
-        for (let y = cellPos.y - 1; y <= cellPos.y + 1; y++) {
-            let d = dist(this.player.pos, new Vec2(x * 8 + 4, y * 8 + 4));
-            if (this.checkCell(new Vec2(x, y)) || dist > 8)
-                continue;
-            this.grid[x][y].light = this.player.distLight - DIST_LIGHT + DIST_LOAD + 1 - d / 8;
-            deque.addBack(new Vec2(x, y));
+    for (let i = 0; i < this.lightSources.length; i++) {
+        // Current light source
+        let lightSource = this.lightSources[i];
+        let cellPos = this.getCell(lightSource.pos);
+        for (let x = cellPos.x - 1; x <= cellPos.x + 1; x++) {
+            for (let y = cellPos.y - 1; y <= cellPos.y + 1; y++) {
+                let d = dist(this.player.pos, new Vec2(x * 8 + 4, y * 8 + 4));
+                if (this.checkCell(new Vec2(x, y)) || dist > 16)
+                    continue;
+                this.grid[x][y].light = lightSource.power - DIST_LIGHT + DIST_LOAD + 1 - d / 8;
+                deque.addBack(new Vec2(x, y));
+            }
         }
     }
 
+    // Clean lightSources
+    this.lightSources = [];
+    
     // BFS itself
     let neighbors = [
         new Vec2(1, 0),
