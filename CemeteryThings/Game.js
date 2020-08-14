@@ -294,7 +294,7 @@ Game.prototype.generate = function() {
 };
 
 // Moves object (collision)
-Game.prototype.move = function(object, shift) {
+Game.prototype.move = function(object, shift, flight) {
     let deltaPos = shift;
     let newPosX = plus(object.pos, new Vec2(0, 0)); newPosX.x += deltaPos.x;
     let newPosY = plus(object.pos, new Vec2(0, 0)); newPosY.y += deltaPos.y;
@@ -304,16 +304,17 @@ Game.prototype.move = function(object, shift) {
     cellPosX.y = Math.floor(cellPosX.y);
     cellPosY.x = Math.floor(cellPosY.x);
     cellPosY.y = Math.floor(cellPosY.y);
-    if(cellPosX.x < 0 || cellPosX.y < 0 || cellPosX.x >= SIZE_X || cellPosX.y >= SIZE_Y || this.grid[cellPosX.x][cellPosX.y].obstacle){
+    if(cellPosX.x < 0 || cellPosX.y < 0 || cellPosX.x >= SIZE_X || cellPosX.y >= SIZE_Y || (!flight && this.grid[cellPosX.x][cellPosX.y].obstacle)){
         deltaPos.x = 0;
     }
-    if(cellPosY.x < 0 || cellPosY.y < 0 || cellPosY.x >= SIZE_X || cellPosY.y >= SIZE_Y || this.grid[cellPosY.x][cellPosY.y].obstacle){
+    if(cellPosY.x < 0 || cellPosY.y < 0 || cellPosY.x >= SIZE_X || cellPosY.y >= SIZE_Y || (!flight && this.grid[cellPosY.x][cellPosY.y].obstacle)){
         deltaPos.y = 0;
     }
     object.pos = plus(object.pos, deltaPos);
 
     // Grid pos
-    object.gridPos = this.getCell(this.player.pos);
+    object.grid_pos = this.getCell(this.player.pos);
+
 }
 
 // Player's movement & actions
@@ -395,7 +396,7 @@ Game.prototype.monstersControl = function() {
 
         // Cooldowns
         monster.step(DT);
-        if (monster.monsterType == MNS_ZOMBIE) {
+        if (monster.monsterType == MNS_ZOMBIE) { // ZOMBIE
             // Movement
             let deltaPos = new Vec2(0, 0);
             // Check neighbor cells to find
@@ -414,10 +415,10 @@ Game.prototype.monstersControl = function() {
             }
 
             if(!random(0, 1)) {
-                this.move(monster, mult(deltaPos, new Vec2(1, 1)));
+                this.move(monster, mult(deltaPos, new Vec2(1, 1)), 0);
             }
         } 
-        else if (monster.monsterType == MNS_GHOST) {
+        else if (monster.monsterType == MNS_GHOST) { // GHOST
             // Movement
             let deltaPos = new Vec2(0, 0);
             // Check neighbor cells to find
@@ -435,8 +436,8 @@ Game.prototype.monstersControl = function() {
                     deltaPos = plus(deltaPos, neighbors[j]); 
             }
 
-            if(!random(0, 1))
-                this.move(monster, mult(deltaPos, new Vec2(1, 1)));
+            if(!random(0, 2))
+                this.move(monster, mult(deltaPos, new Vec2(1, 1)), 1);
         }
 
         // Horror
