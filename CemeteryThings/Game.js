@@ -46,7 +46,7 @@ Game.prototype.getLight = function(pos) {
 
 // Choose random grave texture
 Game.prototype.random_grave_type = function() {
-    return Math.abs(normalDistribution(-7, 7, 2));
+    return Math.abs(normalDistribution(-8, 8, 2));
 }
 
 // Generates the map
