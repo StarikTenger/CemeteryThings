@@ -70,6 +70,7 @@ var IMG_MONSTER0 = getImg("textures/monster0.png");
 var IMG_LIGHT = getImg("textures/light.png");
 var IMG_SHADOW = getImg("textures/shadow.png");
 var IMG_INTERFACE = getImg("textures/interface.png");
+var IMG_MATCH = getImg("textures/match.png");
 
 //// KEY CONFIG ////
 // Keys (0 - released, 1 - pressed)

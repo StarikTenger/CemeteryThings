@@ -125,4 +125,8 @@ Draw.prototype.draw = function(game) {
     this.rect(18, 63, 2, - game.player.hp * 6 / LIMIT_HP, "rgb(194, 29, 40)");
     // Oil 
     this.rect(8, 63, 2, - game.player.oil * 6 / LIMIT_OIL, "rgb(148, 133, 46)");
+    // Matches
+    for (var i = 0; i < game.player.matches; i++) {
+        this.image(IMG_MATCH, 22 + i * 2, 58, 1, 5);
+    }
 };

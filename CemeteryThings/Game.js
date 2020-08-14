@@ -211,8 +211,15 @@ Game.prototype.playerControl = function() {
     }
 
     // Turning on/off
-    if (KEY_X && !KEY_X_PREV)
-        this.player.lamp = !this.player.lamp;
+    if (KEY_X && !KEY_X_PREV) {
+        if (this.player.lamp)
+            this.player.lamp = 0;
+        else if (this.player.matches > 0) {
+            this.player.lamp = 1;
+            this.player.matches --;
+        }
+    }
+        
     if (this.player.lamp)
         this.player.distLight = DIST_LIGHT;
     else

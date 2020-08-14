@@ -9,10 +9,10 @@ class Object {
         this.lamp = 1; // 1 - on, 0 - off
         this.distLight = DIST_LIGHT;
 
-        this.hp = 3;
-        this.oil = 10;
-        this.mind = 10;
-        this.matches = 1;
+        this.hp = LIMIT_HP;
+        this.oil = LIMIT_OIL;
+        this.mind = LIMIT_MIND;
+        this.matches = LIMIT_MATCHES;
         
 
         // For monster
