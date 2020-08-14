@@ -49,7 +49,11 @@ let SIZE_Y = 20 + MARGIN * 2;
 
 
 //// DRAW PREFERENCES ////
-let SCALE = 14; // 1 Cell in px
+let SCALE = 1; // 1 Cell in px
+while (64 * SCALE <= Math.min(window.innerHeight, window.innerWidth)) {
+    SCALE += 1;
+}
+SCALE -= 1;
 
 
 // Canvas
@@ -81,6 +85,11 @@ let IMGS_COVERING = [
     getImg("textures/coverings/covering8.png")
 ];
 
+let IMGS_SPEC_GRAVE = [
+    getImg("textures/spec_grave1.png"),
+    getImg("textures/spec_grave2.png"),
+    getImg("textures/spec_grave3.png")
+];
 
 let IMGS_GRAVE = [
     getImg("textures/graves/grave1.png"),

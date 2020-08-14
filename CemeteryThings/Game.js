@@ -15,6 +15,9 @@ class Game {
         this.player = new Object();
         this.player.pos = new Vec2(10, 10);
         this.player.gridPos = new Vec2(0, 0);
+        
+        this.spec_graves_visited = [0, 0, 0];
+        this.spec_lights = [];
 
         // Monster array
         this.monsterTimer = 0;
@@ -155,8 +158,22 @@ Game.prototype.generate = function() {
             if (cell.light > 0) // Forbidden zone
                 continue;
             if (!random(0, 10)) { // Grave
-                cell.grave = this.random_grave_type();
-                cell.obstacle = 1;
+                var spec_sum = this.spec_graves_visited[0] + this.spec_graves_visited[1] + this.spec_graves_visited[2];
+                if (!random(0, 3) && (spec_sum < 3)) { // Spec grave!
+                    cell.grave = -random(1, 3);
+                    while (this.spec_graves_visited[-cell.grave - 1] == 1) {
+                        cell.grave = -random(1, 3);
+                    }
+                    this.spec_graves_visited[-cell.grave - 1] = 1;
+                    this.spec_lights.push(new LightSource(new Vec2(x * 8 + 4, y * 8 + 4), 2));
+                    console.log(this.spec_lights.length);
+                    cell.obstacle = 1;
+                    cell.covering = 0;
+                } else {
+                    cell.grave = this.random_grave_type();
+                    cell.obstacle = 1;
+                    cell.covering = 0;
+                }
             } else {
                 cell.grave = 0;
                 cell.obstacle = 0;
@@ -210,6 +227,7 @@ Game.prototype.generate = function() {
         if (neighborsCount == 1 && neighborsDiagonalCount <= 1) {
             this.grid[pos.x][pos.y].grave = this.random_grave_type();
             this.grid[pos.x][pos.y].obstacle = 1;
+            this.grid[pos.x][pos.y].covering = 0;
         }
     }
 
@@ -559,6 +577,10 @@ Game.prototype.setLight = function() {
         for (let y = 0; y < SIZE_Y; y++) {
             this.grid[x][y].light = 0;
         }
+    }
+
+    for (let i = 0; i < this.spec_lights.length; i++) {
+        this.lightSources.push(this.spec_lights[i]);
     }
 
     // BFS deque
