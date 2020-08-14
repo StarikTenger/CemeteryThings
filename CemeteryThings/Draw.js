@@ -75,10 +75,18 @@ Draw.prototype.draw = function(game) {
     }
 
     // Player
+    let cur_texture = IMG_PLAYER_STANDING1;
+    if (game.player.animationType == 0 && game.player.animationFrame == 0)
+        cur_texture = IMG_PLAYER_STANDING1;
+    if (game.player.animationType == 1 && game.player.animationFrame == 0)
+        cur_texture = IMG_PLAYER_WALKING1;
+    if (game.player.animationType == 1 && game.player.animationFrame == 1)
+        cur_texture = IMG_PLAYER_WALKING2;
+        
     if (game.player.dir == RIGHT)
-        this.ySorted.push([IMG_PLAYER, game.player.pos.x - CELL_SIZE / 2, game.player.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, 0, game.player.pos.y]);
+        this.ySorted.push([cur_texture, game.player.pos.x - CELL_SIZE / 2, game.player.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, 0, game.player.pos.y]);
     else
-        this.ySorted.push([IMG_PLAYER, game.player.pos.x - CELL_SIZE / 2, game.player.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, 1, game.player.pos.y]);
+        this.ySorted.push([cur_texture, game.player.pos.x - CELL_SIZE / 2, game.player.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, 1, game.player.pos.y]);
 
     // Monsters
     for (let i = 0; i < game.monsters.length; i++) {

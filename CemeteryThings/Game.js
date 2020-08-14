@@ -360,6 +360,22 @@ Game.prototype.playerControl = function() {
     // Movement
     this.move(this.player, deltaPos);
 
+    // Animation
+    if (deltaPos.x != 0 || deltaPos.y != 0) { // Player is moving now
+        if (this.player.animationType == 0) { // Player was not moving
+            this.player.animationType = 1;
+            this.player.animationFrame = random(0, 1);
+            this.player.animationTimer = 0;
+        }
+    }
+    else { // Player is standing now
+        if (this.player.animationType == 1) { // Player was moving
+            this.player.animationType = 0;
+            this.player.animationFrame = 0;
+            this.player.animationTimer = 0;
+        }
+    }
+
     // Cooldowns
     this.player.step(DT);
 
