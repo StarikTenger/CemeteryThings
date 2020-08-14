@@ -57,23 +57,24 @@ Draw.prototype.draw = function(game) {
             if(game.grid[x][y].light <= 0) // We don't see this cell
                 continue;
             let cell = game.grid[x][y];
-            console.log(cell.ground);
-            // ground
+
             if (cell.ground) {
                 this.ySorted.push([IMGS_GROUND[cell.ground - 1], x * CELL_SIZE, y * CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, 0, -5]);
             }
-
+            if (cell.covering) {
+                this.ySorted.push([IMGS_COVERING[cell.covering - 1], x * CELL_SIZE, (y - 1) * CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE * 2, 0, -4]);
+            }
             if (cell.grave) {
-                this.ySorted.push([IMGS_GRAVE[cell.grave - 1], x * CELL_SIZE, (y - 1) * CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE * 2, 0, y]);
+                this.ySorted.push([IMGS_GRAVE[cell.grave - 1], x * CELL_SIZE, (y - 1) * CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE * 2, 0, (y + 1) * 8]);
             }
         }
     }
 
     // Player
     if (game.player.dir == RIGHT)
-        this.ySorted.push([IMG_PLAYER, game.player.pos.x - CELL_SIZE / 2, game.player.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, 0, game.player.grid_pos.y]);
+        this.ySorted.push([IMG_PLAYER, game.player.pos.x - CELL_SIZE / 2, game.player.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, 0, game.player.pos.y]);
     else
-        this.ySorted.push([IMG_PLAYER, game.player.pos.x - CELL_SIZE / 2, game.player.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, 1, game.player.grid_pos.y]);
+        this.ySorted.push([IMG_PLAYER, game.player.pos.x - CELL_SIZE / 2, game.player.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, 1, game.player.pos.y]);
 
     // Monsters
     for (let i = 0; i < game.monsters.length; i++) {

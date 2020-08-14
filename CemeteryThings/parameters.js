@@ -58,6 +58,12 @@ let IMGS_GROUND = [
     getImg("textures/ground2.png")
 ];
 
+let IMGS_COVERING = [
+    getImg("textures/covering1.png"),
+    getImg("textures/covering2.png"),
+    getImg("textures/covering3.png")
+];
+
 
 let IMGS_GRAVE = [
     getImg("textures/grave1.png"),
