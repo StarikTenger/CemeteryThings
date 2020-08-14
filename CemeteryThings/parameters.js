@@ -8,10 +8,10 @@ let LEFT = 2;
 let UP = 3;
 
 // Subjects' names
-let SBJ_HEAL = 0;
-let SBJ_OIL = 1;
-let SBJ_WHISKEY = 2;
-let SBJ_MATCHBOX = 3;
+let SBJ_HEAL = 1;
+let SBJ_OIL = 2;
+let SBJ_WHISKEY = 3;
+let SBJ_MATCHBOX = 4;
 
 // Monsters' names
 
@@ -37,10 +37,10 @@ let DIST_LIGHT = 4;
 let DIST_LOAD = 7;
 
 let MONSTER_LIMIT = 3; // Maximum number of monsters
-let MONSTER_PERIOD = 1; // Time between monsters spawn
+let MONSTER_PERIOD = 20; // Time between monsters spawn
 
 let SUBJECT_LIMIT = 3; // Maximum number of subjects
-let SUBJECT_PERIOD = 1; // Time between subjects spawn
+let SUBJECT_PERIOD = 5; // Time between subjects spawn
 
 // Map parameters
 let MARGIN = 3; // Cells on map's sides, that are not changing
@@ -141,6 +141,10 @@ function checkKey(e, t) {
         KEY_D = t;
     if(e.keyCode == 88)
         KEY_X = t;
+    if(e.keyCode == 49)
+        KEY_1 = t;
+    if(e.keyCode == 50)
+        KEY_2 = t;
 }
 
 window.addEventListener('keydown',this.checkDown,false);

@@ -283,7 +283,7 @@ Game.prototype.generate = function() {
         // Making a subject
         let subject = new Subject(plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4)));
         //subject.pos = plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4));
-        subject.type = random(0, 3);
+        subject.type = random(1, 4);
 
         // Adding subject to array
         this.subjects.push(subject);
@@ -366,7 +366,7 @@ Game.prototype.playerControl = function() {
     if (!this.player.lamp)
         this.player.change_mind(-0.5 * DT);
 
-    //// Get subjects ////
+    // Get subjects
     for (let i = 0; i < this.subjects.length; i++) {
         let subject = this.subjects[i];
         if (dist(subject.pos, this.player.pos) > 8) // Not close enough
@@ -382,7 +382,36 @@ Game.prototype.playerControl = function() {
 
             subject.type = undefined;
         }
+    }
+
+    // Use subjects
+    let keys = [KEY_1, KEY_2];
+    for (let i = 0; i < 2; i++) {
+        if (!this.player.subjects[i] || !this.player.subjects[i].type) // Slot is empty
+            continue;
+        if (!keys[i]) // No command
+            continue;
         
+        // Current subject
+        var subject = this.player.subjects[i];
+
+        // Checking for subject type
+        if (subject.type == SBJ_HEAL){
+            this.player.change_hp(1);
+        }
+        if (subject.type == SBJ_OIL){
+            this.player.change_oil(2);
+        }
+        if (subject.type == SBJ_WHISKEY){
+            this.player.change_mind(2);
+        }
+        if (subject.type == SBJ_MATCHBOX){
+            if (this.player.matches < LIMIT_MATCHES)
+                this.player.matches++;
+        }
+
+        // Remove subject
+        this.player.subjects[i] = undefined;
     }
 
 }

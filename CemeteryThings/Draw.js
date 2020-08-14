@@ -87,7 +87,7 @@ Draw.prototype.draw = function(game) {
         let subject = game.subjects[i];
         if (!subject || !subject.type) // Corrupted
             continue;
-        this.ySorted.push([IMGS_SUBJECT[subject.type], subject.pos.x - CELL_SIZE / 2, subject.pos.y, TEXTURE_SIZE, TEXTURE_SIZE , 0, subject.pos.y]);
+        this.ySorted.push([IMGS_SUBJECT[subject.type - 1], subject.pos.x - CELL_SIZE / 2, subject.pos.y, TEXTURE_SIZE, TEXTURE_SIZE , 0, subject.pos.y]);
     }
 
     // Sorting objects by Y-pos
@@ -148,7 +148,7 @@ Draw.prototype.draw = function(game) {
         if (!game.player.subjects[j] || !game.player.subjects[j].type) // Empty slot
             continue;
 
-        this.image(IMGS_SUBJECT[game.player.subjects[j].type], 28 + j * 7, 56, 8, 8)
+        this.image(IMGS_SUBJECT[game.player.subjects[j].type - 1], 28 + j * 7, 56, 8, 8)
     }
 
     // Overlay
