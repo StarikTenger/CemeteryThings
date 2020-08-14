@@ -102,7 +102,7 @@ Game.prototype.clever_covering_type = function() {
     }
 }
 
-Game.prototype.initial_generation = function() {
+Game.prototype.initialGeneration = function() {
     // Initial graves (in each cell with some chance)
     for (let x = MARGIN - 1; x < SIZE_X - (MARGIN - 1); x++) {
         let y = (MARGIN - 1);
@@ -508,10 +508,12 @@ Game.prototype.setLight = function() {
 
 // Function called in each iteration
 Game.prototype.step = function() {
-    this.playerControl();
-    this.monstersControl();
-    this.setLight();
-    this.generate();
+    if (this.player.status == 0) { // If player is alive
+        this.playerControl();
+        this.monstersControl();
+        this.setLight();
+        this.generate();
+    }
 };
 
 Game.prototype.spawnPlayer = function(pos) {
@@ -520,6 +522,7 @@ Game.prototype.spawnPlayer = function(pos) {
     this.player.pos = pos;
     this.player.gridPos = gridPos;
 
+    // Clearing area
     for (let x = Math.max(0, gridPos.x - 1); x <= Math.min(SIZE_X, gridPos.x + 1); x++) {
         for (let y = Math.max(0, gridPos.y - 1); y <= Math.min(SIZE_Y, gridPos.y + 1); y++) {
             this.grid[x][y].grave = 0;
