@@ -19,7 +19,7 @@ Draw.prototype.image = function(texture, x, y, w, h, flip) {
         flip = 0;
         
     this.ctx.save();
-    var width = 1;
+    let width = 1;
     if (flip) {
         this.ctx.scale(-1, 1);
         width = -1;
@@ -52,8 +52,8 @@ Draw.prototype.draw = function(game) {
     this.ySorted = [];
 
     // Grid
-    for (var x = 0; x < SIZE_X; x++) {
-        for (var y = 0; y < SIZE_Y; y++) {
+    for (let x = 0; x < SIZE_X; x++) {
+        for (let y = 0; y < SIZE_Y; y++) {
             if(game.grid[x][y].light <= 0) // We don't see this cell
                 continue;
             if (game.grid[x][y].obstacle) { // Grave
@@ -72,8 +72,8 @@ Draw.prototype.draw = function(game) {
         this.ySorted.push([IMG_PLAYER, game.player.pos.x - CELL_SIZE / 2, game.player.pos.y - CELL_SIZE, CELL_SIZE, CELL_SIZE, 1, game.player.pos.y]);
 
     // Monsters
-    for (var i = 0; i < game.monsters.length; i++) {
-        var monster = game.monsters[i];
+    for (let i = 0; i < game.monsters.length; i++) {
+        let monster = game.monsters[i];
         this.ySorted.push([IMG_MONSTER0, monster.pos.x - CELL_SIZE / 2, monster.pos.y - CELL_SIZE, CELL_SIZE, CELL_SIZE, 0, monster.pos.y]);
     }
 
@@ -83,24 +83,24 @@ Draw.prototype.draw = function(game) {
     });
 
     // Drawing sorted objects
-    for (var x = 0; x < this.ySorted.length; x++) {
-        var a = this.ySorted[x];
+    for (let x = 0; x < this.ySorted.length; x++) {
+        let a = this.ySorted[x];
         this.image(a[0], a[1], a[2], a[3], a[4], a[5]);
     }
 
     // Gradient light
-    for (var x1 = this.cam.x - 32; x1 <= this.cam.x + 32; x1++) {
-        for (var y1 = this.cam.y - 32; y1 <= this.cam.y + 32; y1++) {
-            var val = 0; // Light value
-            var sum = 0; // Dist sum
-            var pos = new Vec2(x1, y1)
-            var cellPos = game.getCell(pos);
+    for (let x1 = this.cam.x - 32; x1 <= this.cam.x + 32; x1++) {
+        for (let y1 = this.cam.y - 32; y1 <= this.cam.y + 32; y1++) {
+            let val = 0; // Light value
+            let sum = 0; // Dist sum
+            let pos = new Vec2(x1, y1)
+            let cellPos = game.getCell(pos);
 
             // Neighbor cells
-            for (var x = cellPos.x - 1; x <= cellPos.x + 1; x++) {
-                for (var y = cellPos.y - 1; y <= cellPos.y + 1; y++) {
-                    var d = dist(pos, new Vec2(x * 8 + 4, y * 8 + 4));
-                    if (game.checkCell(new Vec2(x, y)) || dist > 8)
+            for (let x = cellPos.x - 1; x <= cellPos.x + 1; x++) {
+                for (let y = cellPos.y - 1; y <= cellPos.y + 1; y++) {
+                    let d = dist(pos, new Vec2(x * 8 + 4, y * 8 + 4));
+                    if (game.checkCell(new Vec2(x, y)) || dist >= 16)
                         continue;
                     val += game.getLight(new Vec2(x, y)) * (18 - d);
                     sum += 18 - d;
@@ -109,7 +109,7 @@ Draw.prototype.draw = function(game) {
 
             val /= sum;
            
-            var alpha = (1 - (val / DIST_LIGHT));
+            let alpha = (1 - (val / DIST_LIGHT));
             this.rect(x1, y1, 1, 1, "rgba(0,0,0," + alpha + ")");
         }
     }
@@ -126,7 +126,7 @@ Draw.prototype.draw = function(game) {
     // Oil 
     this.rect(8, 63, 2, - game.player.oil * 6 / LIMIT_OIL, "rgb(148, 133, 46)");
     // Matches
-    for (var i = 0; i < game.player.matches; i++) {
+    for (let i = 0; i < game.player.matches; i++) {
         this.image(IMG_MATCH, 22 + i * 2, 58, 1, 5);
     }
 };

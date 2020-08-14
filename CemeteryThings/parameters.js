@@ -2,57 +2,63 @@
 
 //// CONSTANTS ////
 // Directions
-var RIGHT = 0;
-var DOWN = 1;
-var LEFT = 2;
-var UP = 3;
+let RIGHT = 0;
+let DOWN = 1;
+let LEFT = 2;
+let UP = 3;
+
+// Subjects' names
+let SBJ_HEAL = 0;
+let SBJ_OIL = 1;
+let SBJ_WHISKEY = 2;
+let SBJ_MATCHBOX = 3;
 
 //// GAME PREFERENCES ////
-var DT = 0.050; // Tick time in seconds
-var CELL_SIZE = 8;
+let DT = 0.050; // Tick time in seconds
+let CELL_SIZE = 8;
 
 // Limitations for player
-var LIMIT_HP = 3;
-var LIMIT_OIL = 10;
-var LIMIT_MIND = 10;
-var LIMIT_MATCHES = 3;
+let LIMIT_HP = 3;
+let LIMIT_OIL = 10;
+let LIMIT_MIND = 10;
+let LIMIT_MATCHES = 3;
 
-var OIL_CONSUMPTION = 0.2;
-var DIST_LIGHT = 4;
-var DIST_LOAD = 7;
+let OIL_CONSUMPTION = 0.2;
+let DIST_LIGHT = 4;
+let DIST_LOAD = 7;
 
-var MONSTER_LIMIT = 3; // Maximum number of monsters
-var MONSTER_PERIOD = 10; // Time between monsters spawn
+let MONSTER_LIMIT = 3; // Maximum number of monsters
+let MONSTER_PERIOD = 10; // Time between monsters spawn
 
 // Map parameters
-var SIZE_X = 20;
-var SIZE_Y = 20;
+let SIZE_X = 20;
+let SIZE_Y = 20;
 
 
 //// DRAW PREFERENCES ////
-var SCALE = 14; // 1 Cell in px
+let SCALE = 14; // 1 Cell in px
 
 
 // Canvas
-var SCREEN = document.getElementById("screen");
+let SCREEN = document.getElementById("screen");
 SCREEN.width = SCREEN.height = 64 * SCALE;
-var CTX = SCREEN.getContext("2d");
+let CTX = SCREEN.getContext("2d");
 
 // Images
 function getImg(src) { // Load images
-    var img = new Image(); 
+    let img = new Image(); 
     img.src = src;
     return img;
 }
 
 // Loading current imgs
-var IMGS_GROUND = [
+let IMGS_GROUND = [
     getImg("textures/ground0.png"),
     getImg("textures/ground1.png")
 ];
 
 
-var IMGS_GRAVE = [
+let IMGS_GRAVE = [
     getImg("textures/grave0.png"),
     getImg("textures/grave1.png"),
     getImg("textures/grave2.png"),
@@ -65,20 +71,20 @@ var IMGS_GRAVE = [
 ];
 
 
-var IMG_PLAYER = getImg("textures/player" + random(0, 2) + ".png");
-var IMG_MONSTER0 = getImg("textures/monster0.png");
-var IMG_LIGHT = getImg("textures/light.png");
-var IMG_SHADOW = getImg("textures/shadow.png");
-var IMG_INTERFACE = getImg("textures/interface.png");
-var IMG_MATCH = getImg("textures/match.png");
+let IMG_PLAYER = getImg("textures/player" + random(0, 2) + ".png");
+let IMG_MONSTER0 = getImg("textures/monster0.png");
+let IMG_LIGHT = getImg("textures/light.png");
+let IMG_SHADOW = getImg("textures/shadow.png");
+let IMG_INTERFACE = getImg("textures/interface/interface.png");
+let IMG_MATCH = getImg("textures/interface/match.png");
 
 //// KEY CONFIG ////
 // Keys (0 - released, 1 - pressed)
-var KEY_W = 0; var KEY_W_PREV = 0; 
-var KEY_A = 0; var KEY_A_PREV = 0; 
-var KEY_S = 0; var KEY_S_PREV = 0; 
-var KEY_D = 0; var KEY_D_PREV = 0;
-var KEY_X = 0; var KEY_X_PREV = 0;
+let KEY_W = 0; let KEY_W_PREV = 0; 
+let KEY_A = 0; let KEY_A_PREV = 0; 
+let KEY_S = 0; let KEY_S_PREV = 0; 
+let KEY_D = 0; let KEY_D_PREV = 0;
+let KEY_X = 0; let KEY_X_PREV = 0;
 
 window.addEventListener('keydown',this.checkDown,false);
 function checkDown(e) {
