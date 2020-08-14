@@ -24,6 +24,9 @@ class Object {
 // Cell on the grid
 class Cell {
     constructor() {
+        this.ground = 0;
+        this.covering = 0;
+        this.grave = 0;
         this.obstacle = 0; // 0 - player can pass, 1 - player can't pass
         this.type = 0; // For different texturing
         this.light = 0; // Illumination

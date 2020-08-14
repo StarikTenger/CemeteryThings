@@ -1,4 +1,5 @@
 // Main class that controls everything
+
 class Game {
     constructor() {
         // Filling grid
@@ -46,24 +47,33 @@ Game.prototype.getLight = function(pos) {
 
 // Choose random grave texture
 Game.prototype.random_grave_type = function() {
-    return Math.abs(normalDistribution(-8, 8, 2));
+    let graves_cnt = 8;
+    let roll = normalDistribution(-graves_cnt + 1, +graves_cnt - 1, 3);
+    return Math.abs(roll) + 1;
+}
+
+// Choose random gronud texture
+Game.prototype.random_ground_type = function() {
+    let grounds_cnt = 2;
+    let roll = normalDistribution(-grounds_cnt + 1, +grounds_cnt - 1, 3);
+    return Math.abs(roll) + 1;
 }
 
 // Generates the map
 Game.prototype.generate = function() {
-
     // Initial graves (in each cell with some chance)
     for (let x = 0; x < SIZE_X; x++) {
         for (let y = 0; y < SIZE_Y; y++) {
-            if(this.grid[x][y].light > 0) // Forbidden zone
+            let cell = this.grid[x][y];
+            if (cell.light > 0) // Forbidden zone
                 continue;
-            if (!random(0, 10)) { // Obstacle
-                this.grid[x][y].type = this.random_grave_type();
-                this.grid[x][y].obstacle = 1;
-            }
-            else { // No obstacle
-                this.grid[x][y].type =  Math.abs(normalDistribution(-1, 1, 3));
-                this.grid[x][y].obstacle = 0;
+            cell.ground = this.random_ground_type();
+            if (!random(0, 10)) { // Grave
+                cell.grave = this.random_grave_type();
+                cell.obstacle = 1;
+            } else {
+                cell.grave = 0;
+                cell.obstacle = 0;
             }
         }
     }
@@ -111,7 +121,7 @@ Game.prototype.generate = function() {
 
         // If cell has neighbors we generate a grave
         if (neighborsCount == 1 && neighborsDiagonalCount <= 1) {
-            this.grid[pos.x][pos.y].type = Math.abs(normalDistribution(-7, 7, 4));
+            this.grid[pos.x][pos.y].grave = this.random_grave_type();
             this.grid[pos.x][pos.y].obstacle = 1;
         }
     }
@@ -146,7 +156,7 @@ Game.prototype.generate = function() {
         // Making a monster
         let monster = new Object();
         monster.pos = plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4));
-        monster.type = 0;
+        monster.type = 1;
         monster.horror = 0.2;
 
         // Adding monster to array

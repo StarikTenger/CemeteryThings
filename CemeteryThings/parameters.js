@@ -16,6 +16,7 @@ let SBJ_MATCHBOX = 3;
 //// GAME PREFERENCES ////
 let DT = 0.050; // Tick time in seconds
 let CELL_SIZE = 8;
+let TEXTURE_SIZE = 8;
 
 // Limitations for player
 let LIMIT_HP = 3;
@@ -53,13 +54,12 @@ function getImg(src) { // Load images
 
 // Loading current imgs
 let IMGS_GROUND = [
-    getImg("textures/ground0.png"),
-    getImg("textures/ground1.png")
+    getImg("textures/ground1.png"),
+    getImg("textures/ground2.png")
 ];
 
 
 let IMGS_GRAVE = [
-    getImg("textures/grave0.png"),
     getImg("textures/grave1.png"),
     getImg("textures/grave2.png"),
     getImg("textures/grave3.png"),
@@ -67,12 +67,13 @@ let IMGS_GRAVE = [
     getImg("textures/grave5.png"),
     getImg("textures/grave6.png"),
     getImg("textures/grave7.png"),
-    getImg("textures/grave8.png")
+    getImg("textures/grave8.png"),
+    getImg("textures/grave9.png"),
 ];
 
 
-let IMG_PLAYER = getImg("textures/player" + random(0, 2) + ".png");
-let IMG_MONSTER0 = getImg("textures/monster0.png");
+let IMG_PLAYER = getImg("textures/player" + random(1, 3) + ".png");
+let IMG_MONSTER0 = getImg("textures/monster1.png");
 let IMG_LIGHT = getImg("textures/light.png");
 let IMG_SHADOW = getImg("textures/shadow.png");
 let IMG_INTERFACE = getImg("textures/interface/interface.png");
