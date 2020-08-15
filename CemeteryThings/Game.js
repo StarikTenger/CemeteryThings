@@ -332,6 +332,10 @@ Game.prototype.generate = function() {
         // Timer
         this.subjectTimer = SUBJECT_PERIOD;
     }
+
+    //// Cemetery gates ////
+    this.grid[MARGIN + 3][MARGIN].gates = 1;
+    this.grid[MARGIN + 4][MARGIN].gates = 1;
 };
 
 // Moves object (collision)
