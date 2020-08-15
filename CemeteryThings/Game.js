@@ -50,7 +50,7 @@ Game.prototype.hurt = function(target, value) {
     if (target.protectionTimer == 0) {
         this.animations.push(new Animation(ANM_BLOOD, plus(target.pos, new Vec2(0, -8)), new Vec2(8, 8), 0.1));
         if (!target.monsterType) {
-            this.animations.push(new Animation(ANM_DAMAGE, new Vec2(0, 0), new Vec2(64, 64), 0.1, 1));
+            this.animations.push(new Animation(ANM_DAMAGE, new Vec2(0, 0), new Vec2(64, 64), 0.3, 1));
         }
     }
     target.hurt(value);
@@ -476,8 +476,8 @@ Game.prototype.playerControl = function() {
             this.player.lamp = 1;
             this.player.matches--;
             this.temporalLightSources.push(new TemporalLightSource(this.player.pos, 5, 2));
-            this.animations.push(new Animation(ANM_MATCH, plus(this.player.pos, new Vec2(0, -5)), new Vec2(8, 8), 0.1));
-            this.animations.push(new Animation(ANM_MATCH_BURNING, new Vec2(22 + (this.player.matches + 1) * 2 + 1, 57), new Vec2(3, 7), 0.1, 1));
+            this.animations.push(new Animation(ANM_MATCH, plus(this.player.pos, new Vec2(0, -5)), new Vec2(8, 8), 0.1)); // In game
+            this.animations.push(new Animation(ANM_MATCH_BURNING, new Vec2(22 + (this.player.matches - 1) * 2 + 1, 57), new Vec2(3, 7), 0.1, 1)); // In interface
 
             // Lighting spec graves
             let pos = this.player.grid_pos;

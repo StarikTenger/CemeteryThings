@@ -187,13 +187,14 @@ Draw.prototype.draw = function(game) {
     // Overlay
     this.image(IMG_INTERFACE_OVERLAY, 0, 0, 64, 64);
 
+    // Animations
     for (let i = 0; i < game.animations.length; i++) {
         let animation = game.animations[i];
         if (!animation.interface_bind) {
             continue;
         }
         let img = animation.getFrame();
-        this.image(img, animation.pos.x - CELL_SIZE / 2, animation.pos.y, animation.box.x, animation.box.y , 0, 1000);
+        this.image(img, animation.pos.x, animation.pos.y, animation.box.x, animation.box.y , 0);
     }
 
     // Gameover screen
