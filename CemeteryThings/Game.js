@@ -34,6 +34,12 @@ class Game {
     }
 }
 
+// Deals damage & makes sprite animation
+Game.prototype.hurt = function(target, value) {
+    target.hurt(value);
+    this.animations.push(new Animation(ANM_BLOOD, plus(target.pos, new Vec2(0, -8)), 0.1));
+}
+
 // Checks is the cell is in bounds
 Game.prototype.checkCell = function(pos) {
     if(pos.x < 0 || pos.y < 0 || pos.x >= SIZE_X || pos.y >= SIZE_Y)
@@ -236,7 +242,7 @@ Game.prototype.generate = function() {
     // Killing lost monsters (out of stable zone)
     for (let i = 0; i < this.monsters.length; i++) {
         let monster = this.monsters[i];
-        if (this.checkCell(monster.gridPos) || this.grid[monster.gridPos.x][monster.gridPos.y].light <= 0 || monster.hp <= 0) {
+        if (this.checkCell(monster.gridPos) || this.grid[monster.gridPos.x][monster.gridPos.y].light <= 0 || monster.hp <= 0 || dist(monster.pos, this.player.pos) > DIST_LOAD * 8 * 2) {
             this.monsters.splice(i, 1);
         }
     }
@@ -281,7 +287,7 @@ Game.prototype.generate = function() {
     for (let i = 0; i < this.subjects.length; i++) {
         let subject = this.subjects[i];
         subject.gridPos = this.getCell(subject.pos);
-        if (this.checkCell(subject.gridPos) || this.grid[subject.gridPos.x][subject.gridPos.y].light <= 0 || !subject.type) {
+        if (this.checkCell(subject.gridPos) || this.grid[subject.gridPos.x][subject.gridPos.y].light <= 0 || !subject.type || dist(subject.pos, this.player.pos) > DIST_LOAD * 8 * 2) {
             this.subjects.splice(i, 1);
         }
     }
@@ -491,8 +497,7 @@ Game.prototype.playerControl = function() {
                     pos = plus(pos, dir);
                     // Collision check
                     if (dist(pos, monster.pos) < 8) {
-                        monster.hurt(this.player.weapon.damage);
-                        this.animations.push(new Animation(ANM_BLOOD, plus(monster.pos, new Vec2(0, -8)), 0.1));                        
+                        this.hurt(monster, this.player.weapon.damage);                       
                     }
                 }
                 if (hit)
@@ -566,8 +571,7 @@ Game.prototype.monstersControl = function() {
 
         // Damage
         if (dist(monster.pos, this.player.pos) <= monster.attackRange) {
-            this.player.hurt(monster.damage);
-            this.animations.push(new Animation(ANM_BLOOD, plus(this.player.pos, new Vec2(0, -8)), 0.1));
+            this.hurt(this.player, monster.damage);    
         }
     }
 }
