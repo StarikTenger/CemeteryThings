@@ -47,7 +47,8 @@ class Object {
         this.weapon = new Weapon();
 
         // animation
-        this.animationType = 0; // 0 - standing, 1 - walking
+        this.right = 1;
+        this.animationType = -1; // 0 - standing, 1 - walking up, 2 - walking down, 3 - walking right, 4 - left
         this.animationFrame = 0; // from 0 to skol'ko est'
         this.animationTime = 0.3; // time per 1 animation frame
         this.animationTimer = 0; // timer
@@ -59,6 +60,47 @@ class Object {
         this.attackRange = 5;
         this.damage = 1;
     }
+}
+
+class Anime {
+    constructor(frame_time, frames) {
+        this.frame_time = frame_time;
+        this.frames = frames;
+        this.frame = 0;
+        this.frames_cnt = this.frames.length;
+    }
+}
+
+Object.prototype.set_animations = function(standing, walking) { // standing - [], walking - [[up], [down], [right]]
+    this.animations = [standing, walking[0], walking[1], walking[2], walking[2]];
+    this.cur_animation = this.animations[0];
+}
+
+// Cooldowns, timers, etc
+Object.prototype.step = function(dt) {
+
+    // Protection timer
+    this.protectionTimer -= dt;
+    if (this.protectionTimer < 0) {
+        this.protectionTimer = 0;
+    }
+
+    if (this.animationType < 0) {
+        return;
+    }
+    
+    // animation timer
+    this.cur_animation = this.animations[this.animationType];
+    this.animationTimer += dt;
+    if (this.animationTimer >= this.cur_animation.frame_time) {
+        this.animationTimer = 0;
+        this.cur_animation.frame = (this.cur_animation.frame + 1) % this.cur_animation.frames_cnt;
+        console.log(this.cur_animation.frame);
+    }
+}
+
+Object.prototype.get_frame = function() {
+    return this.cur_animation.frames[this.cur_animation.frame];
 }
 
 // mind += delta
@@ -111,30 +153,6 @@ Object.prototype.change_oil = function(delta) {
 // Protection after attacks
 Object.prototype.protect = function() {
     this.protectionTimer = this.protectionTime;
-}
-
-// Cooldowns, timers, etc
-Object.prototype.step = function(dt) {
-
-    // Protection timer
-    this.protectionTimer -= dt;
-    if (this.protectionTimer < 0) {
-        this.protectionTimer = 0;
-    }
-    
-    // animation timer
-    this.animationTimer += dt;
-    if (this.animationTimer >= this.animationTime) {
-        this.animationTimer = 0;
-        this.animationFrame++;
-
-        if (this.animationType == 0 && this.animationFrame >= 1) { // Walking frame changing
-            this.animationFrame = 0;
-        }
-        if (this.animationType == 1 && this.animationFrame >= 2) { // Walking frame changing
-            this.animationFrame = 0;
-        }
-    }
 }
 
 // Cell on the grid
