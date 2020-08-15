@@ -153,6 +153,29 @@ Game.prototype.initialGeneration = function() {
     }
 };
 
+// Generates gates (always in the top)
+Game.prototype.gates = function(x) {
+    // Check for existing gates
+    let gatesFound = 0;
+    for (let x = 0; x < SIZE_X; x++)
+        for (let y = 0; y < SIZE_Y; y++)
+            if(this.grid[x][y].gates)
+                gatesFound = 1;
+
+    if (gatesFound) // We don't need one more gates
+        return;
+
+    // Gates itself
+    this.grid[x][MARGIN - 1].gates = 1;
+    this.grid[x + 1][MARGIN - 1].gates = 2;
+    // Clear space under
+    this.grid[x][MARGIN - 2].obstacle = 0;
+    this.grid[x + 1][MARGIN - 2].obstacle = 0;
+    this.grid[x][MARGIN - 2].grave = 0;
+    this.grid[x + 1][MARGIN - 2].grave = 0;
+    // Light
+    this.spec_lights.push(new LightSource(new Vec2(x * 8 + 8, MARGIN * 8 - 8), 3));
+}
 
 // Generates the map
 Game.prototype.generate = function() {
@@ -335,8 +358,9 @@ Game.prototype.generate = function() {
     }
 
     //// Cemetery gates ////
-    this.grid[MARGIN + 3][MARGIN].gates = 1;
-    this.grid[MARGIN + 4][MARGIN].gates = 1;
+    if (this.spec_graves_visited_count >= 3)
+        this.gates(random(GRID + 1, SIZE_X - GRID - 2));
+
 };
 
 // Moves object (collision)
