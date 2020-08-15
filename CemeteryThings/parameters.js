@@ -92,6 +92,12 @@ let IMGS_SPEC_GRAVE = [
     getImg("textures/spec_grave3.png")
 ];
 
+let IMGS_SPEC_MINI_GRAVE = [
+    getImg("textures/spec_mini_grave1.png"),
+    getImg("textures/spec_mini_grave2.png"),
+    getImg("textures/spec_mini_grave3.png")
+];
+
 let IMGS_GRAVE = [
     getImg("textures/graves/grave1.png"),
     getImg("textures/graves/grave2.png"),

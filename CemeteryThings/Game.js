@@ -18,6 +18,7 @@ class Game {
         
         this.spec_graves_visited = [0, 0, 0];
         this.spec_lights = [];
+        this.spec_sprites = [];
 
         // Monster array
         this.monsterTimer = 0;
@@ -155,6 +156,9 @@ Game.prototype.generate = function() {
                 continue;
             cell.ground = this.random_ground_type();
             cell.covering = this.clever_covering_type();
+            if (cell.grave < 0) {
+                this.spec_graves_visited[-cell.grave - 1] = 0;
+            }
         }
     }
 
@@ -164,15 +168,13 @@ Game.prototype.generate = function() {
             if (cell.light > 0) // Forbidden zone
                 continue;
             if (!random(0, 10)) { // Grave
-                var spec_sum = this.spec_graves_visited[0] + this.spec_graves_visited[1] + this.spec_graves_visited[2];
-                if (!random(0, 3) && (spec_sum < 3)) { // Spec grave!
+                var spec_sum = this.spec_graves_visited[0] * this.spec_graves_visited[1] * this.spec_graves_visited[2];
+                if (!random(0, 1) && spec_sum == 0) { // Spec grave!
                     cell.grave = -random(1, 3);
-                    while (this.spec_graves_visited[-cell.grave - 1] == 1) {
+                    while (this.spec_graves_visited[-cell.grave - 1] > 0) {
                         cell.grave = -random(1, 3);
                     }
-                    this.spec_graves_visited[-cell.grave - 1] = 1;
-                    this.spec_lights.push(new LightSource(new Vec2(x * 8 + 4, y * 8 + 4), 2));
-                    console.log(this.spec_lights.length);
+                    this.spec_graves_visited[-cell.grave - 1] = 1; // 1 - generated, 2 - visited
                     cell.obstacle = 1;
                     cell.covering = 0;
                 } else {
@@ -230,7 +232,7 @@ Game.prototype.generate = function() {
         }
 
         // If cell has neighbors we generate a grave
-        if (neighborsCount == 1 && neighborsDiagonalCount <= 1) {
+        if (neighborsCount == 1 && neighborsDiagonalCount <= 1 && this.grid[pos.x][pos.y].grave >= 0) {
             this.grid[pos.x][pos.y].grave = this.random_grave_type();
             this.grid[pos.x][pos.y].obstacle = 1;
             this.grid[pos.x][pos.y].covering = 0;
@@ -402,6 +404,19 @@ Game.prototype.playerControl = function() {
         else if (this.player.matches > 0) {
             this.player.lamp = 1;
             this.player.matches --;
+
+            // Lighting spec graves
+            let pos = this.player.grid_pos;
+            for (x = pos.x - 1; x <= pos.x + 1; ++x) {
+                for (y = pos.y - 1; y <= pos.y + 1; ++y) {
+                    let cell = this.grid[x][y];
+                    console.log(x, y);
+                    if (cell.grave < 0) {
+                        this.spec_graves_visited[-cell.grave - 1] = 2;
+                        this.spec_lights.push(new LightSource(new Vec2(x * 8 + 4, y * 8 + 4), 2));
+                    }
+                }
+            }
         }
     }
         

@@ -175,6 +175,13 @@ Draw.prototype.draw = function(game) {
         this.image(IMGS_SUBJECT[game.player.subjects[j].type - 1], 28 + j * 7, 56, 8, 8)
     }
 
+    // Spec Graves
+    for (let i = 0; i < game.spec_graves_visited.length; i++) {
+        if (game.spec_graves_visited[i] == 2) {
+            this.image(IMGS_SPEC_MINI_GRAVE[i], 52 + 4 * i, 57, 3, 6);
+        }
+    }
+
     // Overlay
     this.image(IMG_INTERFACE_OVERLAY, 0, 0, 64, 64);
 
