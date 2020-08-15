@@ -87,15 +87,15 @@ let IMGS_COVERING = [
 ];
 
 let IMGS_SPEC_GRAVE = [
-    getImg("textures/spec_grave1.png"),
-    getImg("textures/spec_grave2.png"),
-    getImg("textures/spec_grave3.png")
+    getImg("textures/spec_graves/spec_grave1.png"),
+    getImg("textures/spec_graves/spec_grave2.png"),
+    getImg("textures/spec_graves/spec_grave3.png")
 ];
 
 let IMGS_SPEC_MINI_GRAVE = [
-    getImg("textures/spec_mini_grave1.png"),
-    getImg("textures/spec_mini_grave2.png"),
-    getImg("textures/spec_mini_grave3.png")
+    getImg("textures/spec_graves/spec_mini_grave1.png"),
+    getImg("textures/spec_graves/spec_mini_grave2.png"),
+    getImg("textures/spec_graves/spec_mini_grave3.png")
 ];
 
 let IMGS_GRAVE = [
@@ -132,7 +132,6 @@ let IMG_PLAYER_WALKING2 = getImg("textures/player/walking/player_walking2.png");
 
 
 let IMG_MONSTER0 = getImg("textures/monsters/monster1.png");
-let IMG_LIGHT = getImg("textures/light.png");
 let IMG_SHADOW = getImg("textures/shadow.png");
 let IMG_INTERFACE = getImg("textures/interface/interface.png");
 let IMG_INTERFACE_OVERLAY = getImg("textures/interface/interfaceOverlay.png");
