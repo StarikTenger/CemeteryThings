@@ -311,10 +311,24 @@ Game.prototype.generate = function() {
         monster.monsterType = this.random_monster_type();
 
         // Choosing animations
-        let standing = new Anime(0.5, ANM_ZOMBIE_STANDING);
-        let moving_up = new Anime(0.3, ANM_ZOMBIE_MOVING_UP);
-        let moving_down = new Anime(0.3, ANM_ZOMBIE_MOVING_DOWN);
-        let moving_right = new Anime(0.3, ANM_ZOMBIE_MOVING_RIGHT);
+        let standing = [];
+        let moving_up = [];
+        let moving_down = [];
+        let moving_right = [];
+        if (monster.monsterType == 1) {
+            standing = new Anime(0.5, ANM_ZOMBIE_STANDING);
+            moving_up = new Anime(0.3, ANM_ZOMBIE_MOVING_UP);
+            moving_down = new Anime(0.3, ANM_ZOMBIE_MOVING_DOWN);
+            moving_right = new Anime(0.3, ANM_ZOMBIE_MOVING_RIGHT);
+        }
+        if (monster.monsterType == 2) {
+            standing = new Anime(0.5, ANM_GHOST_STANDING);
+            moving_up = new Anime(0.3, ANM_GHOST_MOVING_UP);
+            moving_down = new Anime(0.3, ANM_GHOST_MOVING_DOWN);
+            moving_right = new Anime(0.3, ANM_GHOST_MOVING_RIGHT);
+        }
+        
+
         monster.set_animations(standing, [moving_up, moving_down, moving_right]);
 
 
@@ -452,7 +466,8 @@ Game.prototype.playerControl = function() {
             this.player.lamp = 1;
             this.player.matches--;
             this.temporalLightSources.push(new TemporalLightSource(this.player.pos, 5, 2));
-            this.animations.push(new Animation(ANM_MATCH, plus(this.player.pos, new Vec2(0, -4)), new Vec2(8, 8), 0.1));
+            this.animations.push(new Animation(ANM_MATCH, plus(this.player.pos, new Vec2(0, -5)), new Vec2(8, 8), 0.1));
+            this.animations.push(new Animation(ANM_MATCH_BURNING, new Vec2(22 + (this.player.matches + 1) * 2 + 1, 57), new Vec2(3, 7), 0.1, 1));
 
             // Lighting spec graves
             let pos = this.player.grid_pos;

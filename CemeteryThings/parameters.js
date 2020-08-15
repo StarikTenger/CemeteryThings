@@ -113,6 +113,7 @@ let IMGS_GRAVE = [
     getImg("textures/graves/grave8.png"),
     getImg("textures/graves/grave9.png"),
     getImg("textures/graves/grave10.png"),
+    getImg("textures/graves/grave11.png"),
 ];
 
 let IMGS_GATES = [
@@ -185,6 +186,28 @@ let ANM_GATES = [
     getImg("textures/particles/gates3.png")
 ];
 
+let ANM_GHOST_STANDING = [
+    getImg("textures/monsters/ghost_standing_0.png"),
+    getImg("textures/monsters/ghost_standing_1.png")
+];
+
+let ANM_GHOST_MOVING_UP = [
+    getImg("textures/monsters/ghost_moving_up_0.png"),
+    getImg("textures/monsters/ghost_moving_up_1.png")
+];
+
+let ANM_GHOST_MOVING_DOWN = [
+    getImg("textures/monsters/ghost_moving_down_0.png"),
+    getImg("textures/monsters/ghost_moving_down_1.png")
+];
+
+let ANM_GHOST_MOVING_RIGHT = [
+    getImg("textures/monsters/ghost_moving_right_0.png"),
+    getImg("textures/monsters/ghost_moving_right_1.png")
+];
+
+// ===================
+
 let IMG_MONSTER0 = getImg("textures/monsters/zombie_standing_0.png");
 let IMG_SHADOW = getImg("textures/shadow.png");
 let IMG_INTERFACE = getImg("textures/interface/interface.png");
@@ -210,6 +233,13 @@ let ANM_MATCH = [
     getImg("textures/particles/match0.png"),
     getImg("textures/particles/match1.png"),
     getImg("textures/particles/match2.png")
+];
+let ANM_MATCH_BURNING = [
+    getImg("textures/particles/match_burn_0.png"),
+    getImg("textures/particles/match_burn_1.png"),
+    getImg("textures/particles/match_burn_2.png"),
+    getImg("textures/particles/match_burn_3.png"),
+    getImg("textures/particles/match_burn_4.png")
 ];
 
 let ANM_TRACER_LEFT = [
