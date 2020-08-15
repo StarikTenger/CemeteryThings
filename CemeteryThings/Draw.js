@@ -107,7 +107,7 @@ Draw.prototype.draw = function(game) {
     for (let i = 0; i < game.animations.length; i++) {
         let animation = game.animations[i];
         let img = animation.getFrame();
-        this.ySorted.push([img, animation.pos.x - CELL_SIZE / 2, animation.pos.y, TEXTURE_SIZE, TEXTURE_SIZE , 0, 1000]);
+        this.ySorted.push([img, animation.pos.x - CELL_SIZE / 2, animation.pos.y, animation.box.x, animation.box.y , 0, 1000]);
     }
 
     // Sorting objects by Y-pos
