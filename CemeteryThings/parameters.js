@@ -7,11 +7,12 @@ let DOWN = 1;
 let LEFT = 2;
 let UP = 3;
 
-// Subjects' names
+// Subjects' types
 let SBJ_HEAL = 1;
 let SBJ_OIL = 2;
 let SBJ_WHISKEY = 3;
 let SBJ_MATCHBOX = 4;
+let SBJ_AMMO = 5;
 
 // Monsters' names
 
@@ -37,10 +38,10 @@ let DIST_LIGHT = 4;
 let DIST_LOAD = 7;
 
 let MONSTER_LIMIT = 3; // Maximum number of monsters
-let MONSTER_PERIOD = 1; // Time between monsters spawn
+let MONSTER_PERIOD = 10; // Time between monsters spawn
 
-let SUBJECT_LIMIT = 3; // Maximum number of subjects
-let SUBJECT_PERIOD = 5; // Time between subjects spawn
+let SUBJECT_LIMIT = 5; // Maximum number of subjects
+let SUBJECT_PERIOD = 1; // Time between subjects spawn
 
 // Map parameters
 let MARGIN = 3; // Cells on map's sides, that are not changing
@@ -114,7 +115,8 @@ let IMGS_SUBJECT = [
     getImg("textures/subjects/heal.png"),
     getImg("textures/subjects/oil.png"),
     getImg("textures/subjects/whiskey.png"),
-    getImg("textures/subjects/matchbox.png")
+    getImg("textures/subjects/matchbox.png"),
+    getImg("textures/subjects/ammo.png")
 ];
 
 // Player animation

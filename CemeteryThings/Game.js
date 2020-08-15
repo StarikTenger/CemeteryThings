@@ -307,7 +307,7 @@ Game.prototype.generate = function() {
         let subject = new Subject(plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4)));
         
         // Choosing type
-        subject.type = random(1, 4);
+        subject.type = random(1, 5);
         if(!random(0, 2))
             subject.type = SBJ_OIL;
 
@@ -452,6 +452,10 @@ Game.prototype.playerControl = function() {
             if (this.player.matches < LIMIT_MATCHES)
                 this.player.matches++;
         }
+        if (subject.type == SBJ_AMMO){
+            this.player.weapon.ammo += 2;
+            this.player.weapon.ammo = Math.min(this.player.weapon.ammo, this.player.weapon.ammoMax);
+        }
 
         // Remove subject
         this.player.subjects[i] = undefined;
@@ -488,7 +492,7 @@ Game.prototype.playerControl = function() {
                     // Collision check
                     if (dist(pos, monster.pos) < 8) {
                         monster.hurt(this.player.weapon.damage);
-                        this.animations.push(new Animation(ANM_BLOOD, plus(monster.pos, new Vec2(0, -8)), 0.1));
+                        this.animations.push(new Animation(ANM_BLOOD, plus(monster.pos, new Vec2(0, -8)), 0.1));                        
                     }
                 }
                 if (hit)
@@ -563,6 +567,7 @@ Game.prototype.monstersControl = function() {
         // Damage
         if (dist(monster.pos, this.player.pos) <= monster.attackRange) {
             this.player.hurt(monster.damage);
+            this.animations.push(new Animation(ANM_BLOOD, plus(this.player.pos, new Vec2(0, -8)), 0.1));
         }
     }
 }
