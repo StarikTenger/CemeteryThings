@@ -49,6 +49,9 @@ let MARGIN = 3; // Cells on map's sides, that are not changing
 let SIZE_X = 20 + MARGIN * 2;
 let SIZE_Y = 20 + MARGIN * 2;
 
+// consts
+let LIFE_ETERNAL = -12222;
+
 
 //// DRAW PREFERENCES ////
 let SCALE = 1; // 1 Cell in px
@@ -184,6 +187,17 @@ let ANM_BLOOD = [
     getImg("textures/particles/blood1.png"),
     getImg("textures/particles/blood2.png")
 ];
+let ANM_IGNITION = [
+    getImg("textures/particles/ignition0.png"),
+    getImg("textures/particles/ignition1.png"),
+    getImg("textures/particles/ignition2.png"),
+    getImg("textures/particles/ignition3.png")
+];
+let ANM_MATCH = [
+    getImg("textures/particles/match0.png"),
+    getImg("textures/particles/match1.png"),
+    getImg("textures/particles/match2.png")
+];
 
 let ANM_TRACER_LEFT = [
     getImg("textures/particles/tracer_left.png")
@@ -205,6 +219,7 @@ let KEY_A = 0; let KEY_A_PREV = 0;
 let KEY_S = 0; let KEY_S_PREV = 0; 
 let KEY_D = 0; let KEY_D_PREV = 0;
 let KEY_X = 0; let KEY_X_PREV = 0;
+let KEY_F = 0; let KEY_F_PREV = 0; 
 let KEY_1 = 0; let KEY_1_PREV = 0;
 let KEY_2 = 0; let KEY_2_PREV = 0;
 let KEY_UP = 0; let KEY_UP_PREV = 0; 
@@ -223,6 +238,8 @@ function checkKey(e, t) {
         KEY_D = t;
     if(e.keyCode == 88)
         KEY_X = t;
+    if(e.keyCode == 70)
+        KEY_F = t;
     if(e.keyCode == 49)
         KEY_1 = t;
     if(e.keyCode == 50)

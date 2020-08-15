@@ -27,6 +27,7 @@ class Game {
         this.spec_graves_visited_count = 0;
         this.spec_lights = [];
         this.spec_sprites = [];
+        this.temporalLightSources = [];
 
         // Monster array
         this.monsterTimer = 0;
@@ -45,8 +46,9 @@ class Game {
 
 // Deals damage & makes sprite animation
 Game.prototype.hurt = function(target, value) {
+    if (target.protectionTimer == 0)
+        this.animations.push(new Animation(ANM_BLOOD, plus(target.pos, new Vec2(0, -8)), new Vec2(8, 8), 0.1));
     target.hurt(value);
-    this.animations.push(new Animation(ANM_BLOOD, plus(target.pos, new Vec2(0, -8)), new Vec2(8, 8), 0.1));
 }
 
 // Checks is the cell is in bounds
@@ -404,13 +406,19 @@ Game.prototype.playerControl = function() {
     if (this.player.lamp)
         this.player.change_oil(-OIL_CONSUMPTION * DT);
 
-    // Turning on/off
+    // Turning lamp off
     if (KEY_X && !KEY_X_PREV) {
         if (this.player.lamp)
             this.player.lamp = 0;
-        else if (this.player.matches > 0) {
+    }
+
+    // Match using
+    if (KEY_F && !KEY_F_PREV) {
+        if (this.player.matches > 0) {
             this.player.lamp = 1;
             this.player.matches--;
+            this.temporalLightSources.push(new TemporalLightSource(this.player.pos, 5, 2));
+            this.animations.push(new Animation(ANM_MATCH, plus(this.player.pos, new Vec2(0, -4)), new Vec2(8, 8), 0.1));
 
             // Lighting spec graves
             let pos = this.player.grid_pos;
@@ -421,6 +429,7 @@ Game.prototype.playerControl = function() {
                         this.spec_graves_visited[-cell.grave - 1] = 2;
                         this.spec_lights.push(new LightSource(new Vec2(x * 8 + 4, y * 8 + 4), 2));
                         this.spec_graves_visited_count += 1;
+                        this.animations.push(new Animation(ANM_IGNITION, new Vec2(x * 8 + 4, y * 8 - 8), new Vec2(8, 16), 0.2));
                     }
                 }
             }
@@ -672,6 +681,28 @@ Game.prototype.setLight = function() {
                 deque.addBack(new Vec2(x, y));
             }
         }
+    }
+
+    // Temporal light sources
+    for (let i = 0; i < this.temporalLightSources.length; i++) {
+        // Current light source
+        let lightSource = this.temporalLightSources[i];
+        lightSource.step(DT);
+        let cellPos = this.getCell(lightSource.pos);
+
+        for (let x = cellPos.x - 1; x <= cellPos.x + 1; x++) {
+            for (let y = cellPos.y - 1; y <= cellPos.y + 1; y++) {
+
+                let d = dist(lightSource.pos, new Vec2(x * 8 + 4, y * 8 + 4));
+                if (this.checkCell(new Vec2(x, y)) || dist > 16)
+                    continue;
+                this.grid[x][y].light = Math.max(this.grid[x][y].light, lightSource.power - DIST_LIGHT + DIST_LOAD + 1 - d / 8);
+                deque.addBack(new Vec2(x, y));
+            }
+        }
+
+        if (lightSource.alive == 0)
+            this.temporalLightSources.splice(i, 1);
     }
 
     // Clean lightSources
