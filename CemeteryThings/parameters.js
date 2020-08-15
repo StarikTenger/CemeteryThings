@@ -178,25 +178,33 @@ let ANM_ZOMBIE_MOVING_RIGHT = [
     getImg("textures/monsters/zombie_moving_right_1.png")
 ]
 
+// GATES
+let ANM_GATES = [
+    getImg("textures/particles/gates0.png"),
+    getImg("textures/particles/gates1.png"),
+    getImg("textures/particles/gates2.png"),
+    getImg("textures/particles/gates3.png")
+];
+
 let ANM_GHOST_STANDING = [
     getImg("textures/monsters/ghost_standing_0.png"),
     getImg("textures/monsters/ghost_standing_1.png")
-]
+];
 
 let ANM_GHOST_MOVING_UP = [
     getImg("textures/monsters/ghost_moving_up_0.png"),
     getImg("textures/monsters/ghost_moving_up_1.png")
-]
+];
 
 let ANM_GHOST_MOVING_DOWN = [
     getImg("textures/monsters/ghost_moving_down_0.png"),
     getImg("textures/monsters/ghost_moving_down_1.png")
-]
+];
 
 let ANM_GHOST_MOVING_RIGHT = [
     getImg("textures/monsters/ghost_moving_right_0.png"),
     getImg("textures/monsters/ghost_moving_right_1.png")
-]
+];
 
 let ANM_WORM_STANDING = [
     getImg("textures/monsters/worm_standing_0.png"),
