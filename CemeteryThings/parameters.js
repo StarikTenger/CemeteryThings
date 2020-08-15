@@ -113,6 +113,7 @@ let IMGS_GRAVE = [
     getImg("textures/graves/grave8.png"),
     getImg("textures/graves/grave9.png"),
     getImg("textures/graves/grave10.png"),
+    getImg("textures/graves/grave11.png"),
 ];
 
 let IMGS_GATES = [
