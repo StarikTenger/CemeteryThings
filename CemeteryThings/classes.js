@@ -164,9 +164,10 @@ class LightSource {
 }
 
 class Animation {
-    constructor(frames, pos, t) {
+    constructor(frames, pos, box, t) {
         this.frames = frames; // Images
         this.pos = new Vec2(pos.x, pos.y); // Position
+        this.box = box; // Size
         this.frameTime = t; // Frame change period
         this.timer = this.frameTime; // Countdown to change frame
         this.currentFrame = 0; // id of current frame

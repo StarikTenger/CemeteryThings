@@ -146,6 +146,18 @@ let ANM_BLOOD = [
     getImg("textures/particles/blood1.png"),
     getImg("textures/particles/blood2.png")
 ];
+let ANM_TRACER_LEFT = [
+    getImg("textures/particles/tracer_left.png")
+];
+let ANM_TRACER_RIGHT = [
+    getImg("textures/particles/tracer_right.png")
+];
+let ANM_TRACER_UP = [
+    getImg("textures/particles/tracer_up.png")
+];
+let ANM_TRACER_DOWN = [
+    getImg("textures/particles/tracer_down.png")
+];
 
 //// KEY CONFIG ////
 // Keys (0 - released, 1 - pressed)

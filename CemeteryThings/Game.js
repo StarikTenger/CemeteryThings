@@ -38,7 +38,7 @@ class Game {
 // Deals damage & makes sprite animation
 Game.prototype.hurt = function(target, value) {
     target.hurt(value);
-    this.animations.push(new Animation(ANM_BLOOD, plus(target.pos, new Vec2(0, -8)), 0.1));
+    this.animations.push(new Animation(ANM_BLOOD, plus(target.pos, new Vec2(0, -8)), new Vec2(8, 8), 0.1));
 }
 
 // Checks is the cell is in bounds
@@ -449,7 +449,10 @@ Game.prototype.playerControl = function() {
     }
 
     // Use subjects
-    let keys = [KEY_1, KEY_2];
+    let keys = [
+        (KEY_1 && !KEY_1_PREV), 
+        (KEY_2 && !KEY_2_PREV)
+    ];
     for (let i = 0; i < 2; i++) {
         if (!this.player.subjects[i] || !this.player.subjects[i].type) // Slot is empty
             continue;
@@ -518,6 +521,19 @@ Game.prototype.playerControl = function() {
                 if (hit)
                     break;
             }
+
+            // Animation
+            let curAnm = ANM_TRACER_UP; // Current animation
+            if (KEY_UP)
+                curAnm = ANM_TRACER_UP;
+            if (KEY_DOWN)
+                curAnm = ANM_TRACER_DOWN;
+            if (KEY_LEFT)
+                curAnm = ANM_TRACER_LEFT;
+            if (KEY_RIGHT)
+                curAnm = ANM_TRACER_RIGHT;
+            this.animations.push(new Animation(curAnm, plus(this.player.pos, new Vec2(-28, -36)), new Vec2(64, 64), 0.1));
+
 
             // Modify cooldown & ammo
             this.player.weapon.timeToCooldown =  this.player.weapon.cooldownTime;
