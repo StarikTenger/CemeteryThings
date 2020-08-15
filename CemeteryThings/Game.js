@@ -102,7 +102,7 @@ Game.prototype.random_covering_type = function() {
 // Choose random monster texture
 Game.prototype.random_monster_type = function() {
     let monster_cnt = IMGS_MONSTER.length;
-    return normalRoll(3, monster_cnt, 2);
+    return normalRoll(1, monster_cnt, 2);
 }
 
 Game.prototype.clever_covering_type = function() {
