@@ -15,6 +15,13 @@ class Game {
         this.player = new Object();
         this.player.pos = new Vec2(10, 10);
         this.player.gridPos = new Vec2(0, 0);
+
+        // Player's animations
+        let anm_standing = new Anime(0.5, ANM_PLAYER_STANDING);
+        let anm_walking_right = new Anime(0.3, ANM_PLAYER_MOVING_RIGHT);
+        let anm_walking_up = new Anime(0.3, ANM_PLAYER_MOVING_UP);
+        let anm_walking_down = new Anime(0.3, ANM_PLAYER_MOVING_DOWN);
+        this.player.set_animations(anm_standing, [anm_walking_up, anm_walking_down, anm_walking_right]);
         
         this.spec_graves_visited = [0, 0, 0];
         this.spec_lights = [];
@@ -356,38 +363,29 @@ Game.prototype.playerControl = function() {
     // Player movement
     let deltaPos = new Vec2(0, 0); // Shift for this step
     // Check keys
-    // Player has only 2 directions (left & right)
+    this.player.dir = NONE;
     if (KEY_D) { // Right
         deltaPos.x += 1;
         this.player.dir = RIGHT;
+        this.player.right = 1;
     }
-    if (KEY_S) // Down
+    if (KEY_S) { // Down
         deltaPos.y += 1;
+        this.player.dir = DOWN;
+    }
     if (KEY_A) { // Left
         deltaPos.x -= 1;
         this.player.dir = LEFT;
+        this.player.right = 0;
     }
-    if (KEY_W) // Right
+    if (KEY_W) { // Up
         deltaPos.y -= 1;
+        this.player.dir = UP;
+    }
+    this.player.animationType = this.player.dir;
 
     // Movement
     this.move(this.player, deltaPos);
-
-    // Animation
-    if (deltaPos.x != 0 || deltaPos.y != 0) { // Player is moving now
-        if (this.player.animationType == 0) { // Player was not moving
-            this.player.animationType = 1;
-            this.player.animationFrame = random(0, 1);
-            this.player.animationTimer = 0;
-        }
-    }
-    else { // Player is standing now
-        if (this.player.animationType == 1) { // Player was moving
-            this.player.animationType = 0;
-            this.player.animationFrame = 0;
-            this.player.animationTimer = 0;
-        }
-    }
 
     // Cooldowns
     this.player.step(DT);

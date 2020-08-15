@@ -2,10 +2,11 @@
 
 //// CONSTANTS ////
 // Directions
-let RIGHT = 0;
-let DOWN = 1;
-let LEFT = 2;
-let UP = 3;
+let NONE = 0
+let RIGHT = 3;
+let DOWN = 2;
+let LEFT = 4;
+let UP = 1;
 
 // Subjects' types
 let SBJ_HEAL = 1;
@@ -131,10 +132,25 @@ let IMGS_SUBJECT = [
 ];
 
 // Player animation
-let IMG_PLAYER_STANDING1 = getImg("textures/player/standing/player_standing1.png");
-let IMG_PLAYER_WALKING1 = getImg("textures/player/walking/player_walking1.png");
-let IMG_PLAYER_WALKING2 = getImg("textures/player/walking/player_walking2.png");
+let ANM_PLAYER_STANDING = [
+    getImg("textures/player/player_standing_0.png"),
+    getImg("textures/player/player_standing_1.png")
+];
 
+let ANM_PLAYER_MOVING_RIGHT = [
+    getImg("textures/player/player_moving_right_0.png"),
+    getImg("textures/player/player_moving_right_1.png")
+];
+
+let ANM_PLAYER_MOVING_UP = [
+    getImg("textures/player/player_moving_up_0.png"),
+    getImg("textures/player/player_moving_up_1.png")
+];
+
+let ANM_PLAYER_MOVING_DOWN = [
+    getImg("textures/player/player_moving_down_0.png"),
+    getImg("textures/player/player_moving_down_1.png")
+];
 
 let IMG_MONSTER0 = getImg("textures/monsters/monster1.png");
 let IMG_SHADOW = getImg("textures/shadow.png");
@@ -151,6 +167,7 @@ let ANM_BLOOD = [
     getImg("textures/particles/blood1.png"),
     getImg("textures/particles/blood2.png")
 ];
+
 let ANM_TRACER_LEFT = [
     getImg("textures/particles/tracer_left.png")
 ];
