@@ -305,10 +305,24 @@ Game.prototype.generate = function() {
         monster.monsterType = this.random_monster_type();
 
         // Choosing animations
-        let standing = new Anime(0.5, ANM_ZOMBIE_STANDING);
-        let moving_up = new Anime(0.3, ANM_ZOMBIE_MOVING_UP);
-        let moving_down = new Anime(0.3, ANM_ZOMBIE_MOVING_DOWN);
-        let moving_right = new Anime(0.3, ANM_ZOMBIE_MOVING_RIGHT);
+        let standing = [];
+        let moving_up = [];
+        let moving_down = [];
+        let moving_right = [];
+        if (monster.monsterType == 1) {
+            standing = new Anime(0.5, ANM_ZOMBIE_STANDING);
+            moving_up = new Anime(0.3, ANM_ZOMBIE_MOVING_UP);
+            moving_down = new Anime(0.3, ANM_ZOMBIE_MOVING_DOWN);
+            moving_right = new Anime(0.3, ANM_ZOMBIE_MOVING_RIGHT);
+        }
+        if (monster.monsterType == 2) {
+            standing = new Anime(0.5, ANM_GHOST_STANDING);
+            moving_up = new Anime(0.3, ANM_GHOST_MOVING_UP);
+            moving_down = new Anime(0.3, ANM_GHOST_MOVING_DOWN);
+            moving_right = new Anime(0.3, ANM_GHOST_MOVING_RIGHT);
+        }
+        
+
         monster.set_animations(standing, [moving_up, moving_down, moving_right]);
 
 

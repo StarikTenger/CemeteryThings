@@ -178,6 +178,28 @@ let ANM_ZOMBIE_MOVING_RIGHT = [
     getImg("textures/monsters/zombie_moving_right_1.png")
 ]
 
+let ANM_GHOST_STANDING = [
+    getImg("textures/monsters/ghost_standing_0.png"),
+    getImg("textures/monsters/ghost_standing_1.png")
+]
+
+let ANM_GHOST_MOVING_UP = [
+    getImg("textures/monsters/ghost_moving_up_0.png"),
+    getImg("textures/monsters/ghost_moving_up_1.png")
+]
+
+let ANM_GHOST_MOVING_DOWN = [
+    getImg("textures/monsters/ghost_moving_down_0.png"),
+    getImg("textures/monsters/ghost_moving_down_1.png")
+]
+
+let ANM_GHOST_MOVING_RIGHT = [
+    getImg("textures/monsters/ghost_moving_right_0.png"),
+    getImg("textures/monsters/ghost_moving_right_1.png")
+]
+
+// ===================
+
 let IMG_MONSTER0 = getImg("textures/monsters/zombie_standing_0.png");
 let IMG_SHADOW = getImg("textures/shadow.png");
 let IMG_INTERFACE = getImg("textures/interface/interface.png");
