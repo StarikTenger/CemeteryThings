@@ -171,10 +171,10 @@ Game.prototype.gates = function(x) {
     this.grid[x][MARGIN - 1].gates = 1;
     this.grid[x + 1][MARGIN - 1].gates = 2;
     // Clear space under
-    this.grid[x][MARGIN - 2].obstacle = 0;
-    this.grid[x + 1][MARGIN - 2].obstacle = 0;
-    this.grid[x][MARGIN - 2].grave = 0;
-    this.grid[x + 1][MARGIN - 2].grave = 0;
+    this.grid[x][MARGIN].obstacle = 0;
+    this.grid[x + 1][MARGIN].obstacle = 0;
+    this.grid[x][MARGIN].grave = 0;
+    this.grid[x + 1][MARGIN].grave = 0;
     // Light
     this.spec_lights.push(new LightSource(new Vec2(x * 8 + 8, MARGIN * 8 - 8), 3));
 }
@@ -369,7 +369,7 @@ Game.prototype.generate = function() {
 
     //// Cemetery gates ////
     if (this.spec_graves_visited_count >= 3)
-        this.gates(random(GRID + 1, SIZE_X - GRID - 2));
+        this.gates(random(MARGIN + 1, SIZE_X - MARGIN - 2));
 
 };
 
