@@ -101,7 +101,7 @@ Game.prototype.random_covering_type = function() {
 // Choose random monster texture
 Game.prototype.random_monster_type = function() {
     let monster_cnt = IMGS_MONSTER.length;
-    return normalRoll(1, monster_cnt, 2);
+    return normalRoll(3, monster_cnt, 2);
 }
 
 Game.prototype.clever_covering_type = function() {
@@ -320,6 +320,12 @@ Game.prototype.generate = function() {
             moving_up = new Anime(0.3, ANM_GHOST_MOVING_UP);
             moving_down = new Anime(0.3, ANM_GHOST_MOVING_DOWN);
             moving_right = new Anime(0.3, ANM_GHOST_MOVING_RIGHT);
+        }
+        if (monster.monsterType == 3) {
+            standing = new Anime(0.5, ANM_WORM_STANDING);
+            moving_up = new Anime(0.3, ANM_WORM_STANDING);
+            moving_down = new Anime(0.3, ANM_WORM_STANDING);
+            moving_right = new Anime(0.3, ANM_WORM_STANDING);
         }
         
 

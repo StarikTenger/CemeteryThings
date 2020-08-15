@@ -198,6 +198,13 @@ let ANM_GHOST_MOVING_RIGHT = [
     getImg("textures/monsters/ghost_moving_right_1.png")
 ]
 
+let ANM_WORM_STANDING = [
+    getImg("textures/monsters/worm_standing_0.png"),
+    getImg("textures/monsters/worm_standing_1.png"),
+    getImg("textures/monsters/worm_standing_2.png"),
+    getImg("textures/monsters/worm_standing_3.png")
+]
+
 // ===================
 
 let IMG_MONSTER0 = getImg("textures/monsters/zombie_standing_0.png");
