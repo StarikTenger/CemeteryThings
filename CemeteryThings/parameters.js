@@ -161,22 +161,22 @@ let ANM_PLAYER_MOVING_DOWN = [
 let ANM_ZOMBIE_STANDING = [
     getImg("textures/monsters/zombie_standing_0.png"),
     getImg("textures/monsters/zombie_standing_1.png")
-]
+];
 
 let ANM_ZOMBIE_MOVING_UP = [
     getImg("textures/monsters/zombie_moving_up_0.png"),
     getImg("textures/monsters/zombie_moving_up_1.png")
-]
+];
 
 let ANM_ZOMBIE_MOVING_DOWN = [
     getImg("textures/monsters/zombie_moving_down_0.png"),
     getImg("textures/monsters/zombie_moving_down_1.png")
-]
+];
 
 let ANM_ZOMBIE_MOVING_RIGHT = [
     getImg("textures/monsters/zombie_moving_right_0.png"),
     getImg("textures/monsters/zombie_moving_right_1.png")
-]
+];
 
 // GATES
 let ANM_GATES = [
@@ -260,6 +260,14 @@ let ANM_TRACER_UP = [
 ];
 let ANM_TRACER_DOWN = [
     getImg("textures/particles/tracer_down.png")
+];
+
+// Damage animation
+let ANM_DAMAGE = [
+    getImg("textures/particles/damage0.png"),
+    getImg("textures/particles/damage1.png"),
+    getImg("textures/particles/damage2.png"),
+    getImg("textures/particles/damage3.png")
 ];
 
 //// KEY CONFIG ////

@@ -47,8 +47,12 @@ class Game {
 
 // Deals damage & makes sprite animation
 Game.prototype.hurt = function(target, value) {
-    if (target.protectionTimer == 0)
+    if (target.protectionTimer == 0) {
         this.animations.push(new Animation(ANM_BLOOD, plus(target.pos, new Vec2(0, -8)), new Vec2(8, 8), 0.1));
+        if (!target.monsterType) {
+            this.animations.push(new Animation(ANM_DAMAGE, new Vec2(0, 0), new Vec2(64, 64), 0.1, 1));
+        }
+    }
     target.hurt(value);
 }
 
@@ -557,7 +561,7 @@ Game.prototype.playerControl = function() {
             this.player.change_oil(7);
         }
         if (subject.type == SBJ_WHISKEY){
-            this.player.change_mind(2);
+            this.player.change_mind(6);
         }
         if (subject.type == SBJ_MATCHBOX){
             this.player.matches += 2;
