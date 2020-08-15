@@ -111,6 +111,11 @@ let IMGS_GRAVE = [
     getImg("textures/graves/grave10.png"),
 ];
 
+let IMGS_GATES = [
+    getImg("textures/gates1.png"),
+    getImg("textures/gates2.png")
+];
+
 let IMGS_MONSTER = [
     getImg("textures/monsters/monster1.png"),
     getImg("textures/monsters/monster2.png"),
