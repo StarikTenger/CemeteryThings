@@ -24,6 +24,7 @@ class Game {
         this.player.set_animations(anm_standing, [anm_walking_up, anm_walking_down, anm_walking_right]);
         
         this.spec_graves_visited = [0, 0, 0];
+        this.spec_graves_visited_count = 0;
         this.spec_lights = [];
         this.spec_sprites = [];
 
@@ -408,10 +409,10 @@ Game.prototype.playerControl = function() {
             for (x = pos.x - 1; x <= pos.x + 1; ++x) {
                 for (y = pos.y - 1; y <= pos.y + 1; ++y) {
                     let cell = this.grid[x][y];
-                    console.log(x, y);
-                    if (cell.grave < 0) {
+                    if (cell.grave < 0 && this.spec_graves_visited[-cell.grave - 1] == 1) {
                         this.spec_graves_visited[-cell.grave - 1] = 2;
                         this.spec_lights.push(new LightSource(new Vec2(x * 8 + 4, y * 8 + 4), 2));
+                        this.spec_graves_visited_count += 1;
                     }
                 }
             }

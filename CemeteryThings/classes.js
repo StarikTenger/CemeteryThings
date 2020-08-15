@@ -95,7 +95,6 @@ Object.prototype.step = function(dt) {
     if (this.animationTimer >= this.cur_animation.frame_time) {
         this.animationTimer = 0;
         this.cur_animation.frame = (this.cur_animation.frame + 1) % this.cur_animation.frames_cnt;
-        console.log(this.cur_animation.frame);
     }
 }
 
