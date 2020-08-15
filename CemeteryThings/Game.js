@@ -279,6 +279,14 @@ Game.prototype.generate = function() {
         monster.pos = plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4));
         monster.monsterType = this.random_monster_type();
 
+        // Choosing animations
+        let standing = new Anime(0.5, ANM_ZOMBIE_STANDING);
+        let moving_up = new Anime(0.3, ANM_ZOMBIE_MOVING_UP);
+        let moving_down = new Anime(0.3, ANM_ZOMBIE_MOVING_DOWN);
+        let moving_right = new Anime(0.3, ANM_ZOMBIE_MOVING_RIGHT);
+        monster.set_animations(standing, [moving_up, moving_down, moving_right]);
+
+
         if (monster.monsterType == MNS_TENTACLE)
             monster.horror = 0.5;
         else 
@@ -402,7 +410,7 @@ Game.prototype.playerControl = function() {
             this.player.lamp = 0;
         else if (this.player.matches > 0) {
             this.player.lamp = 1;
-            this.player.matches --;
+            this.player.matches--;
 
             // Lighting spec graves
             let pos = this.player.grid_pos;
@@ -547,9 +555,10 @@ Game.prototype.monstersControl = function() {
         // Get current monster
         let monster = this.monsters[i];
         monster.gridPos = this.getCell(monster.pos);
+        let x1 = monster.pos.x;
+        let y1 = monster.pos.y;
 
         // Cooldowns
-        monster.step(DT);
         if (monster.monsterType == MNS_ZOMBIE) { // ZOMBIE
             // Movement
             let deltaPos = new Vec2(0, 0);
@@ -593,6 +602,30 @@ Game.prototype.monstersControl = function() {
             if(!random(0, 2))
                 this.move(monster, mult(deltaPos, new Vec2(1, 1)), 1);
         }
+
+        let x2 = monster.pos.x;
+        let y2 = monster.pos.y;
+
+        if (x2 - x1 > 0) {
+            monster.right = 1;
+            monster.dir = RIGHT;
+        }
+
+        if (y2 - y1 > 0) {
+            monster.dir = DOWN;
+        }
+
+        if (x2 - x1 < 0) {
+            monster.right = 0;
+            monster.dir = LEFT;
+        }
+
+        if (y2 - y1 < 0) {
+            monster.dir = UP;
+        }        
+
+        monster.animationType = monster.dir;
+        monster.step(DT);
 
         // Horror
         if (this.grid[monster.gridPos.x][monster.gridPos.y].light > DIST_LIGHT - 1) {
