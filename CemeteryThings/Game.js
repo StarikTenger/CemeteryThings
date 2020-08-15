@@ -25,6 +25,7 @@ class Game {
         
         this.spec_graves_visited = [0, 0, 0];
         this.spec_graves_visited_count = 0;
+        this.gates_state = 0; // 1 - gates spawned, 2 - gates opened
         this.spec_lights = [];
         this.spec_sprites = [];
         this.temporalLightSources = [];
@@ -155,17 +156,22 @@ Game.prototype.initialGeneration = function() {
     }
 };
 
-// Generates gates (always in the top)
+// Generates gates (always in the top), check for player near
 Game.prototype.gates = function(x) {
     // Check for existing gates
     let gatesFound = 0;
-    for (let x = 0; x < SIZE_X; x++)
-        for (let y = 0; y < SIZE_Y; y++)
+    for (let x = 0; x < SIZE_X; x++) {
+        for (let y = 0; y < SIZE_Y; y++) {
             if(this.grid[x][y].gates)
                 gatesFound = 1;
+        }
+    }
 
-    if (gatesFound) // We don't need one more gates
+    if (gatesFound || this.gates_state) { // We don't need one more gates
+        if (this.gates_state == 0)
+            this.gates_state = 1; // Gates spawned
         return;
+    }
 
     // Gates itself
     this.grid[x][MARGIN - 1].gates = 1;
@@ -458,6 +464,22 @@ Game.prototype.playerControl = function() {
                         this.spec_lights.push(new LightSource(new Vec2(x * 8 + 4, y * 8 + 4), 2));
                         this.spec_graves_visited_count += 1;
                         this.animations.push(new Animation(ANM_IGNITION, new Vec2(x * 8 + 4, y * 8 - 8), new Vec2(8, 16), 0.2));
+                    }
+                }
+            }
+
+            // Open gates
+            for (let x = 0; x < SIZE_X; x++) {
+                for (let y = 0; y < SIZE_Y; y++) {        
+                    // Check for player
+                    if (this.gates_state == 1 && this.grid[x][y].gates == 1 && dist(this.player.pos, new Vec2(x * 8 + 8, y * 8 + 8)) < 32) {
+                        this.gates_state = 2; // Gays opened
+                        this.animations.push(new Animation(ANM_GATES, new Vec2(x * 8 + 4, y * 8 - 8), new Vec2(16, 16), 0.3));
+                    } 
+        
+                    // Clean obstacles
+                    if (this.gates_state == 2 && this.grid[x][y].gates) {
+                        this.grid[x][y].obstacle = 0;
                     }
                 }
             }

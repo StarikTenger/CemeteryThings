@@ -177,6 +177,14 @@ let ANM_ZOMBIE_MOVING_RIGHT = [
     getImg("textures/monsters/zombie_moving_right_1.png")
 ]
 
+// GATES
+let ANM_GATES = [
+    getImg("textures/particles/gates0.png"),
+    getImg("textures/particles/gates1.png"),
+    getImg("textures/particles/gates2.png"),
+    getImg("textures/particles/gates3.png")
+];
+
 let IMG_MONSTER0 = getImg("textures/monsters/zombie_standing_0.png");
 let IMG_SHADOW = getImg("textures/shadow.png");
 let IMG_INTERFACE = getImg("textures/interface/interface.png");
