@@ -508,8 +508,8 @@ Game.prototype.playerControl = function() {
             this.player.change_mind(2);
         }
         if (subject.type == SBJ_MATCHBOX){
-            if (this.player.matches < LIMIT_MATCHES)
-                this.player.matches++;
+            this.player.matches += 2;
+            this.player.matches = Math.min(this.player.matches, LIMIT_MATCHES);
         }
         if (subject.type == SBJ_AMMO){
             this.player.weapon.ammo += 2;
