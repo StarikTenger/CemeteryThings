@@ -204,6 +204,13 @@ let ANM_MATCH = [
     getImg("textures/particles/match1.png"),
     getImg("textures/particles/match2.png")
 ];
+let ANM_MATCH_BURNING = [
+    getImg("textures/particles/match_burn_0.png"),
+    getImg("textures/particles/match_burn_1.png"),
+    getImg("textures/particles/match_burn_2.png"),
+    getImg("textures/particles/match_burn_3.png"),
+    getImg("textures/particles/match_burn_4.png")
+];
 
 let ANM_TRACER_LEFT = [
     getImg("textures/particles/tracer_left.png")
