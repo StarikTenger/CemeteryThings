@@ -781,13 +781,13 @@ Game.prototype.monstersControl = function() {
             monster.dir = RIGHT;
         }
 
-        if (y2 - y1 > 0) {
-            monster.dir = DOWN;
-        }
-
         if (x2 - x1 < 0) {
             monster.right = 0;
             monster.dir = LEFT;
+        }
+
+        if (y2 - y1 > 0) {
+            monster.dir = DOWN;
         }
 
         if (y2 - y1 < 0) {
