@@ -232,17 +232,42 @@ let ANM_BLOOD = [
     getImg("textures/particles/blood/blood1.png"),
     getImg("textures/particles/blood/blood2.png")
 ];
-let ANM_IGNITION = [
-    getImg("textures/particles/ignition/ignition0.png"),
-    getImg("textures/particles/ignition/ignition1.png"),
-    getImg("textures/particles/ignition/ignition2.png"),
-    getImg("textures/particles/ignition/ignition3.png")
+
+let ANM_IGNITION_RED = [
+    getImg("textures/particles/ignition/ignition_red_0.png"),
+    getImg("textures/particles/ignition/ignition_red_1.png"),
+    getImg("textures/particles/ignition/ignition_red_2.png"),
+    getImg("textures/particles/ignition/ignition_red_3.png"),
+    getImg("textures/particles/ignition/ignition_red_4.png"),
+    getImg("textures/particles/ignition/ignition_red_5.png"),
 ];
+
+let ANM_IGNITION_GREEN = [
+    getImg("textures/particles/ignition/ignition_green_0.png"),
+    getImg("textures/particles/ignition/ignition_green_1.png"),
+    getImg("textures/particles/ignition/ignition_green_2.png"),
+    getImg("textures/particles/ignition/ignition_green_3.png"),
+    getImg("textures/particles/ignition/ignition_green_4.png"),
+    getImg("textures/particles/ignition/ignition_green_5.png"),
+];
+
+let ANM_IGNITION_BLUE = [
+    getImg("textures/particles/ignition/ignition_blue_0.png"),
+    getImg("textures/particles/ignition/ignition_blue_1.png"),
+    getImg("textures/particles/ignition/ignition_blue_2.png"),
+    getImg("textures/particles/ignition/ignition_blue_3.png"),
+    getImg("textures/particles/ignition/ignition_blue_4.png"),
+    getImg("textures/particles/ignition/ignition_blue_5.png"),
+];
+
+let ANM_IGNITION = [ANM_IGNITION_RED, ANM_IGNITION_GREEN, ANM_IGNITION_BLUE];
+
 let ANM_MATCH = [
     getImg("textures/particles/match/match0.png"),
     getImg("textures/particles/match/match1.png"),
     getImg("textures/particles/match/match2.png")
 ];
+
 let ANM_MATCH_BURNING = [
     getImg("textures/particles/match_burn/match_burn_0.png"),
     getImg("textures/particles/match_burn/match_burn_1.png"),
@@ -250,6 +275,7 @@ let ANM_MATCH_BURNING = [
     getImg("textures/particles/match_burn/match_burn_3.png"),
     getImg("textures/particles/match_burn/match_burn_4.png")
 ];
+
 let ANM_ACTIVE_GRAVE = [
     getImg("textures/particles/active_grave/active_grave_0.png"),
     getImg("textures/particles/active_grave/active_grave_1.png"),

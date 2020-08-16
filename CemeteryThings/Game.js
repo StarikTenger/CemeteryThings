@@ -300,9 +300,11 @@ Game.prototype.generate = function() {
 
         // If cell has neighbors we generate a grave
         if (neighborsCount == 1 && neighborsDiagonalCount <= 1 && this.grid[pos.x][pos.y].grave >= 0) {
-            this.grid[pos.x][pos.y].grave = this.random_grave_type();
-            this.grid[pos.x][pos.y].obstacle = 1;
-            this.grid[pos.x][pos.y].covering = 0;
+            let cell = this.grid[pos.x][pos.y];
+            cell.grave = -random(1, 3);
+            this.spec_graves_visited[-cell.grave - 1] = 1;
+            cell.obstacle = 1;
+            cell.covering = 0;
         }
     }
 
@@ -517,8 +519,8 @@ Game.prototype.playerControl = function() {
                         this.spec_graves_visited[-cell.grave - 1] = 2;
                         this.spec_lights.push(new LightSource(new Vec2(x * 8 + 4, y * 8 + 4), 2));
                         this.spec_graves_visited_count += 1;
-                        this.animations.push(new Animation(ANM_IGNITION, new Vec2(x * 8 + 4, y * 8 - 8), new Vec2(8, 16), 0.2));
-                        this.animations.push(new Animation(ANM_ACTIVE_GRAVE, new Vec2(x * 8 + 4, y * 8 - 8), new Vec2(8, 16), 0.3, 0, 1));
+                        this.animations.push(new Animation(ANM_IGNITION[-cell.grave - 1], new Vec2(x * 8 + 4, y * 8 - 8), new Vec2(8, 16), 0.15));
+                        this.animations.push(new Animation(ANM_ACTIVE_GRAVE, new Vec2(x * 8 + 4, y * 8 - 8), new Vec2(8, 16), 0.15, 0, 1));
                     }
                 }
             }
