@@ -22,6 +22,13 @@ function step() {
     KEY_DOWN_PREV = KEY_DOWN;
     KEY_LEFT_PREV = KEY_LEFT;
     KEY_RIGHT_PREV = KEY_RIGHT;
+
+    if (game.RELOAD == 1) {
+        game = new Game();
+        game.initialGeneration();
+        game.generate();
+        game.spawnPlayer(new Vec2(SIZE_X * 8 / 2, 10 + MARGIN * 8));
+    }
 }
 
 var interval = setInterval(step, DT * 1000);

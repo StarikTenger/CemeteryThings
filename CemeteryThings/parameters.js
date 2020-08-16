@@ -327,6 +327,7 @@ let KEY_UP = 0; let KEY_UP_PREV = 0;
 let KEY_DOWN = 0; let KEY_DOWN_PREV = 0; 
 let KEY_LEFT = 0; let KEY_LEFT_PREV = 0; 
 let KEY_RIGHT = 0; let KEY_RIGHT_PREV = 0; 
+let KEY_ENTER = 0; let KEY_ENTER_PREV = 0;
 
 function checkKey(e, t) {
     if(e.keyCode == 87)
@@ -353,6 +354,8 @@ function checkKey(e, t) {
         KEY_RIGHT = t;
     if(e.keyCode == 40)
         KEY_DOWN = t;
+    if (e.keyCode == 13)
+        KEY_ENTER = t;
 }
 
 window.addEventListener('keydown',this.checkDown,false);

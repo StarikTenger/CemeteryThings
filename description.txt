@@ -1,0 +1,28 @@
+It was a normal day and you decided to visit your family's cemetery. After an hour in silence of peaceful graves you noticed something very wrong. Gates are locked and air is being filled with dark magic. Of course you know a rumor about three powerful wizards of your dinasty, but who actually believes in such tales nowadays?
+At least your pistol, lamp and matches are with you and it's known how to stop black witchcraft from spreading it's tentacles worldwide. Activate three rarest graves by striking a match near them and escape throw the gates till it's not too late!
+
+Control:
+wasd - moving
+arrows - shooting
+1, 2 - using picked up items
+x - extinguish the lamp (could be useful!)
+f - use a match (consumes one)
+alt+f4 - give up
+Enter - reload the game
+
+Some basic rules:
+- Don't read this section if you want a brain-cracking challange trying to undestand what is what.
+- Things can't exist if you don't see them
+- Lamp consumes oil while turned on
+- Lamp consumes mind while turned off
+- Monsters consume mind while seen
+- Monsters consume hp when you touch them
+
+Items you can find:
+- Oil for the lamp
+- Ammunition for pistol
+- Blood for hp
+- Blue whiskey for mind
+
+Game is still in development for LowRes jam, so I'll be happy to hear ANY comments, ideas and bug reports!
+(btw sometimes game is not winnable, )

@@ -54,6 +54,8 @@ class Game {
         this.lightSources = [];
 
         this.animations = [];
+
+        this.RELOAD = 0;
     }
 }
 
@@ -301,8 +303,7 @@ Game.prototype.generate = function() {
         // If cell has neighbors we generate a grave
         if (neighborsCount == 1 && neighborsDiagonalCount <= 1 && this.grid[pos.x][pos.y].grave >= 0) {
             let cell = this.grid[pos.x][pos.y];
-            cell.grave = -random(1, 3);
-            this.spec_graves_visited[-cell.grave - 1] = 1;
+            cell.grave = this.random_grave_type();
             cell.obstacle = 1;
             cell.covering = 0;
         }
@@ -352,19 +353,25 @@ Game.prototype.generate = function() {
         let moving_up = [];
         let moving_down = [];
         let moving_right = [];
-        if (monster.monsterType == 1) {
+        if (monster.monsterType == MNS_ZOMBIE) {
+            monster.horror = 0.2;
+            monster.hp = random(2, 3);
             standing = new Anime(0.5, ANM_ZOMBIE_STANDING);
             moving_up = new Anime(0.3, ANM_ZOMBIE_MOVING_UP);
             moving_down = new Anime(0.3, ANM_ZOMBIE_MOVING_DOWN);
             moving_right = new Anime(0.3, ANM_ZOMBIE_MOVING_RIGHT);
         }
-        if (monster.monsterType == 2) {
+        if (monster.monsterType == MNS_GHOST) {
+            monster.horror = 0.3;
+            monster.hp = random(1, 3);
             standing = new Anime(0.5, ANM_GHOST_STANDING);
             moving_up = new Anime(0.3, ANM_GHOST_MOVING_UP);
             moving_down = new Anime(0.3, ANM_GHOST_MOVING_DOWN);
             moving_right = new Anime(0.3, ANM_GHOST_MOVING_RIGHT);
         }
-        if (monster.monsterType == 3) {
+        if (monster.monsterType == MNS_TENTACLE) {
+            monster.horror = 0.5;
+            monster.hp = random(3, 4);
             standing = new Anime(0.5, ANM_WORM_STANDING);
             moving_up = new Anime(0.3, ANM_WORM_STANDING);
             moving_down = new Anime(0.3, ANM_WORM_STANDING);
@@ -627,6 +634,8 @@ Game.prototype.playerControl = function() {
             dir = new Vec2(-1, 0);
         if (KEY_RIGHT)
             dir = new Vec2(1, 0);
+        if (KEY_ENTER)
+            this.RELOAD = 1;
         
         if (this.player.weapon.timeToCooldown <= 0 && this.player.weapon.ammo > 0) { // Are we able to shoot
             // Stupid collision check
@@ -888,6 +897,9 @@ Game.prototype.step = function() {
         this.generate();
         this.manageAnimations();
         this.cooldowns();
+    }
+    if (KEY_ENTER) {
+        this.RELOAD = 1;
     }
 };
 
