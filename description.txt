@@ -6,12 +6,13 @@ wasd - moving
 arrows - shooting
 1, 2 - using picked up items
 x - extinguish the lamp (could be useful!)
-f - use a match (consumes one)
-alt+f4 - give up
+f - use a match (consumes one) -> light the lamp and activate a special grav
 Enter - reload the game
+alt+f4 - give up
 
 Some basic rules:
 - Don't read this section if you want a brain-cracking challange trying to undestand what is what.
+- Mind is the blur
 - Things can't exist if you don't see them
 - Lamp consumes oil while turned on
 - Lamp consumes mind while turned off

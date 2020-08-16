@@ -102,7 +102,7 @@ Game.prototype.getLight = function(pos) {
 // Choose random grave texture
 Game.prototype.random_grave_type = function() {
     let graves_cnt = IMGS_GRAVE.length;
-    return normalRoll(2, graves_cnt, 5);
+    return normalRoll(2, graves_cnt, 10);
 }
 
 // Choose random gronud texture
@@ -526,7 +526,7 @@ Game.prototype.playerControl = function() {
                         this.spec_graves_visited[-cell.grave - 1] = 2;
                         this.spec_lights.push(new LightSource(new Vec2(x * 8 + 4, y * 8 + 4), 2));
                         this.spec_graves_visited_count += 1;
-                        this.animations.push(new Animation(ANM_IGNITION[-cell.grave - 1], new Vec2(x * 8 + 4, y * 8 - 8), new Vec2(8, 16), 0.15));
+                        this.animations.push(new Animation(ANM_IGNITION[-cell.grave - 1], new Vec2(x * 8 + 4, y * 8 - 8), new Vec2(8, 16), 0.1));
                         this.animations.push(new Animation(ANM_ACTIVE_GRAVE, new Vec2(x * 8 + 4, y * 8 - 8), new Vec2(8, 16), 0.15, 0, 1));
                     }
                 }
