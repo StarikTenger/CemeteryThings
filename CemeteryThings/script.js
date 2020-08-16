@@ -5,6 +5,13 @@ game.initialGeneration();
 game.generate();
 game.spawnPlayer(new Vec2(SIZE_X * 8 / 2, 10 + MARGIN * 8));
 
+var myAudio = new Audio('music/main_theme.mp3'); 
+myAudio.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+myAudio.play();
+
 function step() {
     game.step();
     draw.draw(game);
