@@ -706,7 +706,7 @@ Game.prototype.monstersControl = function() {
                 let pos1 = plus(monster.gridPos, neighbors[j]);
                 if (this.checkCell(pos1) || this.grid[pos1.x][pos1.y].obstacle)
                     continue;
-                if(this.grid[pos1.x][pos1.y].light > this.grid[monster.gridPos.x][monster.gridPos.y].light)
+                if (this.grid[pos1.x][pos1.y].zombieNav > this.grid[monster.gridPos.x][monster.gridPos.y].zombieNav)
                     deltaPos = plus(deltaPos, neighbors[j]); 
             }
 
@@ -728,7 +728,7 @@ Game.prototype.monstersControl = function() {
                 let pos1 = plus(monster.gridPos, neighbors[j]);
                 if (this.checkCell(pos1))
                     continue;
-                if(this.grid[pos1.x][pos1.y].light > this.grid[monster.gridPos.x][monster.gridPos.y].light)
+                if(this.grid[pos1.x][pos1.y].ghostNav > this.grid[monster.gridPos.x][monster.gridPos.y].ghostNav)
                     deltaPos = plus(deltaPos, neighbors[j]); 
             }
 
@@ -887,10 +887,93 @@ Game.prototype.cooldowns = function() {
         this.flickeringDelta = random_float(-0.2, 0.2);
     }
 };
+// Pathfinding, DA HARDKOD NO VY VOOBSHE ETOT EBANYI PROEKT VIDELI, TUT V ODNOM ETOM FAILE 1000 STROK NAHUI
+
+Game.prototype.pathfinding = function() {
+    // ZOMBIE
+    // Clearing
+    for (let x = 0; x < SIZE_X; x++) {
+        for (let y = 0; y < SIZE_Y; y++) {
+            this.grid[x][y].zombieNav = 0;
+        }
+    }
+    // BFS deque
+    let deque = new Deque();
+    let x = this.getCell(this.player.pos).x;
+    let y = this.getCell(this.player.pos).y;
+
+    this.grid[x][y].zombieNav = DIST_LOAD + 1;
+    deque.addBack(new Vec2(x, y));
+   
+    // BFS itself
+    let neighbors = [
+        new Vec2(1, 0),
+        new Vec2(-1, 0),
+        new Vec2(0, 1),
+        new Vec2(0, -1)
+    ];
+
+    while (deque.peekFront()) {
+        let pos = plus(deque.peekFront(), new Vec2(0, 0));
+        deque.removeFront();
+        if(this.grid[pos.x][pos.y].zombieNav < 0)
+            this.grid[pos.x][pos.y].zombieNav = 0;
+        if (this.grid[pos.x][pos.y].zombieNav <= 0)
+            continue;
+
+        let deltaNav = 1;
+        if (this.grid[pos.x][pos.y].obstacle)
+            deltaNav = 1000;
+        for (let i = 0; i < 4; i++) {
+            let pos1 = plus(pos, neighbors[i]);
+            if (this.checkCell(pos1) || (this.grid[pos1.x][pos1.y].zombieNav >= this.grid[pos.x][pos.y].zombieNav - deltaNav))
+                continue;
+            this.grid[pos1.x][pos1.y].zombieNav = this.grid[pos.x][pos.y].zombieNav - deltaNav;
+            deque.addBack(pos1);
+        }
+    }
+
+    // Ghost
+
+    // Clearing
+    for (let x = 0; x < SIZE_X; x++) {
+        for (let y = 0; y < SIZE_Y; y++) {
+            this.grid[x][y].ghostNav = 0;
+        }
+    }
+    // BFS deque
+    deque = new Deque();
+    x = this.getCell(this.player.pos).x;
+    y = this.getCell(this.player.pos).y;
+
+    this.grid[x][y].ghostNav = DIST_LOAD + 1;
+    deque.addBack(new Vec2(x, y));
+
+    // BFS itself
+    while (deque.peekFront()) {
+        let pos = plus(deque.peekFront(), new Vec2(0, 0));
+        deque.removeFront();
+        if(this.grid[pos.x][pos.y].ghostNav < 0)
+            this.grid[pos.x][pos.y].ghostNav = 0;
+        if (this.grid[pos.x][pos.y].ghostNav <= 0)
+            continue;
+
+        let deltaNav = 1;
+
+        for (let i = 0; i < 4; i++) {
+            let pos1 = plus(pos, neighbors[i]);
+            if (this.checkCell(pos1) || (this.grid[pos1.x][pos1.y].ghostNav >= this.grid[pos.x][pos.y].ghostNav - deltaNav))
+                continue;
+            this.grid[pos1.x][pos1.y].ghostNav = this.grid[pos.x][pos.y].ghostNav - deltaNav;
+            deque.addBack(pos1);
+        }
+    }
+}
 
 // Function called in each iteration
 Game.prototype.step = function() {
     if (this.player.status == 0) { // If player is alive
+        this.pathfinding();
         this.playerControl();
         this.monstersControl();
         this.setLight();
