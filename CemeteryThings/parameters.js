@@ -180,10 +180,10 @@ let ANM_ZOMBIE_MOVING_RIGHT = [
 
 // GATES
 let ANM_GATES = [
-    getImg("textures/particles/gates0.png"),
-    getImg("textures/particles/gates1.png"),
-    getImg("textures/particles/gates2.png"),
-    getImg("textures/particles/gates3.png")
+    getImg("textures/particles/gates/gates0.png"),
+    getImg("textures/particles/gates/gates1.png"),
+    getImg("textures/particles/gates/gates2.png"),
+    getImg("textures/particles/gates/gates3.png")
 ];
 
 let ANM_GHOST_STANDING = [
@@ -228,48 +228,55 @@ let IMG_WIN = getImg("textures/interface/winscreen.png");
 
 // Sprite animations
 let ANM_BLOOD = [
-    getImg("textures/particles/blood0.png"),
-    getImg("textures/particles/blood1.png"),
-    getImg("textures/particles/blood2.png")
+    getImg("textures/particles/blood/blood0.png"),
+    getImg("textures/particles/blood/blood1.png"),
+    getImg("textures/particles/blood/blood2.png")
 ];
 let ANM_IGNITION = [
-    getImg("textures/particles/ignition0.png"),
-    getImg("textures/particles/ignition1.png"),
-    getImg("textures/particles/ignition2.png"),
-    getImg("textures/particles/ignition3.png")
+    getImg("textures/particles/ignition/ignition0.png"),
+    getImg("textures/particles/ignition/ignition1.png"),
+    getImg("textures/particles/ignition/ignition2.png"),
+    getImg("textures/particles/ignition/ignition3.png")
 ];
 let ANM_MATCH = [
-    getImg("textures/particles/match0.png"),
-    getImg("textures/particles/match1.png"),
-    getImg("textures/particles/match2.png")
+    getImg("textures/particles/match/match0.png"),
+    getImg("textures/particles/match/match1.png"),
+    getImg("textures/particles/match/match2.png")
 ];
 let ANM_MATCH_BURNING = [
-    getImg("textures/particles/match_burn_0.png"),
-    getImg("textures/particles/match_burn_1.png"),
-    getImg("textures/particles/match_burn_2.png"),
-    getImg("textures/particles/match_burn_3.png"),
-    getImg("textures/particles/match_burn_4.png")
+    getImg("textures/particles/match_burn/match_burn_0.png"),
+    getImg("textures/particles/match_burn/match_burn_1.png"),
+    getImg("textures/particles/match_burn/match_burn_2.png"),
+    getImg("textures/particles/match_burn/match_burn_3.png"),
+    getImg("textures/particles/match_burn/match_burn_4.png")
+];
+let ANM_ACTIVE_GRAVE = [
+    getImg("textures/particles/active_grave/active_grave_0.png"),
+    getImg("textures/particles/active_grave/active_grave_1.png"),
+    getImg("textures/particles/active_grave/active_grave_2.png"),
+    getImg("textures/particles/active_grave/active_grave_3.png"),
+    getImg("textures/particles/active_grave/active_grave_4.png")
 ];
 
 let ANM_TRACER_LEFT = [
-    getImg("textures/particles/tracer_left.png")
+    getImg("textures/particles/tracer/tracer_left.png")
 ];
 let ANM_TRACER_RIGHT = [
-    getImg("textures/particles/tracer_right.png")
+    getImg("textures/particles/tracer/tracer_right.png")
 ];
 let ANM_TRACER_UP = [
-    getImg("textures/particles/tracer_up.png")
+    getImg("textures/particles/tracer/tracer_up.png")
 ];
 let ANM_TRACER_DOWN = [
-    getImg("textures/particles/tracer_down.png")
+    getImg("textures/particles/tracer/tracer_down.png")
 ];
 
 // Damage animation
 let ANM_DAMAGE = [
-    getImg("textures/particles/damage0.png"),
-    getImg("textures/particles/damage1.png"),
-    getImg("textures/particles/damage2.png"),
-    getImg("textures/particles/damage3.png")
+    getImg("textures/particles/damage/damage0.png"),
+    getImg("textures/particles/damage/damage1.png"),
+    getImg("textures/particles/damage/damage2.png"),
+    getImg("textures/particles/damage/damage3.png")
 ];
 
 //// KEY CONFIG ////
