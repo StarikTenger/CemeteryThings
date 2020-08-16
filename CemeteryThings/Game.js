@@ -30,7 +30,7 @@ class Game {
         this.gates_state = 0; // 1 - gates spawned, 2 - gates opened
 
         // Spec graves cooldown
-        this.specGraveCooldown = 10; // in sec
+        this.specGraveCooldown = 5; // in sec
         this.specGraveTimer = this.specGraveCooldown;
 
         // Flickering
@@ -245,20 +245,10 @@ Game.prototype.generate = function() {
             if (!random(0, 10)) { // Grave
                 var spec_sum = this.spec_graves_visited[0] * this.spec_graves_visited[1] * this.spec_graves_visited[2];
 
-                if (!random(0, (SIZE_X - MARGIN) * (SIZE_X - MARGIN) / 10) && spec_sum == 0 && (specGravesNum <= this.spec_graves_visited_count + 1) && this.specGraveTimer == 0) { // Spec grave!
-                    specGravesNum += 1;
-                    cell.grave = -random(1, 3);
-                    while (this.spec_graves_visited[-cell.grave - 1] > 0) {
-                        cell.grave = -random(1, 3);
-                    }
-                    this.spec_graves_visited[-cell.grave - 1] = 1; // 1 - generated, 2 - visited
-                    cell.obstacle = 1;
-                    cell.covering = 0;
-                } else {
+                
                     cell.grave = this.random_grave_type();
                     cell.obstacle = 1;
                     cell.covering = 0;
-                }
             } else {
                 cell.grave = 0;
                 cell.obstacle = 0;
@@ -312,6 +302,26 @@ Game.prototype.generate = function() {
         if (neighborsCount == 1 && neighborsDiagonalCount <= 1 && this.grid[pos.x][pos.y].grave >= 0) {
             let cell = this.grid[pos.x][pos.y];
             cell.grave = this.random_grave_type();
+            cell.obstacle = 1;
+            cell.covering = 0;
+        }
+    }
+
+    // spec grave
+    var spec_sum = this.spec_graves_visited[0] * this.spec_graves_visited[1] * this.spec_graves_visited[2];
+
+    if (specGravesNum <= this.spec_graves_visited_count + 1) {
+        let x = random(MARGIN, SIZE_X - MARGIN - 1);
+        let y = random(MARGIN, SIZE_Y - MARGIN - 1);
+        let cell = this.grid[x][y];
+
+        if (cell.light == 0 && spec_sum == 0 && this.specGraveTimer == 0) { // Spec grave!
+            specGravesNum += 1;
+            cell.grave = -random(1, 3);
+            while (this.spec_graves_visited[-cell.grave - 1] > 0) {
+                cell.grave = -random(1, 3);
+            }
+            this.spec_graves_visited[-cell.grave - 1] = 1; // 1 - generated, 2 - visited
             cell.obstacle = 1;
             cell.covering = 0;
         }
