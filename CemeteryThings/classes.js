@@ -164,6 +164,9 @@ class Cell {
         this.obstacle = 0; // 0 - player can pass, 1 - player can't pass
         this.type = 0; // For different texturing
         this.light = 0; // Illumination
+        
+        this.zombieNav = 0; // Used to navigate zombies
+        this.ghostNav = 0; // Used to navigate zombies
     }
 }
 
