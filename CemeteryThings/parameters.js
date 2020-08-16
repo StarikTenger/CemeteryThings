@@ -49,6 +49,9 @@ let MARGIN = 3; // Cells on map's sides, that are not changing
 let SIZE_X = 20 + MARGIN * 2;
 let SIZE_Y = 20 + MARGIN * 2;
 
+// Music
+let VOLUME = 1;
+
 // consts
 let LIFE_ETERNAL = -12222;
 
@@ -329,6 +332,8 @@ let KEY_DOWN = 0; let KEY_DOWN_PREV = 0;
 let KEY_LEFT = 0; let KEY_LEFT_PREV = 0; 
 let KEY_RIGHT = 0; let KEY_RIGHT_PREV = 0; 
 let KEY_ENTER = 0; let KEY_ENTER_PREV = 0;
+let KEY_PLUS = 0; let KEY_PLUS_PREV = 0;
+let KEY_MINUS = 0; let KEY_MINUS_PREV = 0;
 
 function checkKey(e, t) {
     if(e.keyCode == 87)
@@ -357,6 +362,11 @@ function checkKey(e, t) {
         KEY_DOWN = t;
     if (e.keyCode == 13)
         KEY_ENTER = t;
+    if (e.keyCode == 189)
+        KEY_MINUS = t;
+    if (e.keyCode == 187)
+        KEY_PLUS = t;
+    
 }
 
 window.addEventListener('keydown',this.checkDown,false);

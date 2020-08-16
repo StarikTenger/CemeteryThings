@@ -13,9 +13,17 @@ myAudio.addEventListener('ended', function() {
 myAudio.play();
 
 function step() {
+    myAudio.volume = VOLUME;
     myAudio.play();
     game.step();
     draw.draw(game);
+
+    if (KEY_MINUS) {
+        VOLUME = Math.max(0, VOLUME - 0.1);
+    }
+    if (KEY_PLUS) {
+        VOLUME = Math.min(1, VOLUME + 0.1);
+    }
 
     // Previous keys
     KEY_W_PREV = KEY_W;
