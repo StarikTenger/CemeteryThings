@@ -22,6 +22,7 @@ Some basic rules:
 - Monsters consume mind while seen
 - Monsters consume hp when you touch them
 - The goal is to activate 3 rare graves and then escape throw gates (use match near them as well)
+- Activated graves are shown in right-down corner
 
 Items you can find:
 - Oil for the lamp

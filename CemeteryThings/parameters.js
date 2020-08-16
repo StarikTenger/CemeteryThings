@@ -200,17 +200,24 @@ let ANM_GHOST_STANDING = [
 
 let ANM_GHOST_MOVING_UP = [
     getImg("textures/monsters/ghost_moving_up_0.png"),
-    getImg("textures/monsters/ghost_moving_up_1.png")
+    getImg("textures/monsters/ghost_moving_up_1.png"),
+    getImg("textures/monsters/ghost_moving_up_2.png"),
+    getImg("textures/monsters/ghost_moving_up_3.png")
+
 ];
 
 let ANM_GHOST_MOVING_DOWN = [
     getImg("textures/monsters/ghost_moving_down_0.png"),
-    getImg("textures/monsters/ghost_moving_down_1.png")
+    getImg("textures/monsters/ghost_moving_down_1.png"),
+    getImg("textures/monsters/ghost_moving_down_2.png"),
+    getImg("textures/monsters/ghost_moving_down_3.png")
 ];
 
 let ANM_GHOST_MOVING_RIGHT = [
     getImg("textures/monsters/ghost_moving_right_0.png"),
-    getImg("textures/monsters/ghost_moving_right_1.png")
+    getImg("textures/monsters/ghost_moving_right_1.png"),
+    getImg("textures/monsters/ghost_moving_right_2.png"),
+    getImg("textures/monsters/ghost_moving_right_3.png"),
 ];
 
 let ANM_WORM_STANDING = [

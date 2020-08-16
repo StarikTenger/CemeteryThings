@@ -509,14 +509,14 @@ Game.prototype.playerControl = function() {
         this.player.dir = RIGHT;
         this.player.right = 1;
     }
-    if (KEY_S) { // Down
-        deltaPos.y += 1;
-        this.player.dir = DOWN;
-    }
     if (KEY_A) { // Left
         deltaPos.x -= 1;
         this.player.dir = LEFT;
         this.player.right = 0;
+    }
+    if (KEY_S) { // Down
+        deltaPos.y += 1;
+        this.player.dir = DOWN;
     }
     if (KEY_W) { // Up
         deltaPos.y -= 1;
