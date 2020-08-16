@@ -246,8 +246,6 @@ Game.prototype.generate = function() {
                 continue;
             if (!random(0, 10)) { // Grave
                 var spec_sum = this.spec_graves_visited[0] * this.spec_graves_visited[1] * this.spec_graves_visited[2];
-
-                
                     cell.grave = this.random_grave_type();
                     cell.obstacle = 1;
                     cell.covering = 0;
@@ -312,12 +310,19 @@ Game.prototype.generate = function() {
     // spec grave
     var spec_sum = this.spec_graves_visited[0] * this.spec_graves_visited[1] * this.spec_graves_visited[2];
 
-    if (specGravesNum <= this.spec_graves_visited_count + 1) {
+    if (specGravesNum <= this.spec_graves_visited_count + 1 && spec_sum == 0 && this.specGraveTimer == 0) {
         let x = random(MARGIN, SIZE_X - MARGIN - 1);
         let y = random(MARGIN, SIZE_Y - MARGIN - 1);
         let cell = this.grid[x][y];
 
-        if (cell.light == 0 && spec_sum == 0 && this.specGraveTimer == 0) { // Spec grave!
+        while (cell.light > 0) {
+            x = random(MARGIN, SIZE_X - MARGIN - 1);
+            y = random(MARGIN, SIZE_Y - MARGIN - 1);
+            cell = this.grid[x][y];
+
+        }
+
+        if (1) { // Spec grave!
             specGravesNum += 1;
             cell.grave = -random(1, 3);
             while (this.spec_graves_visited[-cell.grave - 1] > 0) {

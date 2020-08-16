@@ -52,6 +52,9 @@ let SIZE_Y = 20 + MARGIN * 2;
 // Music
 let VOLUME = 1;
 
+// Generation
+let SPEC_GRAVE_RADIUS = 10;
+
 // consts
 let LIFE_ETERNAL = -12222;
 
