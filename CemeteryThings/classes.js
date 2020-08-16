@@ -45,7 +45,7 @@ class Object {
         this.subjects = [undefined, undefined];
 
         this.weapon = new Weapon();
-
+        
         // animation
         this.right = 1;
         this.animationType = -1; // 0 - standing, 1 - walking up, 2 - walking down, 3 - walking right, 4 - left

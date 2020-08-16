@@ -1,3 +1,4 @@
+ 
 // Main class that controls everything
 
 class Game {
@@ -29,7 +30,7 @@ class Game {
         this.gates_state = 0; // 1 - gates spawned, 2 - gates opened
 
         // Spec graves cooldown
-        this.specGraveCooldown = 20; // in sec
+        this.specGraveCooldown = 10; // in sec
         this.specGraveTimer = this.specGraveCooldown;
 
         // Flickering
@@ -56,6 +57,8 @@ class Game {
         this.animations = [];
 
         this.RELOAD = 0;
+
+        this.mentalDanger = 0; // PLayer is taking mental damage
     }
 }
 
@@ -102,7 +105,7 @@ Game.prototype.getLight = function(pos) {
 // Choose random grave texture
 Game.prototype.random_grave_type = function() {
     let graves_cnt = IMGS_GRAVE.length;
-    return normalRoll(2, graves_cnt, 10 );
+    return normalRoll(2, graves_cnt, 10);
 }
 
 // Choose random gronud texture
@@ -218,6 +221,8 @@ Game.prototype.gates = function(x) {
 // Generates the map
 Game.prototype.generate = function() {
     // Initial graves (in each cell with some chance)
+
+    let specGravesNum = 0;
     for (let x = 0; x < SIZE_X; x++) {
         for (let y = 0; y < SIZE_Y; y++) {
             let cell = this.grid[x][y];
@@ -227,6 +232,7 @@ Game.prototype.generate = function() {
             cell.covering = this.clever_covering_type();
             if (cell.grave < 0) {
                 this.spec_graves_visited[-cell.grave - 1] = 0;
+                specGravesNum++;
             }
         }
     }
@@ -238,7 +244,9 @@ Game.prototype.generate = function() {
                 continue;
             if (!random(0, 10)) { // Grave
                 var spec_sum = this.spec_graves_visited[0] * this.spec_graves_visited[1] * this.spec_graves_visited[2];
-                if (!random(0, 1) && spec_sum == 0 && this.specGraveTimer == 0) { // Spec grave!
+
+                if (!random(0, (SIZE_X - MARGIN) * (SIZE_X - MARGIN) / 10) && spec_sum == 0 && (specGravesNum <= this.spec_graves_visited_count + 1) && this.specGraveTimer == 0) { // Spec grave!
+                    specGravesNum += 1;
                     cell.grave = -random(1, 3);
                     while (this.spec_graves_visited[-cell.grave - 1] > 0) {
                         cell.grave = -random(1, 3);
@@ -522,7 +530,9 @@ Game.prototype.playerControl = function() {
             for (x = pos.x - 1; x <= pos.x + 1; ++x) {
                 for (y = pos.y - 1; y <= pos.y + 1; ++y) {
                     let cell = this.grid[x][y];
-                    if (cell.grave < 0 && this.spec_graves_visited[-cell.grave - 1] == 1) {
+                    if (cell.grave < 0 && this.spec_graves_visited[-cell.grave - 1] == 1) { // spec grave
+                        
+                        this.specGraveTimer = this.specGraveCooldown;
                         this.spec_graves_visited[-cell.grave - 1] = 2;
                         this.spec_lights.push(new LightSource(new Vec2(x * 8 + 4, y * 8 + 4), 2));
                         this.spec_graves_visited_count += 1;
@@ -559,8 +569,10 @@ Game.prototype.playerControl = function() {
         this.player.distLight = 1;
 
     // Horror
-    if (!this.player.lamp)
+    if (!this.player.lamp) {
         this.player.change_mind(-0.5 * DT);
+        this.mentalDanger = 1;
+    }
 
     //// Active subjects ////
     // Get subjects
@@ -763,6 +775,7 @@ Game.prototype.monstersControl = function() {
         // Horror
         if (this.grid[monster.gridPos.x][monster.gridPos.y].light > DIST_LIGHT - 1) {
             this.player.change_mind(-monster.horror * DT);
+            this.mentalDanger = 1;
         }
 
         // Damage
@@ -877,7 +890,7 @@ Game.prototype.manageAnimations = function() {
 Game.prototype.cooldowns = function() {
     // Spec graves
     this.specGraveTimer -= DT;
-    if (this.specGraveTimer <= 0)
+    if (this.specGraveTimer < 0)
         this.specGraveTimer = 0;
 
     // Flickering
@@ -973,6 +986,7 @@ Game.prototype.pathfinding = function() {
 // Function called in each iteration
 Game.prototype.step = function() {
     if (this.player.status == 0) { // If player is alive
+        this.mentalDanger = 0;
         this.pathfinding();
         this.playerControl();
         this.monstersControl();
