@@ -533,7 +533,7 @@ Game.prototype.playerControl = function() {
                     
                     // Check for player
                     if (this.gates_state == 1 && this.grid[x][y].gates == 1 && dist(this.player.pos, new Vec2(x * 8 + 8, y * 8 + 8)) < 32) {
-                        this.gates_state = 2; // Gays opened
+                        this.gates_state = 2; // Gates opened
                         this.animations.push(new Animation(ANM_GATES, new Vec2(x * 8 + 4, y * 8 - 8), new Vec2(16, 16), 0.3));
                     } 
         
