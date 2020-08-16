@@ -234,8 +234,8 @@ class Animation {
         } else {
             this.interface_bind = 0;
         }
-        if (repeating) { // If not repeating, will be despawned after all the frames
-            this.repeating = 1;
+        if (repeating) { // 0 - dying after repeating, 1 - repeating, 2 - last frame alive
+            this.repeating = repeating;
         } else {
             this.repeating = 0;
         }
@@ -249,10 +249,10 @@ Animation.prototype.step = function() {
         this.timer = this.frameTime;
         if (this.currentFrame >= this.frames.length)
         {
-            if (!(this.repeating)) { // Repeating check
+            if (this.repeating == 0) { // Repeating check
                 this.alive = 0;
             }
-            else {
+            else if (this.repeating == 1) {
                 this.currentFrame = 0;
             }
         }
