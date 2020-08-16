@@ -217,7 +217,7 @@ TemporalLightSource.prototype.step = function(dt) {
 }
 
 class Animation {
-    constructor(frames, pos, box, t, interface_bind) {
+    constructor(frames, pos, box, t, interface_bind, repeating) {
         this.frames = frames; // Images
         this.pos = new Vec2(pos.x, pos.y); // Position
         this.box = box; // Size
@@ -225,10 +225,16 @@ class Animation {
         this.timer = this.frameTime; // Countdown to change frame
         this.currentFrame = 0; // id of current frame
         this.alive = 1; // If 0 - animation must be deleted
+
         if (interface_bind) {
             this.interface_bind = 1;
         } else {
             this.interface_bind = 0;
+        }
+        if (repeating) { // If not repeating, will be despawned after all the frames
+            this.repeating = 1;
+        } else {
+            this.repeating = 0;
         }
     }
 };
@@ -239,7 +245,14 @@ Animation.prototype.step = function() {
         this.currentFrame++;
         this.timer = this.frameTime;
         if (this.currentFrame >= this.frames.length)
-            this.alive = 0;
+        {
+            if (!(this.repeating)) { // Repeating check
+                this.alive = 0;
+            }
+            else {
+                this.currentFrame = 0;
+            }
+        }
     }
 }
 
