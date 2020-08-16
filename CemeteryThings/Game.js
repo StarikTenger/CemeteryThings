@@ -164,7 +164,7 @@ Game.prototype.subject_type = function() {
     } else {
         type = SBJ_AMMO;
     }
-    
+
     return type;
 }
 
@@ -595,7 +595,7 @@ Game.prototype.playerControl = function() {
 
     // Horror
     if (!this.player.lamp) {
-        this.player.change_mind(-0.5 * DT);
+        this.player.change_mind(-0.35 * DT);
         this.mentalDanger = 1;
     }
 
