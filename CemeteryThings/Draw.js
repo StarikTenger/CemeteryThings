@@ -99,7 +99,7 @@ Draw.prototype.draw = function(game) {
         let subject = game.subjects[i];
         if (!subject || !subject.type) // Corrupted
             continue;
-        this.ySorted.push([IMGS_SUBJECT[subject.type - 1], subject.pos.x - CELL_SIZE / 2, subject.pos.y, TEXTURE_SIZE, TEXTURE_SIZE , 0, subject.pos.y]);
+        this.ySorted.push([IMGS_SUBJECT[subject.type - 1], subject.pos.x - CELL_SIZE / 2, subject.pos.y - CELL_SIZE, TEXTURE_SIZE, TEXTURE_SIZE , 0, subject.pos.y]);
     }
 
     // Sprite animations

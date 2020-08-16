@@ -132,6 +132,15 @@ Game.prototype.clever_covering_type = function() {
     }
 }
 
+Game.prototype.subject_type = function() {
+    let type = random(1, 5);
+    if (!random(0, 3))
+        type = SBJ_WHISKEY;
+    if (!random(0, 3))
+        type = SBJ_OIL;
+    return type;
+}
+
 Game.prototype.initialGeneration = function() {
     // Initial graves (in each cell with some chance)
     for (let x = MARGIN - 1; x < SIZE_X - (MARGIN - 1); x++) {
@@ -288,6 +297,13 @@ Game.prototype.generate = function() {
     for (let i = 0; i < this.monsters.length; i++) {
         let monster = this.monsters[i];
         if (this.checkCell(monster.gridPos) || this.grid[monster.gridPos.x][monster.gridPos.y].light <= 0 || monster.hp <= 0 || dist(monster.pos, this.player.pos) > DIST_LOAD * 8 * 2) {
+            // Drop items
+            if (random(0, 99) < 70) { // Chance 70%
+                let sbj = new Subject(); // Dropped subject
+                sbj.type = this.subject_type();
+                sbj.pos = monster.pos;
+                this.subjects.push(sbj);
+            }
             this.monsters.splice(i, 1);
         }
     }
@@ -386,9 +402,7 @@ Game.prototype.generate = function() {
         let subject = new Subject(plus(mult(pos, new Vec2(8, 8)), new Vec2(4, 4)));
         
         // Choosing type
-        subject.type = random(1, 5);
-        if(!random(0, 2))
-            subject.type = SBJ_OIL;
+        subject.type = this.subject_type();
 
         // Adding subject to array
         this.subjects.push(subject);
