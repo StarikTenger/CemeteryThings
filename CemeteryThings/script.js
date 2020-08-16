@@ -13,6 +13,7 @@ myAudio.addEventListener('ended', function() {
 myAudio.play();
 
 function step() {
+    myAudio.play();
     game.step();
     draw.draw(game);
 
