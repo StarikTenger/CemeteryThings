@@ -3,7 +3,7 @@ var draw = new Draw(CTX);
 
 game.initialGeneration();
 game.generate();
-game.spawnPlayer(new Vec2(10 + MARGIN * 8, 10 + MARGIN * 8));
+game.spawnPlayer(new Vec2(SIZE_X * 8 / 2, 10 + MARGIN * 8));
 
 function step() {
     game.step();

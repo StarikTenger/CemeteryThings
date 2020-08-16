@@ -23,9 +23,12 @@ class Game {
         let anm_walking_down = new Anime(0.3, ANM_PLAYER_MOVING_DOWN);
         this.player.set_animations(anm_standing, [anm_walking_up, anm_walking_down, anm_walking_right]);
         
+        // Game progress
         this.spec_graves_visited = [0, 0, 0];
         this.spec_graves_visited_count = 0;
         this.gates_state = 0; // 1 - gates spawned, 2 - gates opened
+
+        // Light
         this.spec_lights = [];
         this.spec_sprites = [];
         this.temporalLightSources = [];
@@ -185,6 +188,9 @@ Game.prototype.gates = function(x) {
             this.gates_state = 1; // Gates spawned
         return;
     }
+
+    // Set gates_state
+    this.gates_state = 1;
 
     // Gates itself
     this.grid[x][MARGIN - 1].gates = 1;
@@ -484,7 +490,7 @@ Game.prototype.playerControl = function() {
             this.player.lamp = 0;
     }
 
-    // Match using
+    //// Match using ////
     if (KEY_F && !KEY_F_PREV) {
         if (this.player.matches > 0) {
             this.player.lamp = 1;
@@ -509,7 +515,10 @@ Game.prototype.playerControl = function() {
 
             // Open gates
             for (let x = 0; x < SIZE_X; x++) {
-                for (let y = 0; y < SIZE_Y; y++) {        
+                for (let y = 0; y < SIZE_Y; y++) {                     
+                    if (this.spec_graves_visited_count < 3) // Gates are not ready
+                        break;
+                    
                     // Check for player
                     if (this.gates_state == 1 && this.grid[x][y].gates == 1 && dist(this.player.pos, new Vec2(x * 8 + 8, y * 8 + 8)) < 32) {
                         this.gates_state = 2; // Gays opened
@@ -645,6 +654,10 @@ Game.prototype.playerControl = function() {
             this.player.weapon.ammo--;
         }
     }
+
+    //// WIN ////
+    if (this.player.pos.y < MARGIN * 8 - 8)
+        this.player.status = 3;
 }
 
 // Monster management
@@ -864,4 +877,7 @@ Game.prototype.spawnPlayer = function(pos) {
             this.grid[x][y].obstacle = 0;
         }
     }
+
+    // Spawning gates
+    this.gates(this.getCell(pos).x - 1);
 }

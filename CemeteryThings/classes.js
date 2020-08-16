@@ -38,7 +38,7 @@ class Object {
         this.mind = LIMIT_MIND;
         this.matches = LIMIT_MATCHES;
 
-        this.status = 0; // 0 - alive, 1 - dead, 2 - delirious
+        this.status = 0; // 0 - alive, 1 - dead, 2 - delirious, 3 - win
         
         this.protectionTime = 1; // Invulnerability after taking damage (parameter)
         this.protectionTimer = 0; // Invulnerability after taking damage (Timer)

@@ -204,4 +204,7 @@ Draw.prototype.draw = function(game) {
     if (game.player.status == 2) {
         this.image(IMG_DELIRIOUS, 0, 0, 64, 64);
     }
+    if (game.player.status == 3) {
+        this.image(IMG_WIN, 0, 0, 64, 64);
+    }
 };

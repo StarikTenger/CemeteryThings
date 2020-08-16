@@ -221,8 +221,10 @@ let IMG_INTERFACE = getImg("textures/interface/interface.png");
 let IMG_INTERFACE_OVERLAY = getImg("textures/interface/interfaceOverlay.png");
 let IMG_MATCH = getImg("textures/interface/match.png");
 
+// Endgame screens
 let IMG_DEAD = getImg("textures/interface/deathscreen.png");
 let IMG_DELIRIOUS = getImg("textures/interface/deliriumscreen.png");
+let IMG_WIN = getImg("textures/interface/winscreen.png");
 
 // Sprite animations
 let ANM_BLOOD = [
