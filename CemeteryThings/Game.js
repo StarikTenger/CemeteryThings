@@ -28,6 +28,15 @@ class Game {
         this.spec_graves_visited_count = 0;
         this.gates_state = 0; // 1 - gates spawned, 2 - gates opened
 
+        // Spec graves cooldown
+        this.specGraveCooldown = 20; // in sec
+        this.specGraveTimer = this.specGraveCooldown;
+
+        // Flickering
+        this.flickeringCooldown = 0.2;
+        this.flickeringTimer = this.flickeringCooldown;
+        this.flickeringDelta = 0;
+
         // Light
         this.spec_lights = [];
         this.spec_sprites = [];
@@ -227,7 +236,7 @@ Game.prototype.generate = function() {
                 continue;
             if (!random(0, 10)) { // Grave
                 var spec_sum = this.spec_graves_visited[0] * this.spec_graves_visited[1] * this.spec_graves_visited[2];
-                if (!random(0, 1) && spec_sum == 0) { // Spec grave!
+                if (!random(0, 1) && spec_sum == 0 && this.specGraveTimer == 0) { // Spec grave!
                     cell.grave = -random(1, 3);
                     while (this.spec_graves_visited[-cell.grave - 1] > 0) {
                         cell.grave = -random(1, 3);
@@ -754,7 +763,7 @@ Game.prototype.monstersControl = function() {
 // Generate light around player (& other objects)
 Game.prototype.setLight = function() {
     // Add player pos to light source
-    this.lightSources.push(new LightSource(this.player.pos, this.player.distLight));
+    this.lightSources.push(new LightSource(this.player.pos, this.player.distLight + this.flickeringDelta));
 
     // Turning off light
     for (let x = 0; x < SIZE_X; x++) {
@@ -853,6 +862,19 @@ Game.prototype.manageAnimations = function() {
         }
     }
 };
+Game.prototype.cooldowns = function() {
+    // Spec graves
+    this.specGraveTimer -= DT;
+    if (this.specGraveTimer <= 0)
+        this.specGraveTimer = 0;
+
+    // Flickering
+    this.flickeringTimer -= DT;
+    if (this.flickeringTimer <= 0) {
+        this.flickeringTimer = this.flickeringCooldown;
+        this.flickeringDelta = random_float(-0.2, 0.2);
+    }
+};
 
 // Function called in each iteration
 Game.prototype.step = function() {
@@ -862,6 +884,7 @@ Game.prototype.step = function() {
         this.setLight();
         this.generate();
         this.manageAnimations();
+        this.cooldowns();
     }
 };
 

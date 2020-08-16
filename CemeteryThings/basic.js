@@ -38,6 +38,9 @@ function dist(a, b) {
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+function random_float(min, max) {
+    return (Math.random() * (max - min) + min);
+}
 
 function normalDistribution(min, max, iterations) {
     var sum = 0;
