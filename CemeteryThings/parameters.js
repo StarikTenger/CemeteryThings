@@ -38,11 +38,11 @@ let OIL_CONSUMPTION = 0.2;
 let DIST_LIGHT = 4;
 let DIST_LOAD = 7;
 
-let MONSTER_LIMIT = 3; // Maximum number of monsters
-let MONSTER_PERIOD = 10; // Time between monsters spawn
+let MONSTER_LIMIT = 4; // Maximum number of monsters
+let MONSTER_PERIOD = 5; // Time between monsters spawn
 
-let SUBJECT_LIMIT = 5; // Maximum number of subjects
-let SUBJECT_PERIOD = 1; // Time between subjects spawn
+let SUBJECT_LIMIT = 4; // Maximum number of subjects
+let SUBJECT_PERIOD = 5; // Time between subjects spawn
 
 // Map parameters
 let MARGIN = 3; // Cells on map's sides, that are not changing
@@ -229,6 +229,7 @@ let IMG_MENTAL_DANGER = getImg("textures/interface/mental_danger.png");
 let IMG_DEAD = getImg("textures/interface/deathscreen.png");
 let IMG_DELIRIOUS = getImg("textures/interface/deliriumscreen.png");
 let IMG_WIN = getImg("textures/interface/winscreen.png");
+let IMG_START_SCREEN = getImg("textures/interface/startscreen.png");
 
 // Sprite animations
 let ANM_BLOOD = [

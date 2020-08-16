@@ -211,4 +211,7 @@ Draw.prototype.draw = function(game) {
     if (game.player.status == 3) {
         this.image(IMG_WIN, 0, 0, 64, 64);
     }
+    if (game.player.status == 4) {
+        this.image(IMG_START_SCREEN, 0, 0, 64, 64);
+    }
 };

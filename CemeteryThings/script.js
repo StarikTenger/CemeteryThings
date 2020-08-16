@@ -4,6 +4,7 @@ var draw = new Draw(CTX);
 game.initialGeneration();
 game.generate();
 game.spawnPlayer(new Vec2(SIZE_X * 8 / 2, 10 + MARGIN * 8));
+game.player.status = 4;
 
 var myAudio = new Audio('music/main_theme.mp3'); 
 myAudio.addEventListener('ended', function() {

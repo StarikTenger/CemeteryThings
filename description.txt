@@ -6,18 +6,22 @@ wasd - moving
 arrows - shooting
 1, 2 - using picked up items
 x - extinguish the lamp (could be useful!)
-f - use a match (consumes one) -> light the lamp and activate a special grav
+f - use a match (consumes one) -> light the lamp and activate a special grave
+"-" - make music quieter
+"=" - make music louder (button with "+")
 Enter - reload the game
 alt+f4 - give up
 
 Some basic rules:
 - Don't read this section if you want a brain-cracking challange trying to undestand what is what.
-- Mind is the blur
+- You have to be very lucky just to have a chance to win
+- Mind is the blue thing on the right
 - Things can't exist if you don't see them
 - Lamp consumes oil while turned on
 - Lamp consumes mind while turned off
 - Monsters consume mind while seen
 - Monsters consume hp when you touch them
+- The goal is to activate 3 rare graves and then escape throw gates (use match near them as well)
 
 Items you can find:
 - Oil for the lamp
