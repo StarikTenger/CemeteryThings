@@ -41,8 +41,8 @@ let DIST_LOAD = 7;
 let MONSTER_LIMIT = 4; // Maximum number of monsters
 let MONSTER_PERIOD = 5; // Time between monsters spawn
 
-let SUBJECT_LIMIT = 4; // Maximum number of subjects
-let SUBJECT_PERIOD = 5; // Time between subjects spawn
+let SUBJECT_LIMIT = 7.5; // Maximum number of subjects
+let SUBJECT_PERIOD = 1.65; // Time between subjects spawn
 
 // Map parameters
 let MARGIN = 3; // Cells on map's sides, that are not changing

@@ -34,9 +34,11 @@ class Game {
         this.specGraveTimer = this.specGraveCooldown;
 
         // Flickering
-        this.flickeringCooldown = 0.2;
+        this.flickeringCooldown = 0.1;
         this.flickeringTimer = this.flickeringCooldown;
         this.flickeringDelta = 0;
+        this.flickeringMaxDelta = 0.5;
+        this.flickeringD = 0.075;
 
         // Light
         this.spec_lights = [];
@@ -907,7 +909,8 @@ Game.prototype.cooldowns = function() {
     this.flickeringTimer -= DT;
     if (this.flickeringTimer <= 0) {
         this.flickeringTimer = this.flickeringCooldown;
-        this.flickeringDelta = random_float(-0.2, 0.2);
+        this.flickeringDelta += random(-1, 1) * this.flickeringD;
+        this.flickeringDelta = Math.min(Math.max(this.flickeringDelta, -this.flickeringMaxDelta), this.flickeringMaxDelta);
     }
 };
 // Pathfinding, DA HARDKOD NO VY VOOBSHE ETOT EBANYI PROEKT VIDELI, TUT V ODNOM ETOM FAILE 1000 STROK NAHUI
