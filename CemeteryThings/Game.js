@@ -56,6 +56,8 @@ class Game {
         this.animations = [];
 
         this.RELOAD = 0;
+
+        this.mentalDanger = 0; // PLayer is taking mental damage
     }
 }
 
@@ -242,7 +244,7 @@ Game.prototype.generate = function() {
             if (!random(0, 10)) { // Grave
                 var spec_sum = this.spec_graves_visited[0] * this.spec_graves_visited[1] * this.spec_graves_visited[2];
 
-                if (!random(0, 1) && spec_sum == 0 && (specGravesNum <= this.spec_graves_visited_count + 1) && this.specGraveTimer == 0) { // Spec grave!
+                if (!random(0, (SIZE_X - MARGIN) * (SIZE_X - MARGIN) / 10) && spec_sum == 0 && (specGravesNum <= this.spec_graves_visited_count + 1) && this.specGraveTimer == 0) { // Spec grave!
                     specGravesNum += 1;
                     cell.grave = -random(1, 3);
                     while (this.spec_graves_visited[-cell.grave - 1] > 0) {
@@ -566,8 +568,10 @@ Game.prototype.playerControl = function() {
         this.player.distLight = 1;
 
     // Horror
-    if (!this.player.lamp)
+    if (!this.player.lamp) {
         this.player.change_mind(-0.5 * DT);
+        this.mentalDanger = 1;
+    }
 
     //// Active subjects ////
     // Get subjects
@@ -770,6 +774,7 @@ Game.prototype.monstersControl = function() {
         // Horror
         if (this.grid[monster.gridPos.x][monster.gridPos.y].light > DIST_LIGHT - 1) {
             this.player.change_mind(-monster.horror * DT);
+            this.mentalDanger = 1;
         }
 
         // Damage
@@ -980,6 +985,7 @@ Game.prototype.pathfinding = function() {
 // Function called in each iteration
 Game.prototype.step = function() {
     if (this.player.status == 0) { // If player is alive
+        this.mentalDanger = 0;
         this.pathfinding();
         this.playerControl();
         this.monstersControl();

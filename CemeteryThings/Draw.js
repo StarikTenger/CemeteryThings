@@ -169,6 +169,10 @@ Draw.prototype.draw = function(game) {
     // Cooldown
     this.rect(1, 54, game.player.weapon.timeToCooldown * 10 / game.player.weapon.cooldownTime , 1, "rgb(0, 0, 0)");
 
+    if (game.mentalDanger) {
+        this.image(IMG_MENTAL_DANGER, 53, 49, 10, 5);
+    }
+
     // Subjects
     for (let j = 0; j < 2; j++) {
         if (!game.player.subjects[j] || !game.player.subjects[j].type) // Empty slot

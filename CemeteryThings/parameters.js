@@ -220,6 +220,7 @@ let IMG_SHADOW = getImg("textures/shadow.png");
 let IMG_INTERFACE = getImg("textures/interface/interface.png");
 let IMG_INTERFACE_OVERLAY = getImg("textures/interface/interfaceOverlay.png");
 let IMG_MATCH = getImg("textures/interface/match.png");
+let IMG_MENTAL_DANGER = getImg("textures/interface/mental_danger.png");
 
 // Endgame screens
 let IMG_DEAD = getImg("textures/interface/deathscreen.png");
