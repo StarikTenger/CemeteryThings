@@ -29,7 +29,7 @@ class Game {
         this.gates_state = 0; // 1 - gates spawned, 2 - gates opened
 
         // Spec graves cooldown
-        this.specGraveCooldown = 20; // in sec
+        this.specGraveCooldown = 10; // in sec
         this.specGraveTimer = this.specGraveCooldown;
 
         // Flickering
@@ -218,6 +218,8 @@ Game.prototype.gates = function(x) {
 // Generates the map
 Game.prototype.generate = function() {
     // Initial graves (in each cell with some chance)
+
+    let specGravesNum = 0;
     for (let x = 0; x < SIZE_X; x++) {
         for (let y = 0; y < SIZE_Y; y++) {
             let cell = this.grid[x][y];
@@ -227,6 +229,7 @@ Game.prototype.generate = function() {
             cell.covering = this.clever_covering_type();
             if (cell.grave < 0) {
                 this.spec_graves_visited[-cell.grave - 1] = 0;
+                specGravesNum++;
             }
         }
     }
@@ -238,7 +241,9 @@ Game.prototype.generate = function() {
                 continue;
             if (!random(0, 10)) { // Grave
                 var spec_sum = this.spec_graves_visited[0] * this.spec_graves_visited[1] * this.spec_graves_visited[2];
-                if (!random(0, 1) && spec_sum == 0 && this.specGraveTimer == 0) { // Spec grave!
+
+                if (!random(0, 1) && spec_sum == 0 && (specGravesNum <= this.spec_graves_visited_count + 1) && this.specGraveTimer == 0) { // Spec grave!
+                    specGravesNum += 1;
                     cell.grave = -random(1, 3);
                     while (this.spec_graves_visited[-cell.grave - 1] > 0) {
                         cell.grave = -random(1, 3);
@@ -522,7 +527,9 @@ Game.prototype.playerControl = function() {
             for (x = pos.x - 1; x <= pos.x + 1; ++x) {
                 for (y = pos.y - 1; y <= pos.y + 1; ++y) {
                     let cell = this.grid[x][y];
-                    if (cell.grave < 0 && this.spec_graves_visited[-cell.grave - 1] == 1) {
+                    if (cell.grave < 0 && this.spec_graves_visited[-cell.grave - 1] == 1) { // spec grave
+                        
+                        this.specGraveTimer = this.specGraveCooldown;
                         this.spec_graves_visited[-cell.grave - 1] = 2;
                         this.spec_lights.push(new LightSource(new Vec2(x * 8 + 4, y * 8 + 4), 2));
                         this.spec_graves_visited_count += 1;
@@ -877,7 +884,7 @@ Game.prototype.manageAnimations = function() {
 Game.prototype.cooldowns = function() {
     // Spec graves
     this.specGraveTimer -= DT;
-    if (this.specGraveTimer <= 0)
+    if (this.specGraveTimer < 0)
         this.specGraveTimer = 0;
 
     // Flickering
