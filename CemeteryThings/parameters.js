@@ -284,6 +284,14 @@ let ANM_ACTIVE_GRAVE = [
     getImg("textures/particles/active_grave/active_grave_4.png")
 ];
 
+let ANM_PISTOL_SHOT = [
+    getImg("textures/interface/pistol_shot/pistol_0.png"),
+    getImg("textures/interface/pistol_shot/pistol_1.png"),
+    getImg("textures/interface/pistol_shot/pistol_2.png"),
+    getImg("textures/interface/pistol_shot/pistol_3.png"),
+    getImg("textures/interface/pistol_shot/pistol_4.png")
+];
+
 let ANM_TRACER_LEFT = [
     getImg("textures/particles/tracer/tracer_left.png")
 ];

@@ -227,7 +227,7 @@ class Animation {
         this.alive = 1; // If 0 - animation must be deleted
 
         if (interface_bind) {
-            this.interface_bind = 1;
+            this.interface_bind = 1; // drawn at very top of all layers
         } else {
             this.interface_bind = 0;
         }

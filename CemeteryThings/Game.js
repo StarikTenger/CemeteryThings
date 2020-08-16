@@ -659,6 +659,7 @@ Game.prototype.playerControl = function() {
             if (KEY_RIGHT)
                 curAnm = ANM_TRACER_RIGHT;
             this.animations.push(new Animation(curAnm, plus(this.player.pos, new Vec2(-28, -36)), new Vec2(64, 64), 0.1));
+            this.animations.push(new Animation(ANM_PISTOL_SHOT, new Vec2(1, 47), new Vec2(13, 7), 0.1, 1, 0));
 
 
             // Modify cooldown & ammo
