@@ -125,7 +125,7 @@ Game.prototype.random_covering_type = function() {
 // Choose random monster texture
 Game.prototype.random_monster_type = function() {
     let monster_cnt = IMGS_MONSTER.length;
-    return normalRoll(1, monster_cnt, 2);
+    return normalRoll(1, monster_cnt, 1);
 }
 
 Game.prototype.clever_covering_type = function() {
@@ -152,11 +152,19 @@ Game.prototype.clever_covering_type = function() {
 }
 
 Game.prototype.subject_type = function() {
-    let type = random(1, 5);
-    if (!random(0, 3))
+    let type = random(1, 100);
+    if (type <= 10) {
+        type = SBJ_HEAL;
+    } else if (type <= 35) {
         type = SBJ_WHISKEY;
-    if (!random(0, 3))
+    } else if (type <= 60) {
         type = SBJ_OIL;
+    } else if (type <= 80) {
+        type = SBJ_MATCHBOX;
+    } else {
+        type = SBJ_AMMO;
+    }
+    
     return type;
 }
 
@@ -395,7 +403,7 @@ Game.prototype.generate = function() {
             moving_right = new Anime(0.3, ANM_GHOST_MOVING_RIGHT);
         }
         if (monster.monsterType == MNS_TENTACLE) {
-            monster.horror = 0.5;
+            monster.horror = 0.7;
             monster.hp = random(3, 4);
             standing = new Anime(0.5, ANM_WORM_STANDING);
             moving_up = new Anime(0.3, ANM_WORM_STANDING);

@@ -54,6 +54,7 @@ let VOLUME = 1;
 
 // Generation
 let SPEC_GRAVE_RADIUS = 10;
+let HARDNESS = 0;
 
 // consts
 let LIFE_ETERNAL = -12222;

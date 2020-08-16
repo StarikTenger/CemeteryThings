@@ -262,3 +262,9 @@ Animation.prototype.step = function() {
 Animation.prototype.getFrame = function() {
     return this.frames[this.currentFrame];
 }
+
+class Artifact {
+    constructor() {
+        
+    }
+};
