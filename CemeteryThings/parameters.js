@@ -363,6 +363,9 @@ function checkDown(e) {
    
     // Checking for buttons pressed
     checkKey(e, 1);
+    if (e.keyCode >= 37 && e.keyCode <= 40) {
+        e.preventDefault();
+    }
 }
 
 window.addEventListener('keyup',this.checkUp,false);
